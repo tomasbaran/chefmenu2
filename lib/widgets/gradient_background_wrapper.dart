@@ -10,7 +10,7 @@ class GradientBackgroundWrapper extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        gradient: RadialGradient(colors: [colorBackground3, colorBackground2, Colors.red], stops: [0.0, 0.4, 1.0]),
+        gradient: RadialGradient(colors: [colorShade5, colorShade6, colorShade6], stops: [0.0, 0.4, 1.0]),
       ),
       child: child,
     );

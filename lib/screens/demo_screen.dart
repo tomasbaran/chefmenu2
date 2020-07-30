@@ -1,6 +1,7 @@
+import 'package:chefmenu2/theme/style_constants.dart';
+import 'package:chefmenu2/widgets/gradient_background_wrapper.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flutter/rendering.dart';
+import 'package:chefmenu2/widgets/my_tab_bar.dart';
 
 class DemoScreen extends StatelessWidget {
   static String id = '/demo';
@@ -8,38 +9,11 @@ class DemoScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 2,
+      length: 25,
       child: Scaffold(
-        floatingActionButton: Align(
-          alignment: Alignment.bottomCenter,
-          child: Container(
-            width: 800,
-            decoration: BoxDecoration(borderRadius: BorderRadius.all(Radius.circular(30)), color: Colors.grey),
-            child: TabBar(
-              labelColor: Colors.green,
-              unselectedLabelColor: Colors.pink,
-              indicatorColor: Colors.white,
-              indicator: BoxDecoration(shape: BoxShape.rectangle, borderRadius: BorderRadius.all(Radius.circular(30)), color: Colors.white),
-              tabs: [
-                Tab(
-                    icon: CustomIcon(
-                  'icons/001-sausage-2.svg',
-                  height: 28,
-                )
-
-                    /* SvgPicture.asset(
-                    'icons/001-sausage-2.svg',
-                    semanticsLabel: 'Acme Logo',
-                    height: 28,
-                    color: Colors.orange,
-                  ), */
-                    ),
-                Tab(icon: Icon(Icons.email)),
-              ],
-            ),
-          ),
-        ),
-        body: Center(
+        floatingActionButton: MyTabBar(),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+        body: GradientBackgroundWrapper(
           child: ListView(
             children: [
               Container(width: double.infinity),
@@ -90,33 +64,6 @@ class DemoScreen extends StatelessWidget {
           ),
         ),
       ),
-    );
-  }
-}
-
-class CustomIcon extends StatelessWidget {
-  const CustomIcon(
-    this.name, {
-    Key key,
-    this.height,
-    this.color,
-  }) : super(key: key);
-
-  final String name;
-  final double height;
-  final Color color;
-
-  @override
-  Widget build(BuildContext context) {
-    final IconThemeData iconTheme = IconTheme.of(context);
-    final double iconOpacity = iconTheme.opacity;
-    Color iconColor = color ?? iconTheme.color;
-
-    if (iconOpacity != 1.0) iconColor = iconColor.withOpacity(iconColor.opacity * iconOpacity);
-    return SvgPicture.asset(
-      name,
-      color: iconColor,
-      height: height,
     );
   }
 }
