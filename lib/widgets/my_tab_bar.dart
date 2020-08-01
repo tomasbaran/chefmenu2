@@ -3,10 +3,6 @@ import 'package:chefmenu2/theme/style_constants.dart';
 import 'package:chefmenu2/widgets/custom_icon.dart';
 
 class MyTabBar extends StatelessWidget {
-  const MyTabBar({
-    Key key,
-  }) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return Container(
