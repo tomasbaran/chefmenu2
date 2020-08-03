@@ -9,3 +9,5 @@ const Color colorShade6 = Color(0xFF1D1C0A);
 
 const double kTabIconHeight = 28;
 const double kCoverHeightProportion = 0.25;
+const double kBigBoxPadding = 8;
+const double kMaxCrossAxisExtent = 150;
