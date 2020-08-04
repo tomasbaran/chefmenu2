@@ -20,21 +20,29 @@ class DemoScreen extends StatelessWidget {
   List<Container> _buildGridTileList(dynamic context, int count) => List.generate(
       count,
       (i) => Container(
+            //NOTE: workaround according to: https://github.com/flutter/flutter/issues/25009
             decoration: BoxDecoration(
-              color: Colors.black,
-              borderRadius: BorderRadius.only(
-                topRight: Radius.circular(/* i == numberOfColumns(context) ? 30 : */ 1), /* topLeft: Radius.circular(i == 0 ? 30 : ) */
+              color: Colors.black, //the color of the main container
+              border: Border.all(
+                //apply border to only that side where the line is appearing i.e. top | bottom | right | left.
+                width: 2.0, //depends on the width of the unintended line
+                color: Colors.black,
               ),
             ),
+            child: Container(
+              decoration: BoxDecoration(
+                color: Colors.black,
+              ),
 
-            child: Center(
-              child: Text(
-                '$i / ${numberOfColumns(context)}',
-                style: TextStyle(color: Colors.grey),
-                //textAlign: TextAlign.center,
+              child: Center(
+                child: Text(
+                  '$i / ${numberOfColumns(context)}',
+                  style: TextStyle(color: Colors.grey),
+                  //textAlign: TextAlign.center,
+                ),
               ),
+              //margin: EdgeInsets.all(0),
             ),
-            //margin: EdgeInsets.all(0),
           ));
 
   // List<Widget> tabbarViewItems() {
@@ -65,77 +73,72 @@ class DemoScreen extends StatelessWidget {
     return DefaultTabController(
       length: 25,
       child: Scaffold(
-        backgroundColor: Colors.black,
         //floatingActionButton: MyTabBar(),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-        body: Stack(
-          children: [
-            Container(
-              width: double.infinity,
-              color: Colors.amber,
-              child: Image.network(
-                'https://images.unsplash.com/photo-1561752888-21eb3b67eb4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=967&q=80',
-                fit: BoxFit.cover,
-                height: MediaQuery.of(context).size.height * kCoverHeightProportion,
-              ),
-              //color: Colors.green,
-            ),
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: Container(
-                height: 40,
-                width: 300,
-                color: Colors.red,
-              ),
-            ),
-            Align(
-              alignment: Alignment.bottomCenter,
-              child: Container(
-                margin: EdgeInsets.only(left: kBigBoxPadding, right: kBigBoxPadding, top: kBigBoxPadding, bottom: kBottomBigBoxPadding),
-
-                //width: MediaQuery.of(context).size.width * 0.9,
-                //margin: EdgeInsets.symmetric(horizontal: kBigBoxPadding),
-                decoration: BoxDecoration(
-                  //color: Colors.pink,
-                  borderRadius: BorderRadius.all(Radius.circular(30)),
+        body: GradientBackgroundWrapper(
+          child: Stack(
+            children: [
+              Container(
+                width: double.infinity,
+                color: Colors.amber,
+                child: Image.network(
+                  'https://images.unsplash.com/photo-1561752888-21eb3b67eb4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=967&q=80',
+                  fit: BoxFit.cover,
+                  height: MediaQuery.of(context).size.height * kCoverHeightProportion,
                 ),
-                child: ClipRRect(
-                  borderRadius: BorderRadius.all(Radius.circular(30)),
-                  child: CustomScrollView(
-                    //physics: FixedExtentScrollPhysics(),
-                    anchor: kCoverHeightProportion *
-                        kCoverHeightProportion *
-                        MediaQuery.of(context).size.height /
-                        (kCoverHeightProportion * (MediaQuery.of(context).size.height - kBigBoxPadding - kBottomBigBoxPadding)),
-                    slivers: [
-                      SliverTomas(
-                        child: Container(
-                          width: double.infinity,
-                          height: 100,
-                          decoration: BoxDecoration(
-                              color: Colors.black, borderRadius: BorderRadius.only(topLeft: Radius.circular(30), topRight: Radius.circular(30))),
-                          child: Center(
-                            child: Text(
-                              'Headline',
-                              textAlign: TextAlign.center,
-                              style: TextStyle(color: Colors.white, fontSize: 24),
-                            ),
+                //color: Colors.green,
+              ),
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: Container(
+                  height: 40,
+                  width: 300,
+                  color: Colors.red,
+                ),
+              ),
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: Container(
+                  margin: EdgeInsets.only(left: kBigBoxPadding, right: kBigBoxPadding, top: kBigBoxPadding, bottom: kBottomBigBoxPadding),
+
+                  //width: MediaQuery.of(context).size.width * 0.9,
+                  //margin: EdgeInsets.symmetric(horizontal: kBigBoxPadding),
+                  decoration: BoxDecoration(
+                    //color: Colors.pink,
+                    borderRadius: BorderRadius.all(Radius.circular(30)),
+                  ),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.all(Radius.circular(30)),
+                    child: CustomScrollView(
+                      //physics: FixedExtentScrollPhysics(),
+                      anchor: kCoverHeightProportion *
+                          kCoverHeightProportion *
+                          MediaQuery.of(context).size.height /
+                          (kCoverHeightProportion * (MediaQuery.of(context).size.height - kBigBoxPadding - kBottomBigBoxPadding)),
+                      slivers: [
+                        SliverTomas(
+                          child: Container(
+                            width: double.infinity,
+                            height: 100,
+                            decoration: BoxDecoration(
+                                color: Colors.redAccent,
+                                borderRadius: BorderRadius.only(topLeft: Radius.circular(30), topRight: Radius.circular(30))),
                           ),
                         ),
-                      ),
-                      SliverGrid.extent(
-                        maxCrossAxisExtent: 358,
-                        childAspectRatio: 1,
-                        mainAxisSpacing: 0,
-                        crossAxisSpacing: 0,
-                        children: _buildGridTileList(context, 250),
-                      ),
-                    ],
+                        SliverGrid.extent(
+                          maxCrossAxisExtent: 150,
+                          childAspectRatio: 1,
+                          mainAxisSpacing: 0,
+                          crossAxisSpacing: 0,
+                          children: _buildGridTileList(context, 250),
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
     );
