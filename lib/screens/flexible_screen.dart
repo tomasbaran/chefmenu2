@@ -115,7 +115,7 @@ class RenderSliverTomas extends RenderSliverToBoxAdapter {
     assert(paintedChildSize.isFinite);
     assert(paintedChildSize >= 0.0);
     geometry = SliverGeometry(
-      scrollExtent: childExtent,
+      scrollExtent: childExtent + 100,
       paintExtent: 100,
       paintOrigin: constraints.scrollOffset,
       cacheExtent: cacheExtent,
