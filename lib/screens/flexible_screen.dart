@@ -98,7 +98,7 @@ class RenderSliverTomas extends RenderSliverToBoxAdapter {
       return;
     }
     final SliverConstraints constraints = this.constraints;
-    child.layout(constraints.asBoxConstraints(crossAxisExtent: 200), parentUsesSize: true);
+    child.layout(constraints.asBoxConstraints(/* crossAxisExtent: double.infinity */), parentUsesSize: true);
     double childExtent;
     switch (constraints.axis) {
       case Axis.horizontal:
@@ -116,11 +116,11 @@ class RenderSliverTomas extends RenderSliverToBoxAdapter {
     assert(paintedChildSize >= 0.0);
     geometry = SliverGeometry(
       scrollExtent: childExtent,
-      paintExtent: paintedChildSize,
+      paintExtent: 100,
+      paintOrigin: constraints.scrollOffset,
       cacheExtent: cacheExtent,
       maxPaintExtent: childExtent,
       hitTestExtent: paintedChildSize,
-      hasVisualOverflow: childExtent > constraints.remainingPaintExtent || constraints.scrollOffset > 0.0,
     );
     setChildParentData(child, constraints, geometry);
   }

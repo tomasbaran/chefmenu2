@@ -3,6 +3,7 @@ import 'package:chefmenu2/widgets/gradient_background_wrapper.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:chefmenu2/widgets/my_tab_bar.dart';
+import 'flexible_screen.dart';
 
 class DemoScreen extends StatelessWidget {
   static String id = '/demo';
@@ -20,12 +21,19 @@ class DemoScreen extends StatelessWidget {
       count,
       (i) => Container(
             decoration: BoxDecoration(
-              color: Colors.blue,
-              borderRadius:
-                  BorderRadius.only(topRight: Radius.circular(i == numberOfColumns(context) ? 30 : 0), topLeft: Radius.circular(i == 0 ? 30 : 0)),
+              color: Colors.black,
+              borderRadius: BorderRadius.only(
+                topRight: Radius.circular(/* i == numberOfColumns(context) ? 30 : */ 1), /* topLeft: Radius.circular(i == 0 ? 30 : ) */
+              ),
             ),
 
-            child: Text('$i / ${numberOfColumns(context)}'),
+            child: Center(
+              child: Text(
+                '$i / ${numberOfColumns(context)}',
+                style: TextStyle(color: Colors.grey),
+                //textAlign: TextAlign.center,
+              ),
+            ),
             //margin: EdgeInsets.all(0),
           ));
 
@@ -75,7 +83,15 @@ class DemoScreen extends StatelessWidget {
               Align(
                 alignment: Alignment.bottomCenter,
                 child: Container(
-                  margin: EdgeInsets.all(kBigBoxPadding),
+                  height: 40,
+                  width: 300,
+                  color: Colors.red,
+                ),
+              ),
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: Container(
+                  margin: EdgeInsets.only(left: kBigBoxPadding, right: kBigBoxPadding, top: kBigBoxPadding, bottom: kBottomBigBoxPadding),
 
                   //width: MediaQuery.of(context).size.width * 0.9,
                   //margin: EdgeInsets.symmetric(horizontal: kBigBoxPadding),
@@ -87,8 +103,20 @@ class DemoScreen extends StatelessWidget {
                     borderRadius: BorderRadius.all(Radius.circular(30)),
                     child: CustomScrollView(
                       //physics: FixedExtentScrollPhysics(),
-                      anchor: kCoverHeightProportion,
+                      anchor: kCoverHeightProportion *
+                          kCoverHeightProportion *
+                          MediaQuery.of(context).size.height /
+                          (kCoverHeightProportion * (MediaQuery.of(context).size.height - kBigBoxPadding - kBottomBigBoxPadding)),
                       slivers: [
+                        SliverTomas(
+                          child: Container(
+                            width: double.infinity,
+                            height: 100,
+                            decoration: BoxDecoration(
+                                color: Colors.redAccent,
+                                borderRadius: BorderRadius.only(topLeft: Radius.circular(30), topRight: Radius.circular(30))),
+                          ),
+                        ),
                         SliverGrid.extent(
                           maxCrossAxisExtent: 150,
                           childAspectRatio: 1,
