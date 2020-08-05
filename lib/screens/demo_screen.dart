@@ -47,6 +47,7 @@ class DemoScreen extends StatelessWidget {
         body: Stack(
           children: [
             CoverContainer(
+                topPadding: kCoverHeightProportion * MediaQuery.of(context).size.height - 50,
                 imageSrc:
                     'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2700&q=80'),
             CtaButton(),
@@ -116,7 +117,7 @@ class BigBoxContainer extends StatelessWidget {
                     color: colorBackground, borderRadius: BorderRadius.only(topLeft: Radius.circular(30), topRight: Radius.circular(30))),
                 child: Center(
                   child: Text(
-                    'La casa de don Juan',
+                    'Entrantes',
                     style: ktsCategoryTitle,
                   ),
                 ),
@@ -158,20 +159,30 @@ class CtaButton extends StatelessWidget {
 }
 
 class CoverContainer extends StatelessWidget {
+  final double topPadding;
   final String imageSrc;
-  CoverContainer({this.imageSrc});
+  CoverContainer({this.imageSrc, this.topPadding});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: double.infinity,
-      color: Colors.amber,
-      child: Image.network(
-        imageSrc,
-        fit: BoxFit.cover,
-        height: MediaQuery.of(context).size.height * kCoverHeightProportion,
+    return Stack(children: [
+      Container(
+        width: double.infinity,
+        color: Colors.amber,
+        child: Image.network(
+          imageSrc,
+          fit: BoxFit.cover,
+          height: MediaQuery.of(context).size.height * kCoverHeightProportion,
+        ),
+        //color: Colors.green,
       ),
-      //color: Colors.green,
-    );
+      Padding(
+        padding: EdgeInsets.only(top: topPadding, left: kBigBoxPadding),
+        child: Text(
+          'La casa de don Juan',
+          style: ktsRestaurantTitle,
+        ),
+      )
+    ]);
   }
 }

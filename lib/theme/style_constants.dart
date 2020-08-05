@@ -17,6 +17,13 @@ const double kTabIconHeight = 28;
 
 // Cover
 const double kCoverHeightProportion = 0.35;
+const TextStyle ktsRestaurantTitle = TextStyle(color: Colors.white, fontSize: 32, fontWeight: FontWeight.w600, shadows: <Shadow>[
+  Shadow(
+    offset: Offset(1, 0),
+    blurRadius: 13.0,
+    color: Color.fromARGB(255, 0, 0, 0),
+  )
+]);
 
 // BigBoxContainer
 const double kBigBoxPadding = 8;
@@ -31,4 +38,4 @@ const TextStyle ktsCategoryTitle = TextStyle(color: colorPrimary1, fontSize: 32,
 const double kCtaHeight = 52;
 const double kCtaWidth = 358;
 const Color colorCtaBackground = Colors.white;
-const TextStyle ktsCta = TextStyle(color: colorRed, fontSize: 19, fontWeight: FontWeight.w900);
+const TextStyle ktsCta = TextStyle(color: colorRed, fontSize: 19, fontWeight: FontWeight.w700);
