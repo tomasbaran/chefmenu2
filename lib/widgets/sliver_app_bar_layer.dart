@@ -23,6 +23,7 @@ class RenderSliverAppBarLayer extends RenderSliverToBoxAdapter {
       geometry = SliverGeometry.zero;
       return;
     }
+
     final SliverConstraints constraints = this.constraints;
     child.layout(constraints.asBoxConstraints(/* crossAxisExtent: double.infinity */), parentUsesSize: true);
     double childExtent;
@@ -37,6 +38,8 @@ class RenderSliverAppBarLayer extends RenderSliverToBoxAdapter {
     assert(childExtent != null);
     final double paintedChildSize = calculatePaintOffset(constraints, from: 0.0, to: childExtent);
     final double cacheExtent = calculateCacheOffset(constraints, from: 0.0, to: childExtent);
+
+    print('constraints: ${constraints.scrollOffset}');
 
     assert(paintedChildSize.isFinite);
     assert(paintedChildSize >= 0.0);

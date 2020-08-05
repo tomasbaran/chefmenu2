@@ -47,7 +47,7 @@ class DemoScreen extends StatelessWidget {
         body: Stack(
           children: [
             CoverContainer(
-                topPadding: kCoverHeightProportion * MediaQuery.of(context).size.height - 50,
+                topPadding: kCoverHeightProportion * MediaQuery.of(context).size.height - 50 - kShadowBlur,
                 imageSrc:
                     'https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=2700&q=80'),
             CtaButton(),
@@ -179,7 +179,7 @@ class CoverContainer extends StatelessWidget {
       Padding(
         padding: EdgeInsets.only(top: topPadding, left: kBigBoxPadding),
         child: Text(
-          'La casa de don Juan',
+          '  ' + 'La casa de don Juan' + '  ',
           style: ktsRestaurantTitle,
         ),
       )

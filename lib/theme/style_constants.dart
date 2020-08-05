@@ -16,11 +16,12 @@ const Color colorRed = Color(0xFFEB5757);
 const double kTabIconHeight = 28;
 
 // Cover
+const double kShadowBlur = 15;
 const double kCoverHeightProportion = 0.35;
-const TextStyle ktsRestaurantTitle = TextStyle(color: Colors.white, fontSize: 32, fontWeight: FontWeight.w600, shadows: <Shadow>[
+const TextStyle ktsRestaurantTitle = TextStyle(height: 2.5, color: Colors.white, fontSize: 32, fontWeight: FontWeight.w600, shadows: <Shadow>[
   Shadow(
-    offset: Offset(1, 0),
-    blurRadius: 13.0,
+    offset: Offset(0, 1),
+    blurRadius: kShadowBlur,
     color: Color.fromARGB(255, 0, 0, 0),
   )
 ]);
