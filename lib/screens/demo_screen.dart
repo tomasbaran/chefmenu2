@@ -142,9 +142,16 @@ class CtaButton extends StatelessWidget {
     return Align(
       alignment: Alignment.bottomCenter,
       child: Container(
+        margin: EdgeInsets.only(bottom: kBigBoxPadding),
         height: kCtaHeight,
         width: kCtaWidth,
-        color: Colors.red,
+        decoration: BoxDecoration(color: colorCtaBackground, borderRadius: BorderRadius.all(Radius.circular(100))),
+        child: Center(
+          child: Text(
+            'CREAR MENÚ',
+            style: ktsCta,
+          ),
+        ),
       ),
     );
   }
