@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'dart:math';
+import 'package:chefmenu2/widgets/sliver_app_bar_layer.dart';
 
 import 'package:flutter/rendering.dart';
 
@@ -14,7 +15,7 @@ class PercentageScreen extends StatelessWidget {
             pinned: true,
             delegate: MyDynamicHeader(),
           ),
-          SliverTomas(
+          SliverAppBarLayer(
             child: Placeholder(
               fallbackHeight: 600,
               fallbackWidth: 300,
@@ -72,56 +73,4 @@ class MyDynamicHeader extends SliverPersistentHeaderDelegate {
 
   @override
   double get minExtent => 80.0;
-}
-
-class SliverTomas extends SingleChildRenderObjectWidget {
-  SliverTomas({Widget child, Key key}) : super(child: child, key: key);
-  @override
-  RenderObject createRenderObject(BuildContext context) {
-    // TODO: implement createRenderObject
-    return RenderSliverTomas();
-  }
-}
-
-class RenderSliverTomas extends RenderSliverToBoxAdapter {
-  RenderSliverTomas({
-    RenderBox child,
-  }) : super(child: child);
-
-  @override
-  void performResize() {}
-
-  @override
-  void performLayout() {
-    if (child == null) {
-      geometry = SliverGeometry.zero;
-      return;
-    }
-    final SliverConstraints constraints = this.constraints;
-    child.layout(constraints.asBoxConstraints(/* crossAxisExtent: double.infinity */), parentUsesSize: true);
-    double childExtent;
-    switch (constraints.axis) {
-      case Axis.horizontal:
-        childExtent = child.size.width;
-        break;
-      case Axis.vertical:
-        childExtent = child.size.height;
-        break;
-    }
-    assert(childExtent != null);
-    final double paintedChildSize = calculatePaintOffset(constraints, from: 0.0, to: childExtent);
-    final double cacheExtent = calculateCacheOffset(constraints, from: 0.0, to: childExtent);
-
-    assert(paintedChildSize.isFinite);
-    assert(paintedChildSize >= 0.0);
-    geometry = SliverGeometry(
-      scrollExtent: childExtent + 100,
-      paintExtent: 100,
-      paintOrigin: constraints.scrollOffset,
-      cacheExtent: cacheExtent,
-      maxPaintExtent: childExtent,
-      hitTestExtent: paintedChildSize,
-    );
-    setChildParentData(child, constraints, geometry);
-  }
 }

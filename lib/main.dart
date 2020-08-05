@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
 import 'screens/demo_screen.dart';
-import 'screens/grid_screen.dart';
-import 'screens/flexible_screen.dart';
-import 'screens/fancy_screen.dart';
 
 void main() {
   runApp(MyApp());
