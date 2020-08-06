@@ -13,7 +13,6 @@ class RenderSliverAppBarLayer extends RenderSliverToBoxAdapter {
   RenderSliverAppBarLayer({
     RenderBox child,
   }) : super(child: child);
-
   @override
   void performResize() {}
 
@@ -39,7 +38,7 @@ class RenderSliverAppBarLayer extends RenderSliverToBoxAdapter {
     final double paintedChildSize = calculatePaintOffset(constraints, from: 0.0, to: childExtent);
     final double cacheExtent = calculateCacheOffset(constraints, from: 0.0, to: childExtent);
 
-    print('constraints: ${constraints.scrollOffset}');
+    //print('constraints: ${constraints.scrollOffset}');
 
     assert(paintedChildSize.isFinite);
     assert(paintedChildSize >= 0.0);
