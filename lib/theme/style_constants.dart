@@ -16,14 +16,21 @@ const Color colorRed = Color(0xFFEB5757);
 const double kTabIconHeight = 28;
 
 // Cover
-const double kShadowBlur = 15;
+const double kStartPointCoefficient = 30;
+const double kBlurSpeed = 0.1;
+const double kRestaurantTitleMaxShadowBlur = 30;
 const double kCoverHeightProportion = 0.35;
-const TextStyle ktsRestaurantTitle = TextStyle(height: 2.5, color: Colors.white, fontSize: 32, fontWeight: FontWeight.w600, shadows: <Shadow>[
+const TextStyle ktsRestaurantTitle = TextStyle(height: 3.5, color: Colors.white, fontSize: 32, fontWeight: FontWeight.w600, shadows: <Shadow>[
   Shadow(
     offset: Offset(0, 1),
-    blurRadius: kShadowBlur,
+    blurRadius: kRestaurantTitleMaxShadowBlur / 2,
     color: Color.fromARGB(255, 0, 0, 0),
-  )
+  ),
+  Shadow(
+    offset: Offset(0, 1),
+    blurRadius: kRestaurantTitleMaxShadowBlur,
+    color: Color.fromARGB(255, 0, 0, 0),
+  ),
 ]);
 
 // BigBoxContainer

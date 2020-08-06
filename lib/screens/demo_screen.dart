@@ -20,8 +20,6 @@ class DemoScreen extends StatelessWidget {
 
   final ScrollPosition scrollPosition = ScrollPosition();
 
-  //double topPadding() => kCoverHeightProportion * MediaQuery.of(context).size.height - 50 - kShadowBlur;
-
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -48,8 +46,7 @@ class DemoScreen extends StatelessWidget {
             },
             child: Stack(
               children: [
-                CoverContainer(
-                    topPadding: kCoverHeightProportion * MediaQuery.of(context).size.height - 50 - kShadowBlur, imageSrc: 'icons/cover.jpeg'),
+                CoverContainer(imageSrc: 'icons/cover.jpeg'),
                 CtaButton(),
                 BigBoxContainer(),
               ],
@@ -161,43 +158,61 @@ class CtaButton extends StatelessWidget {
 }
 
 class CoverContainer extends StatelessWidget {
-  final double topPadding;
   final String imageSrc;
 
-  double calcContraints(dynamic context) => MediaQuery.of(context).size.height * kCoverHeightProportion - kBigBoxPadding;
+  double startPointForBackLayerAnimation(BuildContext context) =>
+      MediaQuery.of(context).size.height * kCoverHeightProportion - kBigBoxPadding - kStartPointCoefficient;
 
-  CoverContainer({this.imageSrc, this.topPadding});
+  double calcHeight(BuildContext context) => Provider.of<ScrollPosition>(context).data < startPointForBackLayerAnimation(context)
+      ? MediaQuery.of(context).size.height * kCoverHeightProportion
+      : Provider.of<ScrollPosition>(context).data < MediaQuery.of(context).size.height
+          ? MediaQuery.of(context).size.height * kCoverHeightProportion +
+              Provider.of<ScrollPosition>(context).data -
+              startPointForBackLayerAnimation(context)
+          : MediaQuery.of(context).size.height;
+
+  double calcBlur(BuildContext context) => Provider.of<ScrollPosition>(context).data < startPointForBackLayerAnimation(context)
+      ? 0
+      : Provider.of<ScrollPosition>(context).data < MediaQuery.of(context).size.height
+          ? (Provider.of<ScrollPosition>(context).data - startPointForBackLayerAnimation(context)) * kBlurSpeed
+          : (MediaQuery.of(context).size.height - startPointForBackLayerAnimation(context)) * kBlurSpeed;
+
+  double topPadding(BuildContext context) => kCoverHeightProportion * MediaQuery.of(context).size.height - 50 - kRestaurantTitleMaxShadowBlur;
+
+  CoverContainer({this.imageSrc});
 
   @override
   Widget build(BuildContext context) {
     return Stack(children: [
-      BackdropFilter(
-        filter: ImageFilter.blur(sigmaX: 20, sigmaY: 20),
-        child: Container(
-          width: double.infinity,
-          color: colorBackground.withOpacity(0),
-          child: Image.asset(
-            imageSrc,
-            fit: BoxFit.cover,
-            height: Provider.of<ScrollPosition>(context).data < calcContraints(context)
-                ? MediaQuery.of(context).size.height * kCoverHeightProportion
-                : MediaQuery.of(context).size.height * kCoverHeightProportion + Provider.of<ScrollPosition>(context).data - 244,
-            isAntiAlias: true,
+      Container(
+        width: double.infinity,
+        height: calcHeight(context),
+        decoration: BoxDecoration(
+          color: Colors.white,
+          // color: colorBackground.withOpacity(0),
+          // image: DecorationImage(
+          //   image: AssetImage(imageSrc),
+          //   fit: BoxFit.cover,
+          // ),
+        ),
+        child: BackdropFilter(
+          filter: ImageFilter.blur(sigmaX: calcBlur(context), sigmaY: calcBlur(context)),
+          child: Container(
+            color: Colors.black.withOpacity(0),
           ),
-          //color: Colors.green,
         ),
       ),
       Padding(
-        padding: EdgeInsets.only(top: topPadding, left: kBigBoxPadding),
+        padding: EdgeInsets.only(top: topPadding(context), left: kBigBoxPadding),
         child: Text(
-          '  ' + 'La casa de don Juan' + '  ',
+          '   ' + 'Casa de don Juan' + '   ',
           style: ktsRestaurantTitle,
         ),
       ),
-      Text(
-        Provider.of<ScrollPosition>(context).data.toString(),
-        style: TextStyle(color: Colors.white),
-      ),
+      // Text(
+      //   Provider.of<ScrollPosition>(context).data.toString(),
+      //   style: TextStyle(color: Colors.white),
+      // ),
     ]);
   }
 }
