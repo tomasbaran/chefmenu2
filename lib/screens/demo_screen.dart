@@ -188,12 +188,12 @@ class CoverContainer extends StatelessWidget {
         width: double.infinity,
         height: calcHeight(context),
         decoration: BoxDecoration(
-          color: Colors.white,
-          // color: colorBackground.withOpacity(0),
-          // image: DecorationImage(
-          //   image: AssetImage(imageSrc),
-          //   fit: BoxFit.cover,
-          // ),
+          // color: Colors.white,
+          color: colorBackground.withOpacity(0),
+          image: DecorationImage(
+            image: AssetImage(imageSrc),
+            fit: BoxFit.cover,
+          ),
         ),
         child: BackdropFilter(
           filter: ImageFilter.blur(sigmaX: calcBlur(context), sigmaY: calcBlur(context)),
