@@ -62,12 +62,6 @@ class DemoScreen extends StatelessWidget {
 class BigBoxContainer extends StatelessWidget {
   int computeNumberOfColumns(dynamic context) => ((MediaQuery.of(context).size.width - (2 * kBigBoxPadding)) / kMaxCrossAxisExtent).floor();
 
-  double computeAnchor(dynamic context) =>
-      kCoverHeightProportion *
-      kCoverHeightProportion *
-      MediaQuery.of(context).size.height /
-      (kCoverHeightProportion * (MediaQuery.of(context).size.height - kBigBoxPadding - kBottomBigBoxPadding));
-
   List<Container> _buildGridTileList(dynamic context, int count) => List.generate(
       count,
       (i) => Container(
@@ -160,49 +154,58 @@ class CtaButton extends StatelessWidget {
 
 class CoverContainer extends StatelessWidget {
   final String imageSrc;
+  CoverContainer({this.imageSrc});
+
+  // REFACTOR: down from here  ↓
 
 // scroll: ~160
-  double startPointForBackLayerAnimation(BuildContext context) =>
-      MediaQuery.of(context).size.height * kCoverHeightProportion - kBigBoxPadding - kStartPointCoefficient;
+  double bottomPointForBackLayerAnimation(BuildContext context) =>
+      MediaQuery.of(context).size.height * kCoverHeightProportion - kBigBoxPadding - kStartPoint(context);
 
 // scroll: ~240
   double topPointForBackLayerAnimation(BuildContext context) => MediaQuery.of(context).size.height * kCoverHeightProportion - kBigBoxPadding;
 
-  double calcHeight(BuildContext context) => Provider.of<ScrollPosition>(context).data < startPointForBackLayerAnimation(context)
+  double calcHeight(BuildContext context) => Provider.of<ScrollPosition>(context).data < bottomPointForBackLayerAnimation(context)
       ? MediaQuery.of(context).size.height * kCoverHeightProportion
       : Provider.of<ScrollPosition>(context).data < MediaQuery.of(context).size.height
           ? MediaQuery.of(context).size.height * kCoverHeightProportion +
               Provider.of<ScrollPosition>(context).data -
-              startPointForBackLayerAnimation(context) // this is the formula
+              bottomPointForBackLayerAnimation(context) // this is the formula
           : MediaQuery.of(context).size.height;
 
   double calcBlurFirstPhase(BuildContext context) => pow(
-      (Provider.of<ScrollPosition>(context).data - startPointForBackLayerAnimation(context) < 0
+      (Provider.of<ScrollPosition>(context).data - bottomPointForBackLayerAnimation(context) < 0
               ? 0
-              : Provider.of<ScrollPosition>(context).data - startPointForBackLayerAnimation(context)) *
-          0.025 /* kBlurSpeed */,
-      4 /* kExponent */);
+              : Provider.of<ScrollPosition>(context).data - bottomPointForBackLayerAnimation(context)) *
+          kBlurSpeed,
+      kExponent);
 
-  double calcBlurFinalPhase(BuildContext context) => pow(80 /* kStartPointCoefficient */ * 0.025 /* kBlurSpeed */, 4 /* kExponent */);
+// REFACTOR: up from here  ↑
+  double calcBlurFinalPhase(BuildContext context) => pow(kStartPoint(context) * kBlurSpeed, kExponent);
 
-  double calcBlur(BuildContext context) => Provider.of<ScrollPosition>(context).data < startPointForBackLayerAnimation(context)
-      ? 0
-      : Provider.of<ScrollPosition>(context).data < topPointForBackLayerAnimation(context)
-          ? calcBlurFirstPhase(context) //this is the formula
-          : calcBlurFinalPhase(context); //maxBlur
+  double handleLowerBlurBoundary(BuildContext context) =>
+      Provider.of<ScrollPosition>(context).data < bottomPointForBackLayerAnimation(context) ? 0 : calcAllBlurPhases(context);
 
-  double calcOpacity(BuildContext context) => Provider.of<ScrollPosition>(context).data < topPointForBackLayerAnimation(context)
-      ? 0.035 /* kCoverColorOpacityCoefficient */ * calcBlurFirstPhase(context) //this is the formula
-      : 0.035 /* kCoverColorOpacityCoefficient */ * calcBlurFinalPhase(context);
+  double calcAllBlurPhases(BuildContext context) => Provider.of<ScrollPosition>(context).data < topPointForBackLayerAnimation(context)
+      ? calcBlurFirstPhase(context)
+      : calcBlurFinalPhase(context); //maxBlur
 
-  Color increaseColorLightness(Color color) => HSVColor.fromColor(color).withValue(1).toColor();
+  double calcAllOpacityPhases(BuildContext context) => Provider.of<ScrollPosition>(context).data < topPointForBackLayerAnimation(context)
+      ? kCoverColorOpacityCoefficient * calcBlurFirstPhase(context) //this is the formula
+      : kCoverColorOpacityCoefficient * calcBlurFinalPhase(context);
+
+  double handleOpacityBoundaries(BuildContext context) =>
+      calcAllOpacityPhases(context) < 0 ? 0 : calcAllOpacityPhases(context) > 1 ? 1 : calcAllOpacityPhases(context);
+
+  // UNUSED#1: Maybe better keep it simlpe than overdo it, that's why I commented it
+  // double calcLastOpacityPhase(BuildContext context) =>
+  //     (Provider.of<ScrollPosition>(context).data - MediaQuery.of(context).size.height) * 0.001 + kCoverOpacitySecondStop;
 
   double topPadding(BuildContext context) => kCoverHeightProportion * MediaQuery.of(context).size.height - 30 - kRestaurantTitleMaxShadowBlur;
 
-  double calcLastOpacityPhase(BuildContext context) =>
-      (Provider.of<ScrollPosition>(context).data - MediaQuery.of(context).size.height) * 0.001 + 0.8 /* kCoverOpacitySecondStop */;
+  // ----------------------------- Helper methods -----------------------------------
 
-  CoverContainer({this.imageSrc});
+  Color increaseColorLightness(Color color) => HSVColor.fromColor(color).withValue(0.75).toColor();
 
   @override
   Widget build(BuildContext context) {
@@ -212,48 +215,41 @@ class CoverContainer extends StatelessWidget {
         height: calcHeight(context),
         decoration: BoxDecoration(
           // color: Colors.white,
-
           image: DecorationImage(
             image: AssetImage(imageSrc),
             fit: BoxFit.cover,
           ),
         ),
         child: BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: calcBlur(context), sigmaY: calcBlur(context)),
+          filter: ImageFilter.blur(sigmaX: calcAllBlurPhases(context), sigmaY: calcAllBlurPhases(context)),
           child: Container(
             decoration: BoxDecoration(
                 gradient: LinearGradient(
                     colors: [
-                      colorPrimary1.withOpacity(calcOpacity(context) < 0 ? 0 : calcOpacity(context) > 1 ? 1 : calcOpacity(context)),
-                      colorPrimary1.withOpacity(calcOpacity(context) < 0 ? 0 : calcOpacity(context) > 1 ? 1 : calcOpacity(context)),
-                      Colors.red.withOpacity(0)
+                      increaseColorLightness(colorPrimary1).withOpacity(handleOpacityBoundaries(context)),
+                      increaseColorLightness(colorPrimary1).withOpacity(handleOpacityBoundaries(context)),
+                      increaseColorLightness(colorPrimary1).withOpacity(0)
                     ],
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,
                     stops: [
                       0,
-                      // Maybe better keep it simle than overdo it, that's why I commented it
+                      // UNUSED#1: Maybe better keep it simlpe than overdo it, that's why I commented it
                       // Provider.of<ScrollPosition>(context).data < (MediaQuery.of(context).size.height)
-                      //     ? 0.85 /* kCoverOpacitySecondStop */ : calcLastOpacityPhase(context) < 1 ? calcLastOpacityPhase(context) : 1,
-                      0.8,
+                      //     ? kCoverOpacitySecondStop : calcLastOpacityPhase(context) < 1 ? calcLastOpacityPhase(context) : 1,
+                      kCoverOpacitySecondStop,
                       1
                     ])),
-            // color:
-            //     increaseColorLightness(colorPrimary1).withOpacity(calcOpacity(context) < 0 ? 0 : calcOpacity(context) > 1 ? 1 : calcOpacity(context)),
           ),
         ),
       ),
       Padding(
         padding: EdgeInsets.only(top: topPadding(context), left: kBigBoxPadding),
         child: Text(
-          '   ' + 'Casa de don Juan' + '   ',
+          '   ' + 'Don Juan' + '   ',
           style: ktsRestaurantTitle,
         ),
       ),
-      // Text(
-      //   Provider.of<ScrollPosition>(context).data.toString(),
-      //   style: TextStyle(color: Colors.white),
-      // ),
     ]);
   }
 }
