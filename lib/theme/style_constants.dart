@@ -16,8 +16,11 @@ const Color colorRed = Color(0xFFEB5757);
 const double kTabIconHeight = 28;
 
 // Cover
-const double kStartPointCoefficient = 30;
-const double kBlurSpeed = 0.1;
+const double kStartPointCoefficient = 80;
+const double kCoverColorOpacityCoefficient = 0.04;
+const double kCoverOpacitySecondStop = 0.8;
+const double kExponent = 1.7;
+const double kBlurSpeed = 0.01;
 const double kRestaurantTitleMaxShadowBlur = 30;
 const double kCoverHeightProportion = 0.35;
 const TextStyle ktsRestaurantTitle = TextStyle(height: 2.3, color: Colors.white, fontSize: 32, fontWeight: FontWeight.w600, shadows: <Shadow>[
