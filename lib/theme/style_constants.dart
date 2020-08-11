@@ -16,7 +16,6 @@ const Color colorRed = Color(0xFFEB5757);
 const double kTabIconHeight = 28;
 
 // Cover
-
 const double kCoverColorOpacityCoefficient = 0.035;
 const double kCoverOpacitySecondStop = 0.8;
 const double kExponent = 4.5;
@@ -24,22 +23,11 @@ const double kBlurSpeed = 0.025;
 const double kRestaurantTitleMaxShadowBlur = 30;
 const double kCoverHeightProportion = 0.35;
 const TextStyle ktsRestaurantTitle = TextStyle(height: 2.3, color: Colors.white, fontSize: 32, fontWeight: FontWeight.w600, shadows: <Shadow>[
-  Shadow(
-    offset: Offset(0, 1),
-    blurRadius: kRestaurantTitleMaxShadowBlur / 2,
-    color: Color.fromARGB(255, 0, 0, 0),
-  ),
-  Shadow(
-    offset: Offset(0, 1),
-    blurRadius: kRestaurantTitleMaxShadowBlur,
-    color: Color.fromARGB(255, 0, 0, 0),
-  ),
+  Shadow(offset: Offset(0, 1), blurRadius: kRestaurantTitleMaxShadowBlur / 2, color: Color.fromARGB(255, 0, 0, 0)),
+  Shadow(offset: Offset(0, 1), blurRadius: kRestaurantTitleMaxShadowBlur, color: Color.fromARGB(255, 0, 0, 0)),
 ]);
 
 // BigBoxContainer
-double computeAnchor(dynamic context) =>
-    (kCoverHeightProportion * MediaQuery.of(context).size.height) / (MediaQuery.of(context).size.height - (kBottomBigBoxPadding + kBigBoxPadding));
-
 const double kBigBoxPadding = 8;
 const double kBottomBigBoxPadding = 68;
 const double kMaxCrossAxisExtent = 350;
