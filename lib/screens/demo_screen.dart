@@ -47,7 +47,7 @@ class DemoScreen extends StatelessWidget {
             },
             child: Stack(
               children: [
-                CoverContainer(imageSrc: 'icons/cover.jpeg'),
+                CoverContainer(restaurantTitle: 'Don Juan', imageSrc: 'icons/cover.jpeg'),
                 CtaButton(),
                 BigBoxContainer(),
               ],
@@ -154,80 +154,87 @@ class CtaButton extends StatelessWidget {
 
 class CoverContainer extends StatelessWidget {
   final String imageSrc;
-  CoverContainer({this.imageSrc});
+  final String restaurantTitle;
+  CoverContainer({this.imageSrc, this.restaurantTitle});
 
-  // REFACTOR: down from here  ↓
+// ------------------------------------------------
 
 // scroll: ~160
-  double bottomPointForBackLayerAnimation(BuildContext context) =>
-      MediaQuery.of(context).size.height * kCoverHeightProportion - kBigBoxPadding - kStartPoint(context);
+  double backLayerAnimationBottomPoint(BuildContext context) =>
+      MediaQuery.of(context).size.height * kCoverHeightProportion - kBigBoxPadding - bottomTopPointsdiff(context);
 
 // scroll: ~240
-  double topPointForBackLayerAnimation(BuildContext context) => MediaQuery.of(context).size.height * kCoverHeightProportion - kBigBoxPadding;
+  double backLayerAnimationTopPoint(BuildContext context) => MediaQuery.of(context).size.height * kCoverHeightProportion - kBigBoxPadding;
 
-  double calcHeight(BuildContext context) => Provider.of<ScrollPosition>(context).data < bottomPointForBackLayerAnimation(context)
-      ? MediaQuery.of(context).size.height * kCoverHeightProportion
+  // delta btw Top and Bottom points
+  double bottomTopPointsdiff(BuildContext context) => computeAnchor(context) / 3.5 * MediaQuery.of(context).size.height;
+
+  // default cover height before we start scrolling
+  double defaultCoverHeight(BuildContext context) => (MediaQuery.of(context).size.height) * kCoverHeightProportion + kBigBoxPadding;
+
+  // once we reach the bottom point, the cover starts growing according to this formula
+  double growingCoverHeight(BuildContext context) =>
+      defaultCoverHeight(context) + Provider.of<ScrollPosition>(context).data - backLayerAnimationBottomPoint(context);
+
+  double coverHeight(BuildContext context) => Provider.of<ScrollPosition>(context).data < backLayerAnimationBottomPoint(context)
+      ? defaultCoverHeight(context)
       : Provider.of<ScrollPosition>(context).data < MediaQuery.of(context).size.height
-          ? MediaQuery.of(context).size.height * kCoverHeightProportion +
-              Provider.of<ScrollPosition>(context).data -
-              bottomPointForBackLayerAnimation(context) // this is the formula
+          ? growingCoverHeight(context) // this is the formula
           : MediaQuery.of(context).size.height;
 
-  double calcBlurFirstPhase(BuildContext context) => pow(
-      (Provider.of<ScrollPosition>(context).data - bottomPointForBackLayerAnimation(context) < 0
-              ? 0
-              : Provider.of<ScrollPosition>(context).data - bottomPointForBackLayerAnimation(context)) *
-          kBlurSpeed,
-      kExponent);
+  double completeBlur(BuildContext context) => Provider.of<ScrollPosition>(context).data < backLayerAnimationTopPoint(context)
+      ? blur(context, firstPhaseBlur(context))
+      : blur(context, finalPhaseMaxBlur(context));
 
-// REFACTOR: up from here  ↑
-  double calcBlurFinalPhase(BuildContext context) => pow(kStartPoint(context) * kBlurSpeed, kExponent);
+  double blur(BuildContext context, double getFunction) =>
+      // handles exception: blur boundary < 0
+      Provider.of<ScrollPosition>(context).data < backLayerAnimationBottomPoint(context) ? 0 : getFunction;
 
-  double handleLowerBlurBoundary(BuildContext context) =>
-      Provider.of<ScrollPosition>(context).data < bottomPointForBackLayerAnimation(context) ? 0 : calcAllBlurPhases(context);
+  double firstPhaseBlur(BuildContext context) =>
+      pow((Provider.of<ScrollPosition>(context).data - backLayerAnimationBottomPoint(context)) * kBlurSpeed, kExponent);
 
-  double calcAllBlurPhases(BuildContext context) => Provider.of<ScrollPosition>(context).data < topPointForBackLayerAnimation(context)
-      ? calcBlurFirstPhase(context)
-      : calcBlurFinalPhase(context); //maxBlur
+  double finalPhaseMaxBlur(BuildContext context) => pow(bottomTopPointsdiff(context) * kBlurSpeed, kExponent);
 
-  double calcAllOpacityPhases(BuildContext context) => Provider.of<ScrollPosition>(context).data < topPointForBackLayerAnimation(context)
-      ? kCoverColorOpacityCoefficient * calcBlurFirstPhase(context) //this is the formula
-      : kCoverColorOpacityCoefficient * calcBlurFinalPhase(context);
+  double opacity(BuildContext context) =>
+      // handles exceptions: opacity boundary < 0 && opacity bouandary > 1
+      completeOpacity(context) < 0 ? 0 : completeOpacity(context) > 1 ? 1 : completeOpacity(context);
 
-  double handleOpacityBoundaries(BuildContext context) =>
-      calcAllOpacityPhases(context) < 0 ? 0 : calcAllOpacityPhases(context) > 1 ? 1 : calcAllOpacityPhases(context);
+  double completeOpacity(BuildContext context) => Provider.of<ScrollPosition>(context).data < backLayerAnimationTopPoint(context)
+      ? kCoverColorOpacityCoefficient * blur(context, firstPhaseBlur(context))
+      : kCoverColorOpacityCoefficient * blur(context, finalPhaseMaxBlur(context));
 
   // UNUSED#1: Maybe better keep it simlpe than overdo it, that's why I commented it
   // double calcLastOpacityPhase(BuildContext context) =>
   //     (Provider.of<ScrollPosition>(context).data - MediaQuery.of(context).size.height) * 0.001 + kCoverOpacitySecondStop;
 
-  double topPadding(BuildContext context) => kCoverHeightProportion * MediaQuery.of(context).size.height - 30 - kRestaurantTitleMaxShadowBlur;
+  double restaurantTitleTopPadding(BuildContext context) =>
+      kCoverHeightProportion * MediaQuery.of(context).size.height - kRestaurantTitleMaxShadowBlur * 2;
 
   // ----------------------------- Helper methods -----------------------------------
 
-  Color increaseColorLightness(Color color) => HSVColor.fromColor(color).withValue(0.75).toColor();
+  Color increaseColorLightness(Color color) => HSVColor.fromColor(color).withValue(0.9).toColor();
 
   @override
   Widget build(BuildContext context) {
     return Stack(children: [
       Container(
         width: double.infinity,
-        height: calcHeight(context),
+        height: coverHeight(context),
         decoration: BoxDecoration(
-          // color: Colors.white,
+          //color: Colors.white,
           image: DecorationImage(
             image: AssetImage(imageSrc),
             fit: BoxFit.cover,
           ),
         ),
         child: BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: calcAllBlurPhases(context), sigmaY: calcAllBlurPhases(context)),
+          filter: ImageFilter.blur(sigmaX: completeBlur(context), sigmaY: completeBlur(context)),
           child: Container(
             decoration: BoxDecoration(
                 gradient: LinearGradient(
                     colors: [
-                      increaseColorLightness(colorPrimary1).withOpacity(handleOpacityBoundaries(context)),
-                      increaseColorLightness(colorPrimary1).withOpacity(handleOpacityBoundaries(context)),
+                      increaseColorLightness(colorPrimary1).withOpacity(opacity(context)),
+                      increaseColorLightness(colorPrimary1).withOpacity(opacity(context)),
                       increaseColorLightness(colorPrimary1).withOpacity(0)
                     ],
                     begin: Alignment.topCenter,
@@ -244,9 +251,9 @@ class CoverContainer extends StatelessWidget {
         ),
       ),
       Padding(
-        padding: EdgeInsets.only(top: topPadding(context), left: kBigBoxPadding),
+        padding: EdgeInsets.only(top: restaurantTitleTopPadding(context), left: kBigBoxPadding),
         child: Text(
-          '   ' + 'Don Juan' + '   ',
+          '    ' + restaurantTitle + '    ',
           style: ktsRestaurantTitle,
         ),
       ),
