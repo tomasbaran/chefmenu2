@@ -7,7 +7,7 @@ import 'dart:math';
 // ----------------------------- ↓ Helper cover (back layer) calculation functions ↓ -----------------------------------
 
 // anchor(context) is used in (big_box_container.dart) && below in (bottomTopPointsdiff(BuildContext context))
-double anchor(dynamic context) =>
+double topBigBoxPadding(dynamic context) =>
     (kCoverHeightProportion * MediaQuery.of(context).size.height) /
     (MediaQuery.of(context).size.height - (/* kBottomBigBoxPadding  */ kBigBoxPadding + kBigBoxPadding));
 
@@ -19,7 +19,7 @@ double backLayerAnimationBottomPoint(BuildContext context) =>
 double backLayerAnimationTopPoint(BuildContext context) => MediaQuery.of(context).size.height * kCoverHeightProportion - kBigBoxPadding;
 
 // delta btw Top and Bottom points
-double bottomTopPointsdiff(BuildContext context) => anchor(context) / 3.5 * MediaQuery.of(context).size.height;
+double bottomTopPointsdiff(BuildContext context) => topBigBoxPadding(context) / 3.5 * MediaQuery.of(context).size.height;
 
 // default cover height before we start scrolling
 double defaultCoverHeight(BuildContext context) => (MediaQuery.of(context).size.height) * kCoverHeightProportion + kBigBoxPadding;

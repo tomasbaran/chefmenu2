@@ -54,18 +54,23 @@ class BigBoxContainer extends StatelessWidget {
       child: ClipRRect(
         borderRadius: BorderRadius.all(Radius.circular(30)),
         child: CustomScrollView(
-          anchor: anchor(context),
+          anchor: topBigBoxPadding(context),
           slivers: [
-            SliverAppBarLayer(
-              child: Container(
-                width: double.infinity,
-                height: kSliverAppBarLayerHeight,
-                decoration: BoxDecoration(
-                    color: colorBackground, borderRadius: BorderRadius.only(topLeft: Radius.circular(30), topRight: Radius.circular(30))),
-                child: Center(
-                  child: Text(
-                    'Entrantes',
-                    style: ktsCategoryTitle,
+            SliverPadding(
+              padding: EdgeInsets.only(top: topBigBoxPadding(context)),
+              sliver: SliverPersistentHeader(
+                delegate: _SliverPersistentHeaderDelegate(
+                  Container(
+                    width: double.infinity,
+                    height: kSliverAppBarLayerHeight,
+                    decoration: BoxDecoration(
+                        color: colorBackground, borderRadius: BorderRadius.only(topLeft: Radius.circular(30), topRight: Radius.circular(30))),
+                    child: Center(
+                      child: Text(
+                        'Entrantes',
+                        style: ktsCategoryTitle,
+                      ),
+                    ),
                   ),
                 ),
               ),
@@ -82,4 +87,24 @@ class BigBoxContainer extends StatelessWidget {
       ),
     );
   }
+}
+
+class _SliverPersistentHeaderDelegate extends SliverPersistentHeaderDelegate {
+  _SliverPersistentHeaderDelegate(this.child);
+
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
+    return child;
+  }
+
+  @override
+  double get maxExtent => 100;
+
+  @override
+  double get minExtent => 100;
+
+  @override
+  bool shouldRebuild(SliverPersistentHeaderDelegate oldDelegate) => false;
 }
