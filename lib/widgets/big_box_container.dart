@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:chefmenu2/theme/style_constants.dart';
-import 'sliver_app_bar_layer.dart';
-import 'package:chefmenu2/models/cover_aka_back_layer_formulas.dart';
-import 'package:chefmenu2/models/my_scroll_position.dart';
+import 'package:chefmenu2/animation/cover_aka_back_layer_formulas.dart';
+import 'package:chefmenu2/animation/my_scroll_position.dart';
 import 'package:provider/provider.dart';
 
 class BigBoxContainer extends StatelessWidget {

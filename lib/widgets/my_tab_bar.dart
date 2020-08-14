@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:chefmenu2/theme/style_constants.dart';
-import 'package:chefmenu2/widgets/custom_icon.dart';
 
 class MyTabBar extends StatelessWidget {
   @override

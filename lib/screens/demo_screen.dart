@@ -1,11 +1,11 @@
-import 'package:chefmenu2/models/cover_aka_back_layer_formulas.dart';
+import 'package:chefmenu2/animation/cover_aka_back_layer_formulas.dart';
 import 'package:chefmenu2/theme/style_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:chefmenu2/widgets/my_tab_bar.dart';
 import 'package:provider/provider.dart';
 import 'package:chefmenu2/widgets/big_box_container.dart';
 import 'package:chefmenu2/widgets/cta_button.dart';
-import 'package:chefmenu2/models/my_scroll_position.dart';
+import 'package:chefmenu2/animation/my_scroll_position.dart';
 import 'package:chefmenu2/widgets/cover_container.dart';
 
 class DemoScreen extends StatelessWidget {
