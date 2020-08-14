@@ -1,3 +1,4 @@
+import 'package:chefmenu2/models/cover_aka_back_layer_formulas.dart';
 import 'package:chefmenu2/theme/style_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:chefmenu2/widgets/my_tab_bar.dart';
@@ -18,8 +19,9 @@ class DemoScreen extends StatelessWidget {
       length: 25,
       child: ChangeNotifierProvider<MyScrollPosition>(
         create: (context) => myScrollPosition,
-        child: Scaffold(
+        builder: (context, child) => Scaffold(
           backgroundColor: colorBackground,
+          floatingActionButton: Provider.of<MyScrollPosition>(context).data > MediaQuery.of(context).size.height ? MyTabBar() : Container(),
           //floatingActionButton: MyTabBar(),
           floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
           body: NotificationListener<ScrollNotification>(
@@ -39,8 +41,16 @@ class DemoScreen extends StatelessWidget {
             child: Stack(
               children: [
                 CoverContainer(restaurantTitle: 'Don Juan', imageSrc: 'icons/cover.jpeg'),
-                CtaButton(),
+                Provider.of<MyScrollPosition>(context).data > backLayerAnimationTopPoint(context)
+                    ? CtaButton()
+                    : Align(alignment: Alignment.bottomCenter, child: Container(/* color: Colors.pink ,*/ height: kCtaHeight)),
+                //CtaButton(),
                 BigBoxContainer(),
+                // Align(
+                //     alignment: Alignment.bottomCenter,
+                //     child: Provider.of<MyScrollPosition>(context).data < (backLayerAnimationTopPoint(context) + 69 /* delay for CTA showtime */)
+                //         ? Container(color: colorBackground, height: kBottomBigBoxPadding)
+                //         : Container()),
               ],
             ),
           ),

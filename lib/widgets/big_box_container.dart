@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:chefmenu2/theme/style_constants.dart';
 import 'sliver_app_bar_layer.dart';
 import 'package:chefmenu2/models/cover_aka_back_layer_formulas.dart';
+import 'package:chefmenu2/models/my_scroll_position.dart';
+import 'package:provider/provider.dart';
 
 class BigBoxContainer extends StatelessWidget {
   int computeNumberOfColumns(dynamic context) => ((MediaQuery.of(context).size.width - (2 * kBigBoxPadding)) / kMaxCrossAxisExtent).floor();
@@ -37,7 +39,14 @@ class BigBoxContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(left: kBigBoxPadding, right: kBigBoxPadding, top: kBigBoxPadding, bottom: kBottomBigBoxPadding),
+      margin: EdgeInsets.only(
+          left: kBigBoxPadding,
+          right: kBigBoxPadding,
+          top: kBigBoxPadding,
+          bottom: Provider.of<MyScrollPosition>(context).data > (backLayerAnimationTopPoint(context) + 69 /* delay for CTA showtime */)
+              ? kBottomBigBoxPadding
+              : kBigBoxPadding),
+      //bottom: kBottomBigBoxPadding),
       decoration: BoxDecoration(
         //color: Colors.pink,
         borderRadius: BorderRadius.all(Radius.circular(30)),

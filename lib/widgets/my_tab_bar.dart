@@ -6,7 +6,7 @@ class MyTabBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(horizontal: 4),
+      margin: EdgeInsets.only(left: kBigBoxPadding, right: kBigBoxPadding, bottom: kBottomBigBoxPadding - 2 * kBigBoxPadding),
       padding: EdgeInsets.all(6),
       width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(
@@ -19,7 +19,7 @@ class MyTabBar extends StatelessWidget {
           isScrollable: true,
           labelColor: Colors.black,
           unselectedLabelColor: colorShade2,
-          indicatorColor: Colors.white,
+          indicatorColor: Colors.white12,
           indicator: BoxDecoration(shape: BoxShape.rectangle, borderRadius: BorderRadius.all(Radius.circular(30)), color: Colors.white),
           tabs: [
             Tab(icon: CustomIcon('icons/001-sausage-2.svg')),

@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:chefmenu2/theme/style_constants.dart';
 import 'dart:ui';
 import 'package:chefmenu2/models/cover_aka_back_layer_formulas.dart';
+import 'package:provider/provider.dart';
+import 'package:chefmenu2/models/my_scroll_position.dart';
 
 class CoverContainer extends StatelessWidget {
   final String imageSrc;

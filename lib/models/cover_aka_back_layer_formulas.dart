@@ -8,7 +8,8 @@ import 'dart:math';
 
 // anchor(context) is used in (big_box_container.dart) && below in (bottomTopPointsdiff(BuildContext context))
 double anchor(dynamic context) =>
-    (kCoverHeightProportion * MediaQuery.of(context).size.height) / (MediaQuery.of(context).size.height - (kBottomBigBoxPadding + kBigBoxPadding));
+    (kCoverHeightProportion * MediaQuery.of(context).size.height) /
+    (MediaQuery.of(context).size.height - (/* kBottomBigBoxPadding  */ kBigBoxPadding + kBigBoxPadding));
 
 // scroll: ~160
 double backLayerAnimationBottomPoint(BuildContext context) =>

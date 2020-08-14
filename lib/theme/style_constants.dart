@@ -18,7 +18,7 @@ const double kTabIconHeight = 28;
 // Cover
 const double kCoverColorOpacityCoefficient = 0.035;
 const double kCoverOpacitySecondStop = 0.8;
-const double kExponent = 4.5;
+const double kExponent = 4.75;
 const double kBlurSpeed = 0.025;
 const double kRestaurantTitleMaxShadowBlur = 30;
 const double kCoverHeightProportion = 0.35;
