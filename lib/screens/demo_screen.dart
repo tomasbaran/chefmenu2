@@ -8,15 +8,33 @@ import 'package:chefmenu2/widgets/cta_button.dart';
 import 'package:chefmenu2/animation/my_scroll_position.dart';
 import 'package:chefmenu2/widgets/cover_container.dart';
 
-class DemoScreen extends StatelessWidget {
+class DemoScreen extends StatefulWidget {
   static String id = '/demo';
 
+  @override
+  _DemoScreenState createState() => _DemoScreenState();
+}
+
+class _DemoScreenState extends State<DemoScreen> with SingleTickerProviderStateMixin {
   final MyScrollPosition myScrollPosition = MyScrollPosition();
+  TabController _tabController;
+
+  @override
+  void initState() {
+    super.initState();
+    _tabController = TabController(length: kTabBarLength, vsync: this);
+  }
+
+  @override
+  void dispose() {
+    _tabController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 25,
+      length: kTabBarLength,
       child: ChangeNotifierProvider<MyScrollPosition>(
         create: (context) => myScrollPosition,
         builder: (context, child) => Scaffold(
@@ -26,16 +44,7 @@ class DemoScreen extends StatelessWidget {
           floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
           body: NotificationListener<ScrollNotification>(
             onNotification: (notification) {
-              //print('A: ${notification.metrics.viewportDimension}');//645
-              //print('E1: ${notification.metrics.extentBefore}'); //Before Pixel
-              //print('E2: ${notification.metrics.extentInside}');//645
-              //print('E3: ${notification.metrics.extentAfter}'); //Still left to the end of Pixel
-              // print('START: ${calcContraints(context)}');
-              //print('P: ${notification.metrics.pixels}');
-              //setState(() {
               myScrollPosition.updateData(notification.metrics.pixels);
-              //});
-
               return true;
             },
             child: Stack(

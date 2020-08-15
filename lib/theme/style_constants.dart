@@ -13,7 +13,10 @@ const Color colorPrimary1 = Color(0xFFCC9757);
 const Color colorRed = Color(0xFFEB5757);
 
 // TabBar
+const int kTabBarLength = 2;
 const double kTabIconHeight = 28;
+const Color colorTabInactive = Colors.grey;
+const Color colorTabActive = Colors.black;
 
 // Cover
 const double kCoverColorOpacityCoefficient = 0.035;
@@ -32,7 +35,7 @@ const double kBigBoxPadding = 8;
 const double kBottomBigBoxPadding = 68;
 const double kMaxCrossAxisExtent = 350;
 
-// SliverAppBarLayer
+// SliverAppBarLayer aka SliverPersistentHeader
 const double kSliverAppBarLayerHeight = 100;
 const TextStyle ktsCategoryTitle = TextStyle(color: colorPrimary1, fontSize: 32, fontWeight: FontWeight.w800);
 

@@ -3,6 +3,7 @@ import 'package:chefmenu2/theme/style_constants.dart';
 import 'package:chefmenu2/animation/cover_aka_back_layer_formulas.dart';
 import 'package:chefmenu2/animation/my_scroll_position.dart';
 import 'package:provider/provider.dart';
+import 'package:chefmenu2/widgets/my_tab_bar.dart';
 
 class BigBoxContainer extends StatelessWidget {
   int computeNumberOfColumns(dynamic context) => ((MediaQuery.of(context).size.width - (2 * kBigBoxPadding)) / kMaxCrossAxisExtent).floor();
@@ -58,6 +59,7 @@ class BigBoxContainer extends StatelessWidget {
             SliverPadding(
               padding: EdgeInsets.only(top: topBigBoxPadding(context)),
               sliver: SliverPersistentHeader(
+                pinned: true,
                 delegate: _SliverPersistentHeaderDelegate(
                   Container(
                     width: double.infinity,
@@ -74,13 +76,42 @@ class BigBoxContainer extends StatelessWidget {
                 ),
               ),
             ),
-            SliverGrid.extent(
-              maxCrossAxisExtent: kMaxCrossAxisExtent,
-              childAspectRatio: 1,
-              mainAxisSpacing: 0,
-              crossAxisSpacing: 0,
-              children: _buildGridTileList(context, 250),
-            ),
+            SliverFillRemaining(
+              child: TabBarView(
+                controller: _tabController,
+                children: [
+                  ListView(
+                    children: [
+                      Container(height: 300, color: Colors.green),
+                      Container(height: 300, color: Colors.red),
+                      Container(height: 300, color: Colors.green),
+                      Container(height: 300, color: Colors.red),
+                      Container(height: 300, color: Colors.green),
+                      Container(height: 300, color: Colors.red),
+                      Container(height: 300, color: Colors.green),
+                    ],
+                  ),
+                  ListView(
+                    children: [
+                      Container(height: 300, color: Colors.blue),
+                      Container(height: 300, color: Colors.red),
+                      Container(height: 300, color: Colors.blue),
+                      Container(height: 300, color: Colors.red),
+                      Container(height: 300, color: Colors.blue),
+                      Container(height: 300, color: Colors.red),
+                      Container(height: 300, color: Colors.blue),
+                    ],
+                  ),
+                ],
+              ),
+            )
+            // SliverGrid.extent(
+            //   maxCrossAxisExtent: kMaxCrossAxisExtent,
+            //   childAspectRatio: 1,
+            //   mainAxisSpacing: 0,
+            //   crossAxisSpacing: 0,
+            //   children: _buildGridTileList(context, 250),
+            // ),
           ],
         ),
       ),
