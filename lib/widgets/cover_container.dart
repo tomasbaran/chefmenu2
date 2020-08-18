@@ -27,9 +27,10 @@ class CoverContainer extends StatelessWidget {
             decoration: BoxDecoration(
                 gradient: LinearGradient(
                     colors: [
-                      increaseColorLightness(colorPrimary1).withOpacity(opacity(context)),
-                      increaseColorLightness(colorPrimary1).withOpacity(opacity(context)),
-                      increaseColorLightness(colorPrimary1).withOpacity(0)
+                      //DEV-MODE: commented because of flickering issue
+                      // increaseColorLightness(colorPrimary1).withOpacity(opacity(context)),
+                      // increaseColorLightness(colorPrimary1).withOpacity(opacity(context)),
+                      // increaseColorLightness(colorPrimary1).withOpacity(0)
                     ],
                     begin: Alignment.topCenter,
                     end: Alignment.bottomCenter,

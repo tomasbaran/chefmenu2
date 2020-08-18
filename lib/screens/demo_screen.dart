@@ -1,5 +1,5 @@
 import 'package:chefmenu2/animation/cover_aka_back_layer_formulas.dart';
-import 'package:chefmenu2/screens/new_demo_screen.dart';
+import 'package:chefmenu2/widgets/new_big_box_container.dart';
 import 'package:chefmenu2/theme/style_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:chefmenu2/widgets/my_tab_bar.dart';
@@ -17,7 +17,7 @@ class DemoScreen extends StatefulWidget {
 }
 
 class _DemoScreenState extends State<DemoScreen> with SingleTickerProviderStateMixin {
-  final MyScrollPosition myScrollPosition = MyScrollPosition();
+  final MyScrollPosition bigBoxScrollPosition = MyScrollPosition();
   TabController _tabController;
 
   @override
@@ -37,7 +37,7 @@ class _DemoScreenState extends State<DemoScreen> with SingleTickerProviderStateM
     return DefaultTabController(
       length: kTabBarLength,
       child: ChangeNotifierProvider<MyScrollPosition>(
-        create: (context) => myScrollPosition,
+        create: (context) => bigBoxScrollPosition,
         builder: (context, child) => Scaffold(
           backgroundColor: colorBackground,
           floatingActionButton:
@@ -46,7 +46,14 @@ class _DemoScreenState extends State<DemoScreen> with SingleTickerProviderStateM
           floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
           body: NotificationListener<ScrollNotification>(
             onNotification: (notification) {
-              myScrollPosition.updateData(notification.metrics.pixels);
+              //double konstanta = 475;
+              double konstanta = kCoverHeightProportion * MediaQuery.of(context).size.height + kSliverAppBarLayerHeight;
+              print('konstanta: $konstanta');
+              if ((notification.metrics.axis == Axis.vertical) && (notification.depth != 2) && (notification.metrics.pixels > 0)) {
+                bigBoxScrollPosition.updateData(notification.metrics.pixels);
+              } else if ((notification.metrics.axis == Axis.vertical) && (notification.depth == 2) && (notification.metrics.pixels > 0)) {
+                bigBoxScrollPosition.updateData(notification.metrics.pixels + konstanta);
+              }
               return true;
             },
             child: Stack(
@@ -57,7 +64,7 @@ class _DemoScreenState extends State<DemoScreen> with SingleTickerProviderStateM
                     : Align(alignment: Alignment.bottomCenter, child: Container(/* color: Colors.pink ,*/ height: kCtaHeight)),
                 //CtaButton(),
                 //BigBoxContainer(_tabController),
-                NewDemoScreen(),
+                NewBigBoxContainer(),
                 // Align(
                 //     alignment: Alignment.bottomCenter,
                 //     child: Provider.of<MyScrollPosition>(context).data < (backLayerAnimationTopPoint(context) + kCtaShowtimeDelay )
