@@ -1,4 +1,5 @@
 import 'package:chefmenu2/animation/cover_aka_back_layer_formulas.dart';
+import 'package:chefmenu2/screens/new_demo_screen.dart';
 import 'package:chefmenu2/theme/style_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:chefmenu2/widgets/my_tab_bar.dart';
@@ -39,7 +40,8 @@ class _DemoScreenState extends State<DemoScreen> with SingleTickerProviderStateM
         create: (context) => myScrollPosition,
         builder: (context, child) => Scaffold(
           backgroundColor: colorBackground,
-          floatingActionButton: Provider.of<MyScrollPosition>(context).data > MediaQuery.of(context).size.height ? MyTabBar() : Container(),
+          floatingActionButton:
+              Provider.of<MyScrollPosition>(context).data > MediaQuery.of(context).size.height ? MyTabBar(_tabController) : Container(),
           //floatingActionButton: MyTabBar(),
           floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
           body: NotificationListener<ScrollNotification>(
@@ -54,10 +56,11 @@ class _DemoScreenState extends State<DemoScreen> with SingleTickerProviderStateM
                     ? CtaButton()
                     : Align(alignment: Alignment.bottomCenter, child: Container(/* color: Colors.pink ,*/ height: kCtaHeight)),
                 //CtaButton(),
-                BigBoxContainer(),
+                //BigBoxContainer(_tabController),
+                NewDemoScreen(),
                 // Align(
                 //     alignment: Alignment.bottomCenter,
-                //     child: Provider.of<MyScrollPosition>(context).data < (backLayerAnimationTopPoint(context) + 69 /* delay for CTA showtime */)
+                //     child: Provider.of<MyScrollPosition>(context).data < (backLayerAnimationTopPoint(context) + kCtaShowtimeDelay )
                 //         ? Container(color: colorBackground, height: kBottomBigBoxPadding)
                 //         : Container()),
               ],

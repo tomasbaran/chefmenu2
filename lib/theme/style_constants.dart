@@ -40,6 +40,7 @@ const double kSliverAppBarLayerHeight = 100;
 const TextStyle ktsCategoryTitle = TextStyle(color: colorPrimary1, fontSize: 32, fontWeight: FontWeight.w800);
 
 // CTA
+const double kCtaShowtimeDelay = 69;
 const double kCtaHeight = 52;
 const double kCtaWidth = 358;
 const Color colorCtaBackground = Colors.white;

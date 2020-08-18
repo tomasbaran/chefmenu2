@@ -6,6 +6,9 @@ import 'package:provider/provider.dart';
 import 'package:chefmenu2/widgets/my_tab_bar.dart';
 
 class BigBoxContainer extends StatelessWidget {
+  final TabController _tabController;
+  BigBoxContainer(this._tabController);
+
   int computeNumberOfColumns(dynamic context) => ((MediaQuery.of(context).size.width - (2 * kBigBoxPadding)) / kMaxCrossAxisExtent).floor();
 
   List<Container> _buildGridTileList(dynamic context, int count) => List.generate(
@@ -43,7 +46,7 @@ class BigBoxContainer extends StatelessWidget {
           left: kBigBoxPadding,
           right: kBigBoxPadding,
           top: kBigBoxPadding,
-          bottom: Provider.of<MyScrollPosition>(context).data > (backLayerAnimationTopPoint(context) + 69 /* delay for CTA showtime */)
+          bottom: Provider.of<MyScrollPosition>(context).data > (backLayerAnimationTopPoint(context) + kCtaShowtimeDelay)
               ? kBottomBigBoxPadding
               : kBigBoxPadding),
       //bottom: kBottomBigBoxPadding),
