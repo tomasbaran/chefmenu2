@@ -18,80 +18,74 @@ class NewDemoScreen extends StatefulWidget {
 class _NewDemoScreenState extends State<NewDemoScreen> with SingleTickerProviderStateMixin {
   final MyScrollPosition myScrollPosition = MyScrollPosition();
   TabController _tabController;
-  ScrollController _scrollController;
+  //ScrollController _scrollController;
 
   @override
   void initState() {
     super.initState();
     _tabController = TabController(length: kTabBarLength, vsync: this);
-    _scrollController = ScrollController();
+    //TODO: remove _scrollController: no need for it
+    //_scrollController = ScrollController();
   }
 
   @override
   void dispose() {
     _tabController.dispose();
-    _scrollController.dispose();
+    // _scrollController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider<MyScrollPosition>(
+    return /* ChangeNotifierProvider<MyScrollPosition>(
       create: (context) => myScrollPosition,
-      builder: (context, child) => Scaffold(
-        backgroundColor: colorBackground,
-        floatingActionButton:
-            Provider.of<MyScrollPosition>(context).data > MediaQuery.of(context).size.height ? MyTabBar(_tabController) : Container(),
-        //floatingActionButton: MyTabBar(),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-        body: NotificationListener<ScrollNotification>(
-          onNotification: (notification) {
-            myScrollPosition.updateData(notification.metrics.pixels);
-            return true;
-          },
-          child: Padding(
-            padding: EdgeInsets.only(top: topBigBoxPadding(context)),
+      builder: (context, child) =>  */
+        Scaffold(
+      //backgroundColor: colorBackground,
+      floatingActionButton: Provider.of<MyScrollPosition>(context).data > MediaQuery.of(context).size.height ? MyTabBar(_tabController) : Container(),
+      //floatingActionButton: MyTabBar(),
+      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      body: NotificationListener<ScrollNotification>(
+        onNotification: (notification) {
+          myScrollPosition.updateData(notification.metrics.pixels);
+          return true;
+        },
+        child: Container(
+          margin: EdgeInsets.only(
+              left: kBigBoxPadding,
+              right: kBigBoxPadding,
+              top: kBigBoxPadding,
+              bottom: Provider.of<MyScrollPosition>(context).data > (backLayerAnimationTopPoint(context) + kCtaShowtimeDelay)
+                  ? kBottomBigBoxPadding
+                  : kBigBoxPadding),
+          //bottom: kBottomBigBoxPadding),
+          decoration: BoxDecoration(
+            //color: Colors.pink,
+            borderRadius: BorderRadius.all(Radius.circular(30)),
+          ),
+          child: ClipRRect(
+            borderRadius: BorderRadius.all(Radius.circular(30)),
             child: NestedScrollView(
-              controller: _scrollController,
+              //controller: _scrollController,
               headerSliverBuilder: (context, isScrolled) {
                 return [
                   SliverPadding(
-                    padding: EdgeInsets.only(top: 300),
-                    sliver: SliverAppBar(
-                      //stretchTriggerOffset: 200,
-                      //collapsedHeight: 100,
-                      expandedHeight: 300,
+                    padding: EdgeInsets.only(top: (kCoverHeightProportion * MediaQuery.of(context).size.height)),
+                    sliver: SliverPersistentHeader(
                       pinned: true,
-                      floating: true,
-                      forceElevated: isScrolled,
-                      bottom: TabBar(
-                        controller: _tabController,
-                        isScrollable: true,
-                        labelColor: Colors.black,
-                        unselectedLabelColor: colorShade2,
-                        indicatorColor: Colors.blue,
-                        indicator: BoxDecoration(shape: BoxShape.rectangle, borderRadius: BorderRadius.all(Radius.circular(30)), color: Colors.white),
-                        tabs: [
-                          Tab(
-                              icon: Image.asset(
-                            'icons/218-bacon-1.png',
-                            height: kTabIconHeight, /* color: widget._tabController.index == 0 ? colorTabActive : colorTabInactive */
-                          )),
-                          Tab(
-                              icon: Image.asset(
-                            'icons/164-crab.png',
-                            height: kTabIconHeight, /*  color: widget._tabController.index == 1 ? colorTabActive : colorTabInactive */
-                          )),
-                          // Tab(
-                          //     icon:
-                          //         Image.asset('icons/205-bread.png', height: kTabIconHeight, color: _tabController.index == 2 ? colorTabActive : colorTabInactive)),
-                          // Tab(
-                          //     icon:
-                          //         Image.asset('icons/201-taco.png', height: kTabIconHeight, color: _tabController.index == 3 ? colorTabActive : colorTabInactive)),
-                          // Tab(
-                          //     icon:
-                          //         Image.asset('icons/200-cake.png', height: kTabIconHeight, color: _tabController.index == 4 ? colorTabActive : colorTabInactive)),
-                        ],
+                      delegate: _SliverPersistentHeaderDelegate(
+                        Container(
+                          width: double.infinity,
+                          height: kSliverAppBarLayerHeight,
+                          decoration: BoxDecoration(
+                              color: colorBackground, borderRadius: BorderRadius.only(topLeft: Radius.circular(30), topRight: Radius.circular(30))),
+                          child: Center(
+                            child: Text(
+                              'Entrantes',
+                              style: ktsCategoryTitle,
+                            ),
+                          ),
+                        ),
                       ),
                     ),
                   ),
@@ -128,6 +122,28 @@ class _NewDemoScreenState extends State<NewDemoScreen> with SingleTickerProvider
           ),
         ),
       ),
-    );
+    ) /* ,
+    ) */
+        ;
   }
+}
+
+class _SliverPersistentHeaderDelegate extends SliverPersistentHeaderDelegate {
+  _SliverPersistentHeaderDelegate(this.child);
+
+  final Widget child;
+
+  @override
+  Widget build(BuildContext context, double shrinkOffset, bool overlapsContent) {
+    return child;
+  }
+
+  @override
+  double get maxExtent => 100;
+
+  @override
+  double get minExtent => 100;
+
+  @override
+  bool shouldRebuild(SliverPersistentHeaderDelegate oldDelegate) => false;
 }
