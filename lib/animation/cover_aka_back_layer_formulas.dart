@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:chefmenu2/theme/style_constants.dart';
-import 'my_scroll_position.dart';
+import '../change_notifiers/my_scroll_position.dart';
 import 'package:provider/provider.dart';
 import 'dart:math';
 

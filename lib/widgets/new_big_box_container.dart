@@ -1,39 +1,18 @@
 import 'package:chefmenu2/animation/cover_aka_back_layer_formulas.dart';
+import 'package:chefmenu2/change_notifiers/tab_index.dart';
 import 'package:chefmenu2/theme/style_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:chefmenu2/widgets/my_tab_bar.dart';
 import 'package:provider/provider.dart';
 import 'package:chefmenu2/widgets/big_box_container.dart';
 import 'package:chefmenu2/widgets/cta_button.dart';
-import 'package:chefmenu2/animation/my_scroll_position.dart';
+import 'package:chefmenu2/change_notifiers/my_scroll_position.dart';
 import 'package:chefmenu2/widgets/cover_container.dart';
 
-class NewBigBoxContainer extends StatefulWidget {
-  static String id = '/demo';
-
-  @override
-  _NewBigBoxContainerState createState() => _NewBigBoxContainerState();
-}
-
-class _NewBigBoxContainerState extends State<NewBigBoxContainer> with SingleTickerProviderStateMixin {
-  final MyScrollPosition myScrollPosition = MyScrollPosition();
-  TabController _tabController;
-  ScrollController _scrollController;
-
-  @override
-  void initState() {
-    super.initState();
-    _tabController = TabController(length: kTabBarLength, vsync: this);
-    //TODO: remove _scrollController: no need for it
-    _scrollController = ScrollController();
-  }
-
-  @override
-  void dispose() {
-    _tabController.dispose();
-    _scrollController.dispose();
-    super.dispose();
-  }
+class NewBigBoxContainer extends StatelessWidget {
+  final TabController tabController;
+  final String categoryTitle;
+  NewBigBoxContainer({this.tabController, this.categoryTitle});
 
   @override
   Widget build(BuildContext context) {
@@ -53,7 +32,6 @@ class _NewBigBoxContainerState extends State<NewBigBoxContainer> with SingleTick
       child: ClipRRect(
         borderRadius: BorderRadius.all(Radius.circular(30)),
         child: NestedScrollView(
-          controller: _scrollController,
           headerSliverBuilder: (context, isScrolled) {
             return [
               SliverPadding(
@@ -68,7 +46,8 @@ class _NewBigBoxContainerState extends State<NewBigBoxContainer> with SingleTick
                           color: colorBackground, borderRadius: BorderRadius.only(topLeft: Radius.circular(30), topRight: Radius.circular(30))),
                       child: Center(
                         child: Text(
-                          'Entrantes',
+                          //_tabController.index == 0 ? 'Entrantes' : 'Main Courses',
+                          Provider.of<TabIndex>(context).position.toString(),
                           style: ktsCategoryTitle,
                         ),
                       ),
@@ -79,7 +58,7 @@ class _NewBigBoxContainerState extends State<NewBigBoxContainer> with SingleTick
             ];
           },
           body: TabBarView(
-            controller: _tabController,
+            controller: tabController,
             children: [
               ListView(
                 children: [

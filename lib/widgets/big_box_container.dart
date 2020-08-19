@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:chefmenu2/theme/style_constants.dart';
 import 'package:chefmenu2/animation/cover_aka_back_layer_formulas.dart';
-import 'package:chefmenu2/animation/my_scroll_position.dart';
+import 'package:chefmenu2/change_notifiers/my_scroll_position.dart';
 import 'package:provider/provider.dart';
 import 'package:chefmenu2/widgets/my_tab_bar.dart';
 
