@@ -25,23 +25,24 @@ class CoverContainer extends StatelessWidget {
           filter: ImageFilter.blur(sigmaX: completeBlur(context), sigmaY: completeBlur(context)),
           child: Container(
             decoration: BoxDecoration(
-                gradient: LinearGradient(
-                    colors: [
-                      //DEV-MODE: commented because of flickering issue
-                      // increaseColorLightness(colorPrimary1).withOpacity(opacity(context)),
-                      // increaseColorLightness(colorPrimary1).withOpacity(opacity(context)),
-                      // increaseColorLightness(colorPrimary1).withOpacity(0)
-                    ],
-                    begin: Alignment.topCenter,
-                    end: Alignment.bottomCenter,
-                    stops: [
-                      0,
-                      // UNUSED#1: Maybe better keep it simlpe than overdo it, that's why I commented it
-                      // Provider.of<MyScrollPosition>(context).data < (MediaQuery.of(context).size.height)
-                      //     ? kCoverOpacitySecondStop : calcLastOpacityPhase(context) < 1 ? calcLastOpacityPhase(context) : 1,
-                      kCoverOpacitySecondStop,
-                      1
-                    ])),
+              //DEV-MODE: disabled coloring to yellow because of flickering issue
+              gradient: LinearGradient(
+                  colors: [
+                    increaseColorLightness(colorPrimary1).withOpacity(opacity(context)),
+                    increaseColorLightness(colorPrimary1).withOpacity(opacity(context)),
+                    increaseColorLightness(colorPrimary1).withOpacity(0)
+                  ],
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                  stops: [
+                    0,
+                    // UNUSED#1: Maybe better keep it simlpe than overdo it, that's why I commented it
+                    // Provider.of<MyScrollPosition>(context).data < (MediaQuery.of(context).size.height)
+                    //     ? kCoverOpacitySecondStop : calcLastOpacityPhase(context) < 1 ? calcLastOpacityPhase(context) : 1,
+                    kCoverOpacitySecondStop,
+                    1
+                  ]),
+            ),
           ),
         ),
       ),

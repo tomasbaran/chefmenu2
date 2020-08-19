@@ -42,7 +42,7 @@ class _NewBigBoxContainerState extends State<NewBigBoxContainer> with SingleTick
           left: kBigBoxPadding,
           right: kBigBoxPadding,
           top: kBigBoxPadding,
-          bottom: Provider.of<MyScrollPosition>(context).data > (backLayerAnimationTopPoint(context) + kCtaShowtimeDelay)
+          bottom: Provider.of<MyScrollPosition>(context).data > (backLayerAnimationTopPoint(context) /* + kCtaShowtimeDelay */)
               ? kBottomBigBoxPadding
               : kBigBoxPadding),
       //bottom: kBottomBigBoxPadding),
@@ -52,63 +52,58 @@ class _NewBigBoxContainerState extends State<NewBigBoxContainer> with SingleTick
       ),
       child: ClipRRect(
         borderRadius: BorderRadius.all(Radius.circular(30)),
-        child: NotificationListener<ScrollNotification>(
-          onNotification: (notification) {
-            print('not: ${notification.metrics.axis}');
-          },
-          child: NestedScrollView(
-            controller: _scrollController,
-            headerSliverBuilder: (context, isScrolled) {
-              return [
-                SliverPadding(
-                  padding: EdgeInsets.only(top: (kCoverHeightProportion * MediaQuery.of(context).size.height)),
-                  sliver: SliverPersistentHeader(
-                    pinned: true,
-                    delegate: _SliverPersistentHeaderDelegate(
-                      Container(
-                        width: double.infinity,
-                        height: kSliverAppBarLayerHeight,
-                        decoration: BoxDecoration(
-                            color: colorBackground, borderRadius: BorderRadius.only(topLeft: Radius.circular(30), topRight: Radius.circular(30))),
-                        child: Center(
-                          child: Text(
-                            'Entrantes',
-                            style: ktsCategoryTitle,
-                          ),
+        child: NestedScrollView(
+          controller: _scrollController,
+          headerSliverBuilder: (context, isScrolled) {
+            return [
+              SliverPadding(
+                padding: EdgeInsets.only(top: (kCoverHeightProportion * MediaQuery.of(context).size.height)),
+                sliver: SliverPersistentHeader(
+                  pinned: true,
+                  delegate: _SliverPersistentHeaderDelegate(
+                    Container(
+                      width: double.infinity,
+                      height: kSliverAppBarLayerHeight,
+                      decoration: BoxDecoration(
+                          color: colorBackground, borderRadius: BorderRadius.only(topLeft: Radius.circular(30), topRight: Radius.circular(30))),
+                      child: Center(
+                        child: Text(
+                          'Entrantes',
+                          style: ktsCategoryTitle,
                         ),
                       ),
                     ),
                   ),
                 ),
-              ];
-            },
-            body: TabBarView(
-              controller: _tabController,
-              children: [
-                ListView(
-                  children: [
-                    Container(height: 300, color: Colors.green),
-                    Container(height: 300, color: Colors.red),
-                    Container(height: 300, color: Colors.green),
-                    Container(height: 300, color: Colors.red),
-                    Container(height: 300, color: Colors.green),
-                    Container(height: 300, color: Colors.red),
-                    Container(height: 300, color: Colors.green),
-                  ],
-                ),
-                ListView(
-                  children: [
-                    Container(height: 300, color: Colors.blue),
-                    Container(height: 300, color: Colors.red),
-                    Container(height: 300, color: Colors.blue),
-                    Container(height: 300, color: Colors.red),
-                    Container(height: 300, color: Colors.blue),
-                    Container(height: 300, color: Colors.red),
-                    Container(height: 300, color: Colors.blue),
-                  ],
-                ),
-              ],
-            ),
+              ),
+            ];
+          },
+          body: TabBarView(
+            controller: _tabController,
+            children: [
+              ListView(
+                children: [
+                  Container(height: 300, color: Colors.green),
+                  Container(height: 300, color: Colors.red),
+                  Container(height: 300, color: Colors.green),
+                  Container(height: 300, color: Colors.red),
+                  Container(height: 300, color: Colors.green),
+                  Container(height: 300, color: Colors.red),
+                  Container(height: 300, color: Colors.green),
+                ],
+              ),
+              ListView(
+                children: [
+                  Container(height: 300, color: Colors.blue),
+                  Container(height: 300, color: Colors.red),
+                  Container(height: 300, color: Colors.blue),
+                  Container(height: 300, color: Colors.red),
+                  Container(height: 300, color: Colors.blue),
+                  Container(height: 300, color: Colors.red),
+                  Container(height: 300, color: Colors.blue),
+                ],
+              ),
+            ],
           ),
         ),
       ),

@@ -41,18 +41,22 @@ class _DemoScreenState extends State<DemoScreen> with SingleTickerProviderStateM
         builder: (context, child) => Scaffold(
           backgroundColor: colorBackground,
           floatingActionButton:
-              Provider.of<MyScrollPosition>(context).data > MediaQuery.of(context).size.height ? MyTabBar(_tabController) : Container(),
+              Provider.of<MyScrollPosition>(context).data > backLayerAnimationTopPoint(context) ? MyTabBar(_tabController) : Container(),
           //floatingActionButton: MyTabBar(),
           floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
           body: NotificationListener<ScrollNotification>(
             onNotification: (notification) {
-              //double konstanta = 475;
-              double konstanta = kCoverHeightProportion * MediaQuery.of(context).size.height + kSliverAppBarLayerHeight;
-              print('konstanta: $konstanta');
-              if ((notification.metrics.axis == Axis.vertical) && (notification.depth != 2) && (notification.metrics.pixels > 0)) {
+              double firstScrollViewHeight = kCoverHeightProportion * MediaQuery.of(context).size.height + kSliverAppBarLayerHeight;
+
+              // formula that counts how much the user scrolls overall (combining the 2 scrollViews) for the blur backlayer animation
+              if ((notification.metrics.axis == Axis.vertical) && (notification.depth != 2) && (notification.metrics.extentBefore > 0)) {
                 bigBoxScrollPosition.updateData(notification.metrics.pixels);
-              } else if ((notification.metrics.axis == Axis.vertical) && (notification.depth == 2) && (notification.metrics.pixels > 0)) {
-                bigBoxScrollPosition.updateData(notification.metrics.pixels + konstanta);
+                //print('CHEck stop 1');
+              } else if ((notification.metrics.axis == Axis.vertical) &&
+                  (notification.depth == 2) &&
+                  (notification.metrics.extentBefore > firstScrollViewHeight)) {
+                bigBoxScrollPosition.updateData(notification.metrics.pixels);
+                //print('CHEck stop 2');
               }
               return true;
             },
