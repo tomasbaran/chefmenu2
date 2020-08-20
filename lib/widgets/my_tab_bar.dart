@@ -4,6 +4,7 @@ import 'package:chefmenu2/change_notifiers/tab_index.dart';
 import 'package:provider/provider.dart';
 import 'package:chefmenu2/animation/cover_aka_back_layer_formulas.dart';
 import 'package:chefmenu2/change_notifiers/my_scroll_position.dart';
+import 'dart:ui';
 
 class MyTabBar extends StatelessWidget {
   MyTabBar(this._tabController);
@@ -16,16 +17,19 @@ class MyTabBar extends StatelessWidget {
         right: kBigBoxPadding,
         //bottom: kBottomBigBoxPadding - 2 * kBigBoxPadding,
         //same as big_box_container.dart margin; ternary operators: for the bottom scroll up animation
-        bottom: (Provider.of<MyScrollPosition>(context).data - backLayerAnimationTopPoint(context)) >= kBottomBigBoxPadding
-            ? kBottomBigBoxPadding - 2 * kBigBoxPadding
-            : Provider.of<MyScrollPosition>(context).data > backLayerAnimationTopPoint(context) + kBigBoxPadding
-                ? kBigBoxPadding + (Provider.of<MyScrollPosition>(context).data - backLayerAnimationTopPoint(context)) - 2 * kBigBoxPadding
-                : 0,
+        // bottom: (Provider.of<MyScrollPosition>(context).data - backLayerAnimationTopPoint(context)) >= kBottomBigBoxPadding
+        //     ? kBottomBigBoxPadding - kBigBoxPadding
+        //     : Provider.of<MyScrollPosition>(context).data > backLayerAnimationTopPoint(context) + 2 * kBigBoxPadding
+        //         ? kBigBoxPadding + (Provider.of<MyScrollPosition>(context).data - backLayerAnimationTopPoint(context)) - 2 * kBigBoxPadding
+        //         : kBigBoxPadding,
+        bottom: kBigBoxPadding,
       ),
       padding: EdgeInsets.all(6),
       width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(
-        color: Colors.black38,
+        color: colorBackground,
+        //color: Colors.black38,
+        //color: Colors.pinkAccent,
         borderRadius: BorderRadius.circular(30),
       ),
       child: ClipRRect(

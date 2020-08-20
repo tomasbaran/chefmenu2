@@ -8,9 +8,16 @@ import 'package:chefmenu2/widgets/big_box_container.dart';
 import 'package:chefmenu2/widgets/cta_button.dart';
 import 'package:chefmenu2/change_notifiers/my_scroll_position.dart';
 import 'package:chefmenu2/widgets/cover_container.dart';
+import 'package:flutter/rendering.dart';
 
 class NewBigBoxContainer extends StatelessWidget {
+  NewBigBoxContainer({this.categoryTitle, this.tabController, this.scrollController});
+  final TabController tabController;
+  final String categoryTitle;
+  final ScrollController scrollController;
+
   int computeNumberOfColumns(dynamic context) => ((MediaQuery.of(context).size.width - (2 * kBigBoxPadding)) / kMaxCrossAxisExtent).floor();
+
   List<Container> _buildGridTileList(dynamic context, int count) => List.generate(
       count,
       (i) => Container(
@@ -39,10 +46,6 @@ class NewBigBoxContainer extends StatelessWidget {
             ),
           ));
 
-  final TabController tabController;
-  final String categoryTitle;
-  NewBigBoxContainer({this.tabController, this.categoryTitle});
-
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -64,6 +67,7 @@ class NewBigBoxContainer extends StatelessWidget {
       child: ClipRRect(
         borderRadius: BorderRadius.all(Radius.circular(30)),
         child: NestedScrollView(
+          controller: scrollController,
           headerSliverBuilder: (context, isScrolled) {
             return [
               SliverPadding(

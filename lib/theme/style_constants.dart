@@ -32,7 +32,7 @@ const TextStyle ktsRestaurantTitle = TextStyle(height: 2.3, color: Colors.white,
 
 // BigBoxContainer
 const double kBigBoxPadding = 8;
-const double kBottomBigBoxPadding = 68;
+const double kBottomBigBoxPadding = 68 + kBigBoxPadding;
 const double kMaxCrossAxisExtent = 350;
 
 // SliverAppBarLayer aka SliverPersistentHeader
