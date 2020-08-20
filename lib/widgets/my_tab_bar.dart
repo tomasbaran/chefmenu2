@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:chefmenu2/theme/style_constants.dart';
 import 'package:chefmenu2/change_notifiers/tab_index.dart';
 import 'package:provider/provider.dart';
+import 'package:chefmenu2/animation/cover_aka_back_layer_formulas.dart';
+import 'package:chefmenu2/change_notifiers/my_scroll_position.dart';
 
 class MyTabBar extends StatelessWidget {
   MyTabBar(this._tabController);
@@ -9,7 +11,17 @@ class MyTabBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.only(left: kBigBoxPadding, right: kBigBoxPadding, bottom: kBottomBigBoxPadding - 2 * kBigBoxPadding),
+      margin: EdgeInsets.only(
+        left: kBigBoxPadding,
+        right: kBigBoxPadding,
+        //bottom: kBottomBigBoxPadding - 2 * kBigBoxPadding,
+        //same as big_box_container.dart margin; ternary operators: for the bottom scroll up animation
+        bottom: (Provider.of<MyScrollPosition>(context).data - backLayerAnimationTopPoint(context)) >= kBottomBigBoxPadding
+            ? kBottomBigBoxPadding - 2 * kBigBoxPadding
+            : Provider.of<MyScrollPosition>(context).data > backLayerAnimationTopPoint(context) + kBigBoxPadding
+                ? kBigBoxPadding + (Provider.of<MyScrollPosition>(context).data - backLayerAnimationTopPoint(context)) - 2 * kBigBoxPadding
+                : 0,
+      ),
       padding: EdgeInsets.all(6),
       width: MediaQuery.of(context).size.width,
       decoration: BoxDecoration(

@@ -10,6 +10,35 @@ import 'package:chefmenu2/change_notifiers/my_scroll_position.dart';
 import 'package:chefmenu2/widgets/cover_container.dart';
 
 class NewBigBoxContainer extends StatelessWidget {
+  int computeNumberOfColumns(dynamic context) => ((MediaQuery.of(context).size.width - (2 * kBigBoxPadding)) / kMaxCrossAxisExtent).floor();
+  List<Container> _buildGridTileList(dynamic context, int count) => List.generate(
+      count,
+      (i) => Container(
+            //NOTE: workaround according to: https://github.com/flutter/flutter/issues/25009
+            decoration: BoxDecoration(
+              color: colorBackground, //the color of the main container
+              border: Border.all(
+                //apply border to only that side where the line is appearing i.e. top | bottom | right | left.
+                width: 4, //depends on the width of the unintended line
+                color: colorBackground,
+              ),
+            ),
+            child: Container(
+              decoration: BoxDecoration(
+                color: colorBackground,
+              ),
+
+              child: Center(
+                child: Text(
+                  '$i / ${computeNumberOfColumns(context)}',
+                  style: TextStyle(color: Colors.grey),
+                  //textAlign: TextAlign.center,
+                ),
+              ),
+              //margin: EdgeInsets.all(0),
+            ),
+          ));
+
   final TabController tabController;
   final String categoryTitle;
   NewBigBoxContainer({this.tabController, this.categoryTitle});
@@ -21,9 +50,12 @@ class NewBigBoxContainer extends StatelessWidget {
           left: kBigBoxPadding,
           right: kBigBoxPadding,
           top: kBigBoxPadding,
-          bottom: Provider.of<MyScrollPosition>(context).data > (backLayerAnimationTopPoint(context) /* + kCtaShowtimeDelay */)
+          //ternary operators: for the bottom scroll up animation
+          bottom: (Provider.of<MyScrollPosition>(context).data - backLayerAnimationTopPoint(context)) >= kBottomBigBoxPadding
               ? kBottomBigBoxPadding
-              : kBigBoxPadding),
+              : Provider.of<MyScrollPosition>(context).data > backLayerAnimationTopPoint(context)
+                  ? kBigBoxPadding + (Provider.of<MyScrollPosition>(context).data - backLayerAnimationTopPoint(context))
+                  : kBigBoxPadding),
       //bottom: kBottomBigBoxPadding),
       decoration: BoxDecoration(
         //color: Colors.pink,
@@ -47,7 +79,8 @@ class NewBigBoxContainer extends StatelessWidget {
                       child: Center(
                         child: Text(
                           //_tabController.index == 0 ? 'Entrantes' : 'Main Courses',
-                          Provider.of<TabIndex>(context).position.toString(),
+                          //Provider.of<TabIndex>(context).position.toString(),
+                          categoryTitle,
                           style: ktsCategoryTitle,
                         ),
                       ),
@@ -60,27 +93,19 @@ class NewBigBoxContainer extends StatelessWidget {
           body: TabBarView(
             controller: tabController,
             children: [
-              ListView(
-                children: [
-                  Container(height: 300, color: Colors.green),
-                  Container(height: 300, color: Colors.red),
-                  Container(height: 300, color: Colors.green),
-                  Container(height: 300, color: Colors.red),
-                  Container(height: 300, color: Colors.green),
-                  Container(height: 300, color: Colors.red),
-                  Container(height: 300, color: Colors.green),
-                ],
+              GridView.extent(
+                maxCrossAxisExtent: kMaxCrossAxisExtent,
+                childAspectRatio: 1,
+                mainAxisSpacing: 0,
+                crossAxisSpacing: 0,
+                children: _buildGridTileList(context, 250),
               ),
-              ListView(
-                children: [
-                  Container(height: 300, color: Colors.blue),
-                  Container(height: 300, color: Colors.red),
-                  Container(height: 300, color: Colors.blue),
-                  Container(height: 300, color: Colors.red),
-                  Container(height: 300, color: Colors.blue),
-                  Container(height: 300, color: Colors.red),
-                  Container(height: 300, color: Colors.blue),
-                ],
+              GridView.extent(
+                maxCrossAxisExtent: kMaxCrossAxisExtent,
+                childAspectRatio: 1,
+                mainAxisSpacing: 0,
+                crossAxisSpacing: 0,
+                children: _buildGridTileList(context, 250),
               ),
             ],
           ),
@@ -107,5 +132,5 @@ class _SliverPersistentHeaderDelegate extends SliverPersistentHeaderDelegate {
   double get minExtent => 100;
 
   @override
-  bool shouldRebuild(SliverPersistentHeaderDelegate oldDelegate) => false;
+  bool shouldRebuild(SliverPersistentHeaderDelegate oldDelegate) => true;
 }

@@ -51,6 +51,7 @@ class _DemoScreenState extends State<DemoScreen> with SingleTickerProviderStateM
             body: NotificationListener<ScrollNotification>(
               onNotification: (notification) {
                 if (notification.metrics.axis == Axis.horizontal) {
+                  print('axis: horizontal');
                   Provider.of<TabIndex>(context, listen: false).updatePosition(_tabController.index);
                   //print('nostate: ${_tabController.index}');
                   print('nostate: ${Provider.of<TabIndex>(context, listen: false).position}');
@@ -77,17 +78,13 @@ class _DemoScreenState extends State<DemoScreen> with SingleTickerProviderStateM
               child: Stack(
                 children: [
                   CoverContainer(restaurantTitle: 'Don Juan', imageSrc: 'icons/cover.jpeg'),
+                  CtaButton(),
                   // Provider.of<MyScrollPosition>(context).data > backLayerAnimationTopPoint(context)
                   //     ? CtaButton()
                   //     : Align(alignment: Alignment.bottomCenter, child: Container(/* color: Colors.pink ,*/ height: kCtaHeight)),
-                  CtaButton(),
+                  Provider.of<MyScrollPosition>(context).data > (backLayerAnimationTopPoint(context) + kCtaShowtimeDelay) ? CtaButton() : Container(),
                   //BigBoxContainer(_tabController),
-                  NewBigBoxContainer(tabController: _tabController, categoryTitle: _tabController.index.toString()),
-                  Align(
-                      alignment: Alignment.bottomCenter,
-                      child: Provider.of<MyScrollPosition>(context).data < (backLayerAnimationTopPoint(context) + kCtaShowtimeDelay)
-                          ? Container(color: colorBackground, height: kBottomBigBoxPadding)
-                          : Container()),
+                  NewBigBoxContainer(tabController: _tabController, categoryTitle: Provider.of<TabIndex>(context).position.toString()),
                 ],
               ),
             ),
