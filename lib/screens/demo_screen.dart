@@ -1,11 +1,10 @@
 import 'package:chefmenu2/animation/cover_aka_back_layer_formulas.dart';
-import 'package:chefmenu2/widgets/new_big_box_container.dart';
+import 'package:chefmenu2/widgets/big_box_container.dart';
 import 'package:chefmenu2/theme/style_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:chefmenu2/widgets/my_tab_bar.dart';
 import 'package:flutter/rendering.dart';
 import 'package:provider/provider.dart';
-import 'package:chefmenu2/widgets/big_box_container.dart';
 import 'package:chefmenu2/widgets/cta_button.dart';
 import 'package:chefmenu2/change_notifiers/my_scroll_position.dart';
 import 'package:chefmenu2/change_notifiers/tab_index.dart';
@@ -64,16 +63,8 @@ class _DemoScreenState extends State<DemoScreen> with SingleTickerProviderStateM
                   upDirection = false;
                 }
 
-                if (notification.metrics.axis == Axis.horizontal) {
-                  //print('axis: horizontal');
-                  Provider.of<TabIndex>(context, listen: false).updatePosition(_tabController.index);
-                  //print('nostate: ${_tabController.index}');
-                  //print('nostate: ${Provider.of<TabIndex>(context, listen: false).position}');
-                  setState(() {
-                    //print('newState: ${_tabController.index}');
-                    // this is to refresh _tabController.index, so that active tab changes title && icon color
-                  });
-                }
+                // Switch active tab bar index when scroll is horizontal
+                if (notification.metrics.axis == Axis.horizontal) Provider.of<TabIndex>(context, listen: false).updatePosition(_tabController.index);
 
                 double firstScrollViewHeight = kCoverHeightProportion * MediaQuery.of(context).size.height + kSliverAppBarLayerHeight;
 
@@ -98,7 +89,7 @@ class _DemoScreenState extends State<DemoScreen> with SingleTickerProviderStateM
                   //     : Align(alignment: Alignment.bottomCenter, child: Container(/* color: Colors.pink ,*/ height: kCtaHeight)),
                   Provider.of<MyScrollPosition>(context).data > (backLayerAnimationTopPoint(context) + kCtaShowtimeDelay) ? CtaButton() : Container(),
                   //BigBoxContainer(_tabController),
-                  NewBigBoxContainer(
+                  BigBoxContainer(
                     tabController: _tabController,
                     categoryTitle: Provider.of<TabIndex>(context).position.toString(),
                     scrollController: _scrollController,

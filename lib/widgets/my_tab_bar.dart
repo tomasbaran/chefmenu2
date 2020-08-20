@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:chefmenu2/theme/style_constants.dart';
 import 'package:chefmenu2/change_notifiers/tab_index.dart';
 import 'package:provider/provider.dart';
-import 'package:chefmenu2/animation/cover_aka_back_layer_formulas.dart';
-import 'package:chefmenu2/change_notifiers/my_scroll_position.dart';
 import 'dart:ui';
 
 class MyTabBar extends StatelessWidget {
@@ -15,6 +13,7 @@ class MyTabBar extends StatelessWidget {
       margin: EdgeInsets.only(
         left: kBigBoxPadding,
         right: kBigBoxPadding,
+        // DEPRECATED: smooth movement of tabbar that was supposed to be moved together with the bottom padding of Big Box
         //bottom: kBottomBigBoxPadding - 2 * kBigBoxPadding,
         //same as big_box_container.dart margin; ternary operators: for the bottom scroll up animation
         // bottom: (Provider.of<MyScrollPosition>(context).data - backLayerAnimationTopPoint(context)) >= kBottomBigBoxPadding
@@ -35,11 +34,6 @@ class MyTabBar extends StatelessWidget {
       child: ClipRRect(
         borderRadius: BorderRadius.circular(30),
         child: TabBar(
-          // onTap: (index) {
-          //   setState(() {
-          //     print('index: ${widget._tabController.index}');
-          //   });
-          // },
           controller: _tabController,
           isScrollable: true,
           labelColor: Colors.black,
@@ -49,10 +43,12 @@ class MyTabBar extends StatelessWidget {
           tabs: [
             Tab(
                 icon: Image.asset('icons/218-bacon-1.png',
-                    height: kTabIconHeight, color: Provider.of<TabIndex>(context).position == 0 ? colorTabActive : colorTabInactive)),
+                    height: kTabIconHeight,
+                    color: Provider.of<TabIndex>(context).position == 0 ? colorTabActive : Colors.white.withOpacity(0.33) /* colorTabInactive */)),
             Tab(
-                icon:
-                    Image.asset('icons/164-crab.png', height: kTabIconHeight, color: _tabController.index == 1 ? colorTabActive : colorTabInactive)),
+                icon: Image.asset('icons/164-crab.png',
+                    height: kTabIconHeight,
+                    color: _tabController.index == 1 ? colorTabActive : Colors.white.withOpacity(0.33) /* colorTabInactive */)),
             // Tab(
             //     icon:
             //         Image.asset('icons/205-bread.png', height: kTabIconHeight, color: _tabController.index == 2 ? colorTabActive : colorTabInactive)),

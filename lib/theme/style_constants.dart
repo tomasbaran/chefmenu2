@@ -15,8 +15,8 @@ const Color colorRed = Color(0xFFEB5757);
 // TabBar
 const int kTabBarLength = 2;
 const double kTabIconHeight = 28;
-const Color colorTabInactive = Colors.grey;
-const Color colorTabActive = Colors.black;
+Color colorTabInactive = Colors.white.withOpacity(0.5);
+const Color colorTabActive = colorBackground;
 
 // Cover
 const double kCoverColorOpacityCoefficient = 0.035;

@@ -1,13 +1,19 @@
-import 'package:flutter/material.dart';
-import 'package:chefmenu2/theme/style_constants.dart';
 import 'package:chefmenu2/animation/cover_aka_back_layer_formulas.dart';
-import 'package:chefmenu2/change_notifiers/my_scroll_position.dart';
-import 'package:provider/provider.dart';
+import 'package:chefmenu2/change_notifiers/tab_index.dart';
+import 'package:chefmenu2/theme/style_constants.dart';
+import 'package:flutter/material.dart';
 import 'package:chefmenu2/widgets/my_tab_bar.dart';
+import 'package:provider/provider.dart';
+import 'package:chefmenu2/widgets/cta_button.dart';
+import 'package:chefmenu2/change_notifiers/my_scroll_position.dart';
+import 'package:chefmenu2/widgets/cover_container.dart';
+import 'package:flutter/rendering.dart';
 
 class BigBoxContainer extends StatelessWidget {
-  final TabController _tabController;
-  BigBoxContainer(this._tabController);
+  BigBoxContainer({this.categoryTitle, this.tabController, this.scrollController});
+  final TabController tabController;
+  final String categoryTitle;
+  final ScrollController scrollController;
 
   int computeNumberOfColumns(dynamic context) => ((MediaQuery.of(context).size.width - (2 * kBigBoxPadding)) / kMaxCrossAxisExtent).floor();
 
@@ -46,9 +52,12 @@ class BigBoxContainer extends StatelessWidget {
           left: kBigBoxPadding,
           right: kBigBoxPadding,
           top: kBigBoxPadding,
-          bottom: Provider.of<MyScrollPosition>(context).data > (backLayerAnimationTopPoint(context) + kCtaShowtimeDelay)
+          //ternary operators: for the bottom scroll up animation
+          bottom: (Provider.of<MyScrollPosition>(context).data - backLayerAnimationTopPoint(context)) >= kBottomBigBoxPadding
               ? kBottomBigBoxPadding
-              : kBigBoxPadding),
+              : Provider.of<MyScrollPosition>(context).data > backLayerAnimationTopPoint(context)
+                  ? kBigBoxPadding + (Provider.of<MyScrollPosition>(context).data - backLayerAnimationTopPoint(context))
+                  : kBigBoxPadding),
       //bottom: kBottomBigBoxPadding),
       decoration: BoxDecoration(
         //color: Colors.pink,
@@ -56,66 +65,53 @@ class BigBoxContainer extends StatelessWidget {
       ),
       child: ClipRRect(
         borderRadius: BorderRadius.all(Radius.circular(30)),
-        child: CustomScrollView(
-          anchor: topBigBoxPadding(context),
-          slivers: [
-            SliverPadding(
-              padding: EdgeInsets.only(top: topBigBoxPadding(context)),
-              sliver: SliverPersistentHeader(
-                pinned: true,
-                delegate: _SliverPersistentHeaderDelegate(
-                  Container(
-                    width: double.infinity,
-                    height: kSliverAppBarLayerHeight,
-                    decoration: BoxDecoration(
-                        color: colorBackground, borderRadius: BorderRadius.only(topLeft: Radius.circular(30), topRight: Radius.circular(30))),
-                    child: Center(
-                      child: Text(
-                        'Entrantes',
-                        style: ktsCategoryTitle,
+        child: NestedScrollView(
+          controller: scrollController,
+          headerSliverBuilder: (context, isScrolled) {
+            return [
+              SliverPadding(
+                padding: EdgeInsets.only(top: (kCoverHeightProportion * MediaQuery.of(context).size.height)),
+                sliver: SliverPersistentHeader(
+                  pinned: true,
+                  delegate: _SliverPersistentHeaderDelegate(
+                    Container(
+                      width: double.infinity,
+                      height: kSliverAppBarLayerHeight,
+                      decoration: BoxDecoration(
+                          color: colorBackground, borderRadius: BorderRadius.only(topLeft: Radius.circular(30), topRight: Radius.circular(30))),
+                      child: Center(
+                        child: Text(
+                          //_tabController.index == 0 ? 'Entrantes' : 'Main Courses',
+                          //Provider.of<TabIndex>(context).position.toString(),
+                          categoryTitle,
+                          style: ktsCategoryTitle,
+                        ),
                       ),
                     ),
                   ),
                 ),
               ),
-            ),
-            SliverFillRemaining(
-              child: TabBarView(
-                controller: _tabController,
-                children: [
-                  ListView(
-                    children: [
-                      Container(height: 300, color: Colors.green),
-                      Container(height: 300, color: Colors.red),
-                      Container(height: 300, color: Colors.green),
-                      Container(height: 300, color: Colors.red),
-                      Container(height: 300, color: Colors.green),
-                      Container(height: 300, color: Colors.red),
-                      Container(height: 300, color: Colors.green),
-                    ],
-                  ),
-                  ListView(
-                    children: [
-                      Container(height: 300, color: Colors.blue),
-                      Container(height: 300, color: Colors.red),
-                      Container(height: 300, color: Colors.blue),
-                      Container(height: 300, color: Colors.red),
-                      Container(height: 300, color: Colors.blue),
-                      Container(height: 300, color: Colors.red),
-                      Container(height: 300, color: Colors.blue),
-                    ],
-                  ),
-                ],
+            ];
+          },
+          body: TabBarView(
+            controller: tabController,
+            children: [
+              GridView.extent(
+                maxCrossAxisExtent: kMaxCrossAxisExtent,
+                childAspectRatio: 1,
+                mainAxisSpacing: 0,
+                crossAxisSpacing: 0,
+                children: _buildGridTileList(context, 250),
               ),
-            )
-            // SliverGrid.extent(
-            //   maxCrossAxisExtent: kMaxCrossAxisExtent,
-            //   childAspectRatio: 1,
-            //   mainAxisSpacing: 0,
-            //   crossAxisSpacing: 0,
-            //   children: _buildGridTileList(context, 250),
-            // ),
-          ],
+              GridView.extent(
+                maxCrossAxisExtent: kMaxCrossAxisExtent,
+                childAspectRatio: 1,
+                mainAxisSpacing: 0,
+                crossAxisSpacing: 0,
+                children: _buildGridTileList(context, 250),
+              ),
+            ],
+          ),
         ),
       ),
     );
@@ -139,5 +135,5 @@ class _SliverPersistentHeaderDelegate extends SliverPersistentHeaderDelegate {
   double get minExtent => 100;
 
   @override
-  bool shouldRebuild(SliverPersistentHeaderDelegate oldDelegate) => false;
+  bool shouldRebuild(SliverPersistentHeaderDelegate oldDelegate) => true;
 }

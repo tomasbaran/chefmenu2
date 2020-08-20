@@ -5,7 +5,6 @@ class TabIndex extends ChangeNotifier {
 
   updatePosition(int newPosition) {
     position = newPosition;
-    print('newPosition: $newPosition');
     notifyListeners();
   }
 }
