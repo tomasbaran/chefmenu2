@@ -41,7 +41,8 @@ const TextStyle ktsCategoryTitle = TextStyle(color: colorPrimary1, fontSize: 32,
 
 // CTA
 const double kCtaShowtimeDelay = 100;
-const double kCtaHeight = 52;
+const double kCtaHeight = 60;
 const double kCtaWidth = 358;
-const Color colorCtaBackground = Colors.white;
-const TextStyle ktsCta = TextStyle(color: colorRed, fontSize: 19, fontWeight: FontWeight.w700);
+const Color colorCtaBackground = colorRed;
+const TextStyle ktsCta = TextStyle(color: Colors.white, fontSize: 21, fontWeight: FontWeight.w700);
+const TextStyle kts2Cta = TextStyle(color: Color(0xFFECB4B4), fontSize: 11, fontWeight: FontWeight.w400);

@@ -56,11 +56,11 @@ class _DemoScreenState extends State<DemoScreen> with SingleTickerProviderStateM
               onNotification: (notification) {
                 //print('dir: ${_scrollController.position.userScrollDirection}');
                 if (_scrollController.position.userScrollDirection == ScrollDirection.forward) {
-                  print('↑↑↑');
                   upDirection = true;
+                  print('↑↑↑: $upDirection');
                 } else if (_scrollController.position.userScrollDirection == ScrollDirection.reverse) {
-                  print('down');
                   upDirection = false;
+                  print('down: $upDirection');
                 }
 
                 // Switch active tab bar index when scroll is horizontal
@@ -83,27 +83,18 @@ class _DemoScreenState extends State<DemoScreen> with SingleTickerProviderStateM
               child: Stack(
                 children: [
                   CoverContainer(restaurantTitle: 'Don Juan', imageSrc: 'icons/cover.jpeg'),
-                  CtaButton(),
+                  //CtaButton(),
+                  //DEPRECATED:
                   // Provider.of<MyScrollPosition>(context).data > backLayerAnimationTopPoint(context)
                   //     ? CtaButton()
                   //     : Align(alignment: Alignment.bottomCenter, child: Container(/* color: Colors.pink ,*/ height: kCtaHeight)),
+                  //DEPRECATED:
                   Provider.of<MyScrollPosition>(context).data > (backLayerAnimationTopPoint(context) + kCtaShowtimeDelay) ? CtaButton() : Container(),
-                  //BigBoxContainer(_tabController),
                   BigBoxContainer(
                     tabController: _tabController,
                     categoryTitle: Provider.of<TabIndex>(context).position.toString(),
                     scrollController: _scrollController,
                   ),
-                  // Positioned(
-                  //   height: 40,
-                  //   width: 300,
-                  //   child: BackdropFilter(
-                  //     filter: ImageFilter.blur(sigmaX: 30, sigmaY: 30),
-                  //     child: Container(
-                  //       color: Colors.black.withOpacity(0),
-                  //     ),
-                  //   ),
-                  // )
                 ],
               ),
             ),
