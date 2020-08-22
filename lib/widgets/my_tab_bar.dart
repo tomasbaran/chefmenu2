@@ -17,14 +17,14 @@ class MyTabBar extends StatelessWidget {
       return kBigBoxPadding;
     //DESKTOP platform: same as big_box_container.dart margin; ternary operators: for the bottom scroll up animation
     else {
-      // prevent bottom padding to get bigger than kBottomBigBoxPadding
       if ((Provider.of<MyScrollPosition>(context).data - backLayerAnimationTopPoint(context)) >= kBottomBigBoxPadding)
+        // prevent bottom padding to get bigger than kBottomBigBoxPadding
         return kBottomBigBoxPadding;
-      // formula to slide btw kBottomBigBoxPadding && kBigBoxPadding; it is being moved together with the bottom padding of Big Box (so it's almost Big Box bottom padding copy)
       else if (Provider.of<MyScrollPosition>(context).data > backLayerAnimationTopPoint(context) + 2 * kBigBoxPadding)
+        // formula to slide btw kBottomBigBoxPadding && kBigBoxPadding; it is being moved together with the bottom padding of Big Box (so it's almost Big Box bottom padding copy)
         return kBigBoxPadding + (Provider.of<MyScrollPosition>(context).data - backLayerAnimationTopPoint(context)) - 2 * kBigBoxPadding;
-      // prevent bottom padding to get smaller than kBigBoxPadding
       else
+        // prevent bottom padding to get smaller than kBigBoxPadding
         return kBigBoxPadding;
     }
   }
@@ -66,15 +66,6 @@ class MyTabBar extends StatelessWidget {
               // icon: Image.asset('icons/164-crab.png',
               //     height: kTabIconHeight, color: _tabController.index == 1 ? colorTabActive : Colors.white.withOpacity(0.33) /* colorTabInactive */),
             ),
-            // Tab(
-            //     icon:
-            //         Image.asset('icons/205-bread.png', height: kTabIconHeight, color: _tabController.index == 2 ? colorTabActive : colorTabInactive)),
-            // Tab(
-            //     icon:
-            //         Image.asset('icons/201-taco.png', height: kTabIconHeight, color: _tabController.index == 3 ? colorTabActive : colorTabInactive)),
-            // Tab(
-            //     icon:
-            //         Image.asset('icons/200-cake.png', height: kTabIconHeight, color: _tabController.index == 4 ? colorTabActive : colorTabInactive)),
           ],
         ),
       ),

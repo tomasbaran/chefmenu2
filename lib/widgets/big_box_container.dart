@@ -1,12 +1,8 @@
 import 'package:chefmenu2/animation/cover_aka_back_layer_formulas.dart';
-import 'package:chefmenu2/change_notifiers/tab_index.dart';
 import 'package:chefmenu2/theme/style_constants.dart';
 import 'package:flutter/material.dart';
-import 'package:chefmenu2/widgets/my_tab_bar.dart';
 import 'package:provider/provider.dart';
-import 'package:chefmenu2/widgets/cta_button.dart';
 import 'package:chefmenu2/change_notifiers/my_scroll_position.dart';
-import 'package:chefmenu2/widgets/cover_container.dart';
 import 'package:flutter/rendering.dart';
 
 class BigBoxContainer extends StatelessWidget {
@@ -20,7 +16,7 @@ class BigBoxContainer extends StatelessWidget {
   List<Container> _buildGridTileList(dynamic context, int count) => List.generate(
       count,
       (i) => Container(
-            //NOTE: workaround according to: https://github.com/flutter/flutter/issues/25009
+            //WORKAROUND: according to https://github.com/flutter/flutter/issues/25009
             decoration: BoxDecoration(
               color: colorBackground, //the color of the main container
               border: Border.all(
@@ -45,20 +41,28 @@ class BigBoxContainer extends StatelessWidget {
             ),
           ));
 
+  double bigBoxContainerBottomPadding(BuildContext context) {
+    if ((Provider.of<MyScrollPosition>(context).data - backLayerAnimationTopPoint(context)) >= kBottomBigBoxPadding)
+      // prevent bottom padding to get bigger than kBottomBigBoxPadding
+      return kBottomBigBoxPadding;
+    else if (Provider.of<MyScrollPosition>(context).data > backLayerAnimationTopPoint(context))
+      // formula to slide btw kBottomBigBoxPadding && kBigBoxPadding; it is being moved together with the bottom padding of tabBar (so it's almost tabBar bottom padding copy)
+      return kBigBoxPadding + (Provider.of<MyScrollPosition>(context).data - backLayerAnimationTopPoint(context));
+    else
+      // prevent bottom padding to get smaller than kBigBoxPadding
+      return kBigBoxPadding;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.only(
-          left: kBigBoxPadding,
-          right: kBigBoxPadding,
-          top: kBigBoxPadding,
-          //ternary operators: for the bottom scroll up animation
-          bottom: (Provider.of<MyScrollPosition>(context).data - backLayerAnimationTopPoint(context)) >= kBottomBigBoxPadding
-              ? kBottomBigBoxPadding
-              : Provider.of<MyScrollPosition>(context).data > backLayerAnimationTopPoint(context)
-                  ? kBigBoxPadding + (Provider.of<MyScrollPosition>(context).data - backLayerAnimationTopPoint(context))
-                  : kBigBoxPadding),
-      //bottom: kBottomBigBoxPadding),
+        left: kBigBoxPadding,
+        right: kBigBoxPadding,
+        top: kBigBoxPadding,
+        // bottom padding: slide animation when being scrolled
+        bottom: bigBoxContainerBottomPadding(context),
+      ),
       decoration: BoxDecoration(
         //color: Colors.pink,
         borderRadius: BorderRadius.all(Radius.circular(30)),

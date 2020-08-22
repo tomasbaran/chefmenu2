@@ -21,7 +21,7 @@ const Color colorTabActive = colorBackground;
 // Cover
 const double kCoverColorOpacityCoefficient = 0.035;
 const double kCoverOpacitySecondStop = 0.8;
-const double kExponent = 4.75;
+const double kExponent = 5;
 const double kBlurSpeed = 0.025;
 const double kRestaurantTitleMaxShadowBlur = 30;
 const double kCoverHeightProportion = 0.35;
@@ -45,4 +45,4 @@ const double kCtaHeight = 60;
 const double kCtaWidth = 358;
 const Color colorCtaBackground = colorRed;
 const TextStyle ktsCta = TextStyle(color: Colors.white, fontSize: 21, fontWeight: FontWeight.w700);
-const TextStyle kts2Cta = TextStyle(color: Color(0xFFECB4B4), fontSize: 11, fontWeight: FontWeight.w400);
+const TextStyle kts2Cta = TextStyle(color: Color(0xFFECB4B4), fontSize: 12, fontWeight: FontWeight.w400);
