@@ -28,13 +28,13 @@ class MyTabBar extends StatelessWidget {
     }
   }
 
-  MyTabBar(this._tabController, this.invisible);
-  final TabController _tabController;
-  final bool invisible;
+  MyTabBar({this.tabController, this.makeFabInvisible});
+  final TabController tabController;
+  final bool makeFabInvisible;
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: invisible ? 0 : null,
+      height: makeFabInvisible ? 0 : null,
       margin: EdgeInsets.only(
         left: kBigBoxPadding,
         right: kBigBoxPadding,
@@ -49,7 +49,7 @@ class MyTabBar extends StatelessWidget {
       child: ClipRRect(
         borderRadius: BorderRadius.circular(30),
         child: TabBar(
-          controller: _tabController,
+          controller: tabController,
           isScrollable: true,
           labelColor: Colors.black,
           unselectedLabelColor: colorShade2,

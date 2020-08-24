@@ -21,8 +21,8 @@ class _DemoScreenState extends State<DemoScreen> with SingleTickerProviderStateM
   TabIndex _tabIndex;
   TabController _tabController;
   ScrollController _scrollController;
-  bool upDirection = true, isFabVisible = true;
-  double _fabOpacity = 1;
+  bool upDirection = true, _makeFabInvisible = false;
+  int upDirectionCounter = 0;
 
   @override
   void initState() {
@@ -44,11 +44,18 @@ class _DemoScreenState extends State<DemoScreen> with SingleTickerProviderStateM
 
   void updateVerticalScrollDirection(ScrollDirection _scrollDirection) {
     if (_scrollDirection == ScrollDirection.forward) {
-      //print('↑↑↑');
-      upDirection = true;
+      // count the scrolled down delay
+      upDirectionCounter++;
+      //print('↑↑↑: $upDirectionCounter');
+      // update upDirection only after scrolled down kCtaShowtimeDelay pixels, not right away
+      if (upDirectionCounter == kCtaShowtimeDelay) {
+        upDirection = true;
+        upDirectionCounter = 0;
+      }
     } else if (_scrollDirection == ScrollDirection.reverse) {
       //print('↓↓↓');
       upDirection = false;
+      upDirectionCounter = 0;
     }
   }
 
@@ -72,8 +79,6 @@ class _DemoScreenState extends State<DemoScreen> with SingleTickerProviderStateM
     }
   }
 
-  double fabOpacity(bool upDirection) => upDirection ? 1 : 0;
-
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -88,31 +93,21 @@ class _DemoScreenState extends State<DemoScreen> with SingleTickerProviderStateM
             //floatingActionButton: upDirection ? MyTabBar(_tabController) : Container(),
             floatingActionButton: upDirection
                 ? AnimatedOpacity(
-                    duration: Duration(milliseconds: 1800),
-                    curve: Curves.decelerate,
+                    duration: Duration(milliseconds: 750),
+                    curve: Curves.easeOutQuart,
                     opacity: 1,
-                    child: MyTabBar(_tabController, false),
+                    child: MyTabBar(tabController: _tabController, makeFabInvisible: false),
                     onEnd: () {
-                      // print('before isFabVisible: $isFabVisible');
-                      // isFabVisible ? isFabVisible = false : isFabVisible = true;
-                      // print('after isFabVisible: $isFabVisible \n');
-                      // print('upDirection: $upDirection; _fabOpacity: $_fabOpacity');
-                      // (upDirection && _fabOpacity == 1) ? _fabOpacity = 0 : _fabOpacity = 1;
-                      fabOpacity(upDirection) == 0 ? isFabVisible = false : isFabVisible = true;
+                      _makeFabInvisible = false;
                     },
                   )
                 : AnimatedOpacity(
-                    duration: Duration(milliseconds: 1800),
-                    curve: Curves.decelerate,
+                    duration: Duration(milliseconds: 750),
+                    curve: Curves.easeInQuart,
                     opacity: 0,
-                    child: MyTabBar(_tabController, true),
+                    child: MyTabBar(tabController: _tabController, makeFabInvisible: _makeFabInvisible),
                     onEnd: () {
-                      // print('before isFabVisible: $isFabVisible');
-                      // isFabVisible ? isFabVisible = false : isFabVisible = true;
-                      // print('after isFabVisible: $isFabVisible \n');
-                      // print('upDirection: $upDirection; _fabOpacity: $_fabOpacity');
-                      // (upDirection && _fabOpacity == 1) ? _fabOpacity = 0 : _fabOpacity = 1;
-                      fabOpacity(upDirection) == 0 ? isFabVisible = false : isFabVisible = true;
+                      _makeFabInvisible = true;
                     },
                   ),
             //DEPRECATED: shows tabBar only when scrolled to the full screen
