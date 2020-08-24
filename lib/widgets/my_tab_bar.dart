@@ -28,11 +28,13 @@ class MyTabBar extends StatelessWidget {
     }
   }
 
-  MyTabBar(this._tabController);
+  MyTabBar(this._tabController, this.invisible);
   final TabController _tabController;
+  final bool invisible;
   @override
   Widget build(BuildContext context) {
     return Container(
+      height: invisible ? 0 : null,
       margin: EdgeInsets.only(
         left: kBigBoxPadding,
         right: kBigBoxPadding,

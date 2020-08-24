@@ -21,7 +21,8 @@ class _DemoScreenState extends State<DemoScreen> with SingleTickerProviderStateM
   TabIndex _tabIndex;
   TabController _tabController;
   ScrollController _scrollController;
-  bool upDirection = true;
+  bool upDirection = true, isFabVisible = true;
+  double _fabOpacity = 1;
 
   @override
   void initState() {
@@ -71,6 +72,8 @@ class _DemoScreenState extends State<DemoScreen> with SingleTickerProviderStateM
     }
   }
 
+  double fabOpacity(bool upDirection) => upDirection ? 1 : 0;
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
@@ -82,7 +85,36 @@ class _DemoScreenState extends State<DemoScreen> with SingleTickerProviderStateM
           builder: (context, child) => Scaffold(
             backgroundColor: colorBackground,
             // show tabBar only when being scrolled up ↑↑↑
-            floatingActionButton: upDirection ? MyTabBar(_tabController) : Container(),
+            //floatingActionButton: upDirection ? MyTabBar(_tabController) : Container(),
+            floatingActionButton: upDirection
+                ? AnimatedOpacity(
+                    duration: Duration(milliseconds: 1800),
+                    curve: Curves.decelerate,
+                    opacity: 1,
+                    child: MyTabBar(_tabController, false),
+                    onEnd: () {
+                      // print('before isFabVisible: $isFabVisible');
+                      // isFabVisible ? isFabVisible = false : isFabVisible = true;
+                      // print('after isFabVisible: $isFabVisible \n');
+                      // print('upDirection: $upDirection; _fabOpacity: $_fabOpacity');
+                      // (upDirection && _fabOpacity == 1) ? _fabOpacity = 0 : _fabOpacity = 1;
+                      fabOpacity(upDirection) == 0 ? isFabVisible = false : isFabVisible = true;
+                    },
+                  )
+                : AnimatedOpacity(
+                    duration: Duration(milliseconds: 1800),
+                    curve: Curves.decelerate,
+                    opacity: 0,
+                    child: MyTabBar(_tabController, true),
+                    onEnd: () {
+                      // print('before isFabVisible: $isFabVisible');
+                      // isFabVisible ? isFabVisible = false : isFabVisible = true;
+                      // print('after isFabVisible: $isFabVisible \n');
+                      // print('upDirection: $upDirection; _fabOpacity: $_fabOpacity');
+                      // (upDirection && _fabOpacity == 1) ? _fabOpacity = 0 : _fabOpacity = 1;
+                      fabOpacity(upDirection) == 0 ? isFabVisible = false : isFabVisible = true;
+                    },
+                  ),
             //DEPRECATED: shows tabBar only when scrolled to the full screen
             //Provider.of<MyScrollPosition>(context).data > backLayerAnimationTopPoint(context) ? MyTabBar(_tabController) : Container(),
             floatingActionButtonLocation: FloatingActionButtonLocation.miniCenterDocked,
