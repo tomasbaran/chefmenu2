@@ -17,7 +17,7 @@ class DemoScreen extends StatefulWidget {
 }
 
 class _DemoScreenState extends State<DemoScreen> with SingleTickerProviderStateMixin {
-  final MyScrollPosition bigBoxScrollPosition = MyScrollPosition();
+  MyScrollPosition bigBoxScrollPosition;
   TabIndex _tabIndex;
   TabController _tabController;
   ScrollController _scrollController;
@@ -26,6 +26,7 @@ class _DemoScreenState extends State<DemoScreen> with SingleTickerProviderStateM
   @override
   void initState() {
     super.initState();
+    bigBoxScrollPosition = MyScrollPosition();
     _tabIndex = TabIndex();
     _tabController = TabController(length: kTabBarLength, vsync: this);
     _scrollController = ScrollController();
@@ -33,6 +34,7 @@ class _DemoScreenState extends State<DemoScreen> with SingleTickerProviderStateM
 
   @override
   void dispose() {
+    bigBoxScrollPosition.dispose();
     _tabController.dispose();
     _tabIndex.dispose();
     _scrollController.dispose();
@@ -106,10 +108,9 @@ class _DemoScreenState extends State<DemoScreen> with SingleTickerProviderStateM
                   Provider.of<MyScrollPosition>(context).data > 0 /* (backLayerAnimationTopPoint(context) + kCtaShowtimeDelay) */ ? CtaButton()
                       : Container(),
                   BigBoxContainer(
-                    tabController: _tabController,
-                    categoryTitle: Provider.of<TabIndex>(context).position.toString(),
-                    scrollController: _scrollController,
-                  ),
+                      categoryTitle: Provider.of<TabIndex>(context).position.toString(),
+                      tabController: _tabController,
+                      scrollController: _scrollController),
                 ],
               ),
             ),
