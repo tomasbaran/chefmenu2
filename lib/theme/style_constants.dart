@@ -19,10 +19,11 @@ Color colorTabInactive = Colors.white.withOpacity(0.5);
 const Color colorTabActive = colorBackground;
 
 // Cover
-const double kCoverColorOpacityCoefficient = 0.035;
-const double kCoverOpacitySecondStop = 0.8;
+const double kSmallScreenCoverColorOpacityCoefficient = 0.065;
+const double kBigScreenCoverColorOpacityCoefficient = 0.020;
+const double kCoverOpacitySecondStop = 0.7;
 const double kExponent = 5;
-const double kBlurSpeed = 0.025;
+const double kBlurSpeed = 0.027;
 const double kRestaurantTitleMaxShadowBlur = 30;
 const double kCoverHeightProportion = 0.35;
 const TextStyle ktsRestaurantTitle = TextStyle(height: 2.3, color: Colors.white, fontSize: 32, fontWeight: FontWeight.w600, shadows: <Shadow>[

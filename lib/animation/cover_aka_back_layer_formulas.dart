@@ -52,10 +52,12 @@ double opacity(BuildContext context) =>
     completeOpacity(context) < 0 ? 0 : completeOpacity(context) > 1 ? 1 : completeOpacity(context);
 
 double completeOpacity(BuildContext context) => Provider.of<MyScrollPosition>(context).data < backLayerAnimationTopPoint(context)
-    ? kCoverColorOpacityCoefficient * blur(context, firstPhaseBlur(context))
-    : kCoverColorOpacityCoefficient * blur(context, finalPhaseMaxBlur(context));
+    ? (MediaQuery.of(context).size.height < 600 ? kSmallScreenCoverColorOpacityCoefficient : kBigScreenCoverColorOpacityCoefficient) *
+        blur(context, firstPhaseBlur(context))
+    : (MediaQuery.of(context).size.height < 600 ? kSmallScreenCoverColorOpacityCoefficient : kBigScreenCoverColorOpacityCoefficient) *
+        blur(context, finalPhaseMaxBlur(context));
 
-// UNUSED#1: Maybe better keep it simlpe than overdo it, that's why I commented it
+// DEPRECATED#1: Maybe better keep it simlpe than overdo it, that's why I commented it
 // double calcLastOpacityPhase(BuildContext context) =>
 //     (Provider.of<MyScrollPosition>(context).data - MediaQuery.of(context).size.height) * 0.001 + kCoverOpacitySecondStop;
 
@@ -63,5 +65,19 @@ Color increaseColorLightness(Color color) => HSVColor.fromColor(color).withValue
 
 double restaurantTitleTopPadding(BuildContext context) =>
     kCoverHeightProportion * MediaQuery.of(context).size.height - kRestaurantTitleMaxShadowBlur * 2;
+
+// double kCoverOpacitySecondStop(BuildContext context) => Provider.of<MyScrollPosition>(context).data > MediaQuery.of(context).size.height ? 1 : kCoverOpacitySecondStop;
+
+double coverOpacitySecondStop(BuildContext context) {
+  if ((Provider.of<MyScrollPosition>(context).data - MediaQuery.of(context).size.height) > (1 - kCoverOpacitySecondStop) * 100)
+    // upper boundary
+    return 1;
+  else if (Provider.of<MyScrollPosition>(context).data < MediaQuery.of(context).size.height)
+    // lower boundary
+    return kCoverOpacitySecondStop;
+  else
+    // formula for btw boundaries
+    return kCoverOpacitySecondStop + (Provider.of<MyScrollPosition>(context).data - MediaQuery.of(context).size.height) * 0.01;
+}
 
 // ----------------------------- ↑ Helper cover (back layer) calculation functions ↑-----------------------------------

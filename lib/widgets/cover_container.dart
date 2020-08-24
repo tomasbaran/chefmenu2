@@ -24,8 +24,8 @@ class CoverContainer extends StatelessWidget {
         child: BackdropFilter(
           filter: ImageFilter.blur(sigmaX: completeBlur(context), sigmaY: completeBlur(context)),
           child: Container(
+            //NOTE: gradient is used when the back layer gets blurry, so it's lowest point is blurry, too when getting bigger
             decoration: BoxDecoration(
-              //DEV-MODE: disabled coloring to yellow because of flickering issue
               gradient: LinearGradient(
                   colors: [
                     increaseColorLightness(colorPrimary1).withOpacity(opacity(context)),
@@ -36,10 +36,11 @@ class CoverContainer extends StatelessWidget {
                   end: Alignment.bottomCenter,
                   stops: [
                     0,
-                    // UNUSED#1: Maybe better keep it simlpe than overdo it, that's why I commented it
+                    // DEPRECATED #1: Maybe better keep it simlpe than overdo it, that's why I commented it
                     // Provider.of<MyScrollPosition>(context).data < (MediaQuery.of(context).size.height)
                     //     ? kCoverOpacitySecondStop : calcLastOpacityPhase(context) < 1 ? calcLastOpacityPhase(context) : 1,
-                    kCoverOpacitySecondStop,
+                    // lowerBoundary (0.7) - upperBoundary (1.0)
+                    coverOpacitySecondStop(context),
                     1
                   ]),
             ),
