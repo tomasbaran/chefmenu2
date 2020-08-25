@@ -60,3 +60,6 @@ TextStyle ktsMealBoxTitle = GoogleFonts.nunitoSans(color: Colors.white, fontSize
 TextStyle ktsMealBoxDetail = GoogleFonts.nunitoSans(color: Color(0xFFE2E2E2), fontSize: 13, fontWeight: FontWeight.w300);
 TextStyle ktsMealBoxPortion = GoogleFonts.nunitoSans(color: Colors.white, fontSize: 13, fontWeight: FontWeight.w600);
 TextStyle ktsMealBoxPrice = GoogleFonts.nunitoSans(color: Colors.white, fontSize: 13, fontWeight: FontWeight.w800);
+
+// SignupBottomSheet
+const double kSignupBottomSheetCornerRadius = 30;
