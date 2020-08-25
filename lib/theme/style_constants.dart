@@ -63,3 +63,4 @@ TextStyle ktsMealBoxPrice = GoogleFonts.nunitoSans(color: Colors.white, fontSize
 
 // SignupBottomSheet
 const double kSignupBottomSheetCornerRadius = 30;
+const Color kkSignupBottomSheetColor = Color(0xFFF6F7F8);
