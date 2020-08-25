@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:chefmenu2/change_notifiers/my_scroll_position.dart';
 import 'package:flutter/rendering.dart';
+import 'meal_card.dart';
 
 class BigBoxContainer extends StatelessWidget {
   BigBoxContainer({this.categoryTitle, this.tabController, this.scrollController});
@@ -11,35 +12,10 @@ class BigBoxContainer extends StatelessWidget {
   final String categoryTitle;
   final ScrollController scrollController;
 
-  int computeNumberOfColumns(dynamic context) => ((MediaQuery.of(context).size.width - (2 * kBigBoxPadding)) / kMaxCrossAxisExtent).floor();
+  int numberOfColumns(dynamic context) => ((MediaQuery.of(context).size.width - (2 * kBigBoxPadding)) / kMaxCrossAxisExtent).floor();
 
-  List<Container> _buildGridTileList(dynamic context, int count) => List.generate(
-      count,
-      (i) => Container(
-            //WORKAROUND: according to https://github.com/flutter/flutter/issues/25009
-            decoration: BoxDecoration(
-              color: colorBackground, //the color of the main container
-              border: Border.all(
-                //apply border to only that side where the line is appearing i.e. top | bottom | right | left.
-                width: 4, //depends on the width of the unintended line
-                color: colorBackground,
-              ),
-            ),
-            child: Container(
-              decoration: BoxDecoration(
-                color: colorBackground,
-              ),
-
-              child: Center(
-                child: Text(
-                  '$i / ${computeNumberOfColumns(context)}',
-                  style: TextStyle(color: Colors.grey),
-                  //textAlign: TextAlign.center,
-                ),
-              ),
-              //margin: EdgeInsets.all(0),
-            ),
-          ));
+  List<MealCard> _buildGridTileList(dynamic context, int count) =>
+      List.generate(count, (i) => MealCard(i: i, numberOfColumns: numberOfColumns(context)));
 
   double bigBoxContainerBottomPadding(BuildContext context) {
     if ((Provider.of<MyScrollPosition>(context).data - backLayerAnimationTopPoint(context)) >= kBottomBigBoxPadding)
@@ -102,17 +78,13 @@ class BigBoxContainer extends StatelessWidget {
             children: [
               GridView.extent(
                 maxCrossAxisExtent: kMaxCrossAxisExtent,
-                childAspectRatio: 1,
-                mainAxisSpacing: 0,
-                crossAxisSpacing: 0,
-                children: _buildGridTileList(context, 250),
+                childAspectRatio: 0.60,
+                children: _buildGridTileList(context, 9),
               ),
               GridView.extent(
                 maxCrossAxisExtent: kMaxCrossAxisExtent,
-                childAspectRatio: 1,
-                mainAxisSpacing: 0,
-                crossAxisSpacing: 0,
-                children: _buildGridTileList(context, 250),
+                childAspectRatio: 0.60,
+                children: _buildGridTileList(context, 6),
               ),
             ],
           ),
@@ -133,10 +105,10 @@ class _SliverPersistentHeaderDelegate extends SliverPersistentHeaderDelegate {
   }
 
   @override
-  double get maxExtent => 100;
+  double get maxExtent => kSliverAppBarLayerHeight;
 
   @override
-  double get minExtent => 100;
+  double get minExtent => kSliverAppBarLayerHeight;
 
   @override
   bool shouldRebuild(SliverPersistentHeaderDelegate oldDelegate) => true;

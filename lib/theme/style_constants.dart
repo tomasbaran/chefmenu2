@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 // Colors
 const Color colorShade1 = Color(0xFFEFF0F2);
@@ -34,10 +36,10 @@ const TextStyle ktsRestaurantTitle = TextStyle(height: 2.3, color: Colors.white,
 // BigBoxContainer
 const double kBigBoxPadding = 8;
 const double kBottomBigBoxPadding = 68 + kBigBoxPadding;
-const double kMaxCrossAxisExtent = 350;
+const double kMaxCrossAxisExtent = 250;
 
 // SliverAppBarLayer aka SliverPersistentHeader
-const double kSliverAppBarLayerHeight = 100;
+const double kSliverAppBarLayerHeight = 60;
 const TextStyle ktsCategoryTitle = TextStyle(color: colorPrimary1, fontSize: 32, fontWeight: FontWeight.w800);
 
 // CTA
@@ -47,3 +49,14 @@ const double kCtaWidth = 358;
 const Color colorCtaBackground = colorRed;
 const TextStyle ktsCta = TextStyle(color: Colors.white, fontSize: 21, fontWeight: FontWeight.w700);
 const TextStyle kts2Cta = TextStyle(color: Color(0xFFECB4B4), fontSize: 12, fontWeight: FontWeight.w400);
+
+// MealCard
+const double kMealCoverSize = 120;
+const double kMealCardMargin = 8;
+const double kMealBoxPadding = 12;
+const double kMealBoxCornerRadius = 30;
+const double kMealCoverCornerRadius = 20;
+TextStyle ktsMealBoxTitle = GoogleFonts.nunitoSans(color: Colors.white, fontSize: 19, fontWeight: FontWeight.w800);
+TextStyle ktsMealBoxDetail = GoogleFonts.nunitoSans(color: Color(0xFFE2E2E2), fontSize: 13, fontWeight: FontWeight.w300);
+TextStyle ktsMealBoxPortion = GoogleFonts.nunitoSans(color: Colors.white, fontSize: 13, fontWeight: FontWeight.w600);
+TextStyle ktsMealBoxPrice = GoogleFonts.nunitoSans(color: Colors.white, fontSize: 13, fontWeight: FontWeight.w800);
