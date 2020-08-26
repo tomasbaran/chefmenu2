@@ -9,7 +9,11 @@ class CtaButton extends StatelessWidget {
       alignment: Alignment.bottomCenter,
       child: GestureDetector(
         onTap: () {
-          showModalBottomSheet(context: context, builder: (BuildContext context) => SignupBottomSheet());
+          showModalBottomSheet(
+            isScrollControlled: true,
+            context: context,
+            builder: (BuildContext context) => SignupBottomSheet(),
+          );
         },
         child: Container(
           margin: EdgeInsets.symmetric(vertical: kBigBoxPadding, horizontal: kBigBoxPadding + 1),

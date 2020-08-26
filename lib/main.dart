@@ -6,9 +6,14 @@ void main() {
 }
 
 class MyApp extends StatelessWidget {
+  //TODO: Install firebase analytics
+  //FirebaseAnalytics analytics = FirebaseAnalytics();
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      //TODO: Install firebase analytics
+      //navigatorObservers: [FirebaseAnalyticsObserver(analytics: analytics)],
       theme: ThemeData(
         primarySwatch: Colors.teal,
         canvasColor: Colors.transparent,
