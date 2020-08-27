@@ -69,7 +69,7 @@ class MealBox extends StatelessWidget {
         bottom: kMealBoxCornerRadius - kMealBoxPadding,
       ),
       decoration: BoxDecoration(
-        color: Color(0x00707070).withOpacity(0.3),
+        color: colorMealBox,
         borderRadius: BorderRadius.all(Radius.circular(kMealBoxCornerRadius)),
       ),
       child: Column(

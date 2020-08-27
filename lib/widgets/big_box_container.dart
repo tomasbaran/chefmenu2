@@ -78,12 +78,12 @@ class BigBoxContainer extends StatelessWidget {
             children: [
               GridView.extent(
                 maxCrossAxisExtent: kMaxCrossAxisExtent,
-                childAspectRatio: 0.60,
+                childAspectRatio: 0.50,
                 children: _buildGridTileList(context, 9),
               ),
               GridView.extent(
                 maxCrossAxisExtent: kMaxCrossAxisExtent,
-                childAspectRatio: 0.60,
+                childAspectRatio: 0.55,
                 children: _buildGridTileList(context, 6),
               ),
             ],

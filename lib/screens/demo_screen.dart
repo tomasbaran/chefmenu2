@@ -8,6 +8,7 @@ import 'package:chefmenu2/widgets/cta_button.dart';
 import 'package:chefmenu2/change_notifiers/my_scroll_position.dart';
 import 'package:chefmenu2/change_notifiers/tab_index.dart';
 import 'package:chefmenu2/widgets/cover_container.dart';
+import 'package:chefmenu2/widgets/signup_bottom_sheet.dart';
 
 class DemoScreen extends StatefulWidget {
   static String id = '/demo';
@@ -132,7 +133,11 @@ class _DemoScreenState extends State<DemoScreen> with SingleTickerProviderStateM
                   //     : Align(alignment: Alignment.bottomCenter, child: Container(/* color: Colors.pink ,*/ height: kCtaHeight)),
                   //WORKAROUND of a simple CtaButton(): because pure simple CtaButton() causes strange issues of different sorts
                   //CtaButton(),
-                  Provider.of<MyScrollPosition>(context).data > 0 /* (backLayerAnimationTopPoint(context) + kCtaShowtimeDelay) */ ? CtaButton()
+                  Provider.of<MyScrollPosition>(context).data > 0 /* (backLayerAnimationTopPoint(context) + kCtaShowtimeDelay) */ ? CtaButton(
+                          onTap: () {
+                            showModalBottomSheet(isScrollControlled: true, context: context, builder: (BuildContext context) => SignupBottomSheet());
+                          },
+                        )
                       : Container(),
                   BigBoxContainer(
                       categoryTitle: Provider.of<TabIndex>(context).position.toString(),

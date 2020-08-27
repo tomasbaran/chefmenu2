@@ -13,6 +13,9 @@ const Color colorBackground = Color(0xFF101A24);
 const Color colorPrimary1 = Color(0xFFCC9757);
 const Color colorRed = Color(0xFFEB5757);
 
+const Color colorIosSafariLight = Color(0xFFF6F7F8);
+const Color colorIosSafariDark = Color(0xFF575757);
+
 // TabBar
 const int kTabBarLength = 2;
 const double kTabIconHeight = 28;
@@ -42,7 +45,7 @@ const double kSliverAppBarLayerHeight = 60;
 const TextStyle ktsCategoryTitle = TextStyle(color: colorPrimary1, fontSize: 32, fontWeight: FontWeight.w800);
 
 // CTA
-const double kCtaShowtimeDelay = 20;
+const double kCtaShowtimeDelay = 15;
 const double kCtaHeight = 60;
 const double kCtaWidth = 358;
 const Color colorCtaBackground = colorRed;
@@ -55,11 +58,20 @@ const double kMealCardMargin = 8;
 const double kMealBoxPadding = 12;
 const double kMealBoxCornerRadius = 30;
 const double kMealCoverCornerRadius = 20;
+Color colorMealBox = Color(0x00707070).withOpacity(0.3);
 TextStyle ktsMealBoxTitle = GoogleFonts.nunitoSans(color: Colors.white, fontSize: 19, fontWeight: FontWeight.w800);
 TextStyle ktsMealBoxDetail = GoogleFonts.nunitoSans(color: Color(0xFFE2E2E2), fontSize: 13, fontWeight: FontWeight.w300);
 TextStyle ktsMealBoxPortion = GoogleFonts.nunitoSans(color: Colors.white, fontSize: 13, fontWeight: FontWeight.w600);
 TextStyle ktsMealBoxPrice = GoogleFonts.nunitoSans(color: Colors.white, fontSize: 13, fontWeight: FontWeight.w800);
 
 // SignupBottomSheet
-const double kSignupBottomSheetCornerRadius = 30;
-const Color kkSignupBottomSheetColor = Color(0xFFF6F7F8);
+const double kSignupBottomSheetCornerRadius = 42; //42px is iPhone XR's radius
+const double kSignupBottomSheetHorizontalLineHeight = 4;
+const double kSignupBottomSheetHorizontalLineWidth = 100;
+const Color colorSignupBottomSheetHorizontalLightLine = Color(0xFFD4D4D4);
+const Color colorSignupBottomSheetHorizontalDarkLine = Color(0xFF393939);
+// SignupField
+const double kSignupFieldPadding = 8;
+const double kSignupFieldCornerRadius = 14;
+TextStyle ktsSignupField = GoogleFonts.nunitoSans(color: Colors.white, fontSize: 18, fontWeight: FontWeight.w600);
+TextStyle ktsHintSignupField = GoogleFonts.nunitoSans(color: Colors.white.withOpacity(0.5), fontSize: 18, fontWeight: FontWeight.w300);
