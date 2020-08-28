@@ -4,9 +4,16 @@ import 'package:flutter/material.dart';
 import 'package:chefmenu2/theme/style_constants.dart';
 import 'package:universal_io/io.dart';
 import 'package:flushbar/flushbar.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
-class SignupBottomSheet extends StatelessWidget {
-  final bool step1Done = false;
+class SignupBottomSheet extends StatefulWidget {
+  @override
+  _SignupBottomSheetState createState() => _SignupBottomSheetState();
+}
+
+class _SignupBottomSheetState extends State<SignupBottomSheet> {
+  bool step1Done = false;
+
   @override
   Widget build(BuildContext context) {
     return AnimatedPadding(
@@ -20,7 +27,15 @@ class SignupBottomSheet extends StatelessWidget {
             top: Radius.circular(kSignupBottomSheetCornerRadius),
           ),
         ),
-        child: SignupStep2(),
+        child: step1Done
+            ? SignupStep2()
+            : SignupStep1(
+                step1DoneCallback: () {
+                  setState(() {
+                    step1Done = true;
+                  });
+                },
+              ),
       ),
     );
   }
@@ -63,8 +78,10 @@ class SignupStep2 extends StatelessWidget {
 }
 
 class SignupStep1 extends StatelessWidget {
-  bool step1Done;
-  SignupStep1({this.step1Done});
+  final Function step1DoneCallback;
+  SignupStep1({this.step1DoneCallback});
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -90,18 +107,33 @@ class SignupStep1 extends StatelessWidget {
         ),
         SizedBox(height: kSignupBottomSheetCornerRadius / 2 - kBigBoxPadding),
         CtaButton(
-          onTap: () {
-            step1Done = true;
-            Flushbar(
-              margin: EdgeInsets.all(kFlushbarPadding),
-              backgroundColor: MediaQuery.of(context).platformBrightness == Brightness.dark ? colorIosSafariDark : colorIosSafariLight,
-              icon: Icon(Icons.error, color: colorRed),
-              title: 'Error',
-              message: 'Merror message. You need at least 6 characters for password.',
-              borderRadius: 100,
-              flushbarPosition: FlushbarPosition.TOP,
-              duration: Duration(seconds: 15),
-            ).show(context);
+          onTap: () async {
+            try {
+              UserCredential userCredential = await _auth.createUserWithEmailAndPassword(email: "barry.allen@example.com", password: "12345");
+            } /* on FirebaseAuthException catch (e) {
+              if (e.code == 'weak-password') {
+                print('The password provided is too weak: ${e.toString()}');
+              } else if (e.code == 'email-already-in-use') {
+                print(e.toString());
+                print('The account already exists for that email.');
+              }
+            } */
+            catch (e) {
+              print(e.toString());
+              print('huhululu');
+              Flushbar(
+                margin: EdgeInsets.all(kFlushbarPadding),
+                backgroundColor: colorIosSafariDark,
+                icon: Icon(Icons.error, color: colorRed),
+                title: 'Error',
+                message: e.toString(),
+                borderRadius: 100,
+                flushbarPosition: FlushbarPosition.TOP,
+                duration: Duration(seconds: 15),
+              ).show(context);
+            }
+
+            step1DoneCallback();
           },
         ),
         SizedBox(height: kSignupBottomSheetCornerRadius / 2),

@@ -28,6 +28,34 @@
       });
     }
   </script>
-  <script src="main.dart.js" type="application/javascript"></script>
+  
+  <!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-app.js"></script>
+<!-- Add Firebase products that you want to use -->
+<script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-firestore.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+<script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-analytics.js"></script>
+
+<script>
+  // Your web app's Firebase configuration
+  var firebaseConfig = {
+    apiKey: "AIzaSyBdGsJlFzPlWK6b5ml09q0YN62qklqWfuI",
+    authDomain: "chefmenu2-staging.firebaseapp.com",
+    databaseURL: "https://chefmenu2-staging.firebaseio.com",
+    projectId: "chefmenu2-staging",
+    storageBucket: "chefmenu2-staging.appspot.com",
+    messagingSenderId: "718578983018",
+    appId: "1:718578983018:web:f7e888787ac421d2caea13",
+    measurementId: "G-NYY2TMBSDF"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  firebase.analytics();
+</script>
+<script src="main.dart.js" type="application/javascript"></script>
+  
 </body>
 </html>

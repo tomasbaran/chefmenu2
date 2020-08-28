@@ -77,9 +77,9 @@ TextStyle ktsSignupField = GoogleFonts.nunitoSans(color: Colors.white, fontSize:
 TextStyle ktsHintSignupField = GoogleFonts.nunitoSans(color: Colors.white.withOpacity(0.5), fontSize: 18, fontWeight: FontWeight.w300);
 // SignBottomSheet Step 2
 TextStyle ktsSignupFieldStep2DarkThemeTitle = GoogleFonts.nunitoSans(color: Colors.white, fontSize: 31, fontWeight: FontWeight.w800);
-TextStyle ktsSignupStep2DarkThemeMessage = GoogleFonts.nunitoSans(color: Colors.white.withOpacity(0.8), fontSize: 18, fontWeight: FontWeight.w300);
+TextStyle ktsSignupStep2DarkThemeMessage = GoogleFonts.nunitoSans(color: Colors.white.withOpacity(0.8), fontSize: 18, fontWeight: FontWeight.w400);
 TextStyle ktsSignupFieldStep2LightThemeTitle = GoogleFonts.nunitoSans(color: colorBackground, fontSize: 31, fontWeight: FontWeight.w800);
 TextStyle ktsSignupStep2LightThemeMessage =
-    GoogleFonts.nunitoSans(color: colorBackground.withOpacity(0.8), fontSize: 18, fontWeight: FontWeight.w300);
+    GoogleFonts.nunitoSans(color: colorBackground.withOpacity(0.8), fontSize: 18, fontWeight: FontWeight.w400);
 // Flushbar
 const double kFlushbarPadding = 8;
