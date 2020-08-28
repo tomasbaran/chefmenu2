@@ -2,8 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:chefmenu2/theme/style_constants.dart';
 
 class CtaButton extends StatelessWidget {
+  final bool isLoading;
   final Function onTap;
-  CtaButton({this.onTap});
+  CtaButton({this.onTap, this.isLoading = false});
   @override
   Widget build(BuildContext context) {
     return Align(
@@ -18,13 +19,15 @@ class CtaButton extends StatelessWidget {
           child: Center(
             child: Padding(
               padding: const EdgeInsets.only(top: 8),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text('CREAR MENÚ', style: ktsCta),
-                  Text('GRATIS PARA SIEMPRE', style: kts2Cta),
-                ],
-              ),
+              child: isLoading
+                  ? CircularProgressIndicator(/* backgroundColor: Colors.white */)
+                  : Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text('CREAR MENÚ', style: ktsCta),
+                        Text('GRATIS PARA SIEMPRE', style: kts2Cta),
+                      ],
+                    ),
             ),
           ),
         ),

@@ -77,10 +77,18 @@ class SignupStep2 extends StatelessWidget {
   }
 }
 
-class SignupStep1 extends StatelessWidget {
+class SignupStep1 extends StatefulWidget {
   final Function step1DoneCallback;
   SignupStep1({this.step1DoneCallback});
+
+  @override
+  _SignupStep1State createState() => _SignupStep1State();
+}
+
+class _SignupStep1State extends State<SignupStep1> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
+
+  bool isLoading = false;
 
   @override
   Widget build(BuildContext context) {
@@ -107,9 +115,17 @@ class SignupStep1 extends StatelessWidget {
         ),
         SizedBox(height: kSignupBottomSheetCornerRadius / 2 - kBigBoxPadding),
         CtaButton(
+          isLoading: isLoading,
           onTap: () async {
             try {
+              setState(() {
+                isLoading = true;
+              });
               UserCredential userCredential = await _auth.createUserWithEmailAndPassword(email: "barry.allen@example.com", password: "12345");
+              widget.step1DoneCallback();
+              setState(() {
+                isLoading = false;
+              });
             } /* on FirebaseAuthException catch (e) {
               if (e.code == 'weak-password') {
                 print('The password provided is too weak: ${e.toString()}');
@@ -132,8 +148,6 @@ class SignupStep1 extends StatelessWidget {
                 duration: Duration(seconds: 15),
               ).show(context);
             }
-
-            step1DoneCallback();
           },
         ),
         SizedBox(height: kSignupBottomSheetCornerRadius / 2),
