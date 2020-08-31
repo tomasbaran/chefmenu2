@@ -12,6 +12,7 @@ const Color colorShade6 = Color(0xFF1D1C0A);
 const Color colorBackground = Color(0xFF101A24);
 const Color colorPrimary1 = Color(0xFFCC9757);
 const Color colorRed = Color(0xFFEB5757);
+const Color colorGreen = Color(0xFF74BF00);
 
 const Color colorIosSafariLight = Color(0xFFF6F7F8);
 const Color colorIosSafariDark = Color(0xFF575757);
