@@ -87,8 +87,60 @@ class SignupStep1 extends StatefulWidget {
 
 class _SignupStep1State extends State<SignupStep1> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
-
+  String email;
+  String password;
   bool isLoading = false;
+
+  Flushbar _errorFlushbar;
+
+  void _showFlushbar(BuildContext context, String message) {
+    _errorFlushbar = Flushbar(
+      margin: EdgeInsets.all(kFlushbarPadding),
+      backgroundColor: colorIosSafariDark,
+      icon: Icon(Icons.error, color: colorRed),
+      title: 'Error',
+      message: message,
+      borderRadius: 100,
+      flushbarPosition: FlushbarPosition.TOP,
+      duration: Duration(seconds: 10),
+    );
+    _errorFlushbar.dismiss();
+    _errorFlushbar.show(context);
+    return;
+  }
+
+  Future<Function> registerUser(String email, String password) async {
+    try {
+      setState(() {
+        isLoading = true;
+      });
+      UserCredential userCredential = await _auth.createUserWithEmailAndPassword(email: email, password: password);
+      widget.step1DoneCallback();
+      setState(() {
+        isLoading = false;
+      });
+      _errorFlushbar.dismiss(true);
+    } on FirebaseAuthException catch (e) {
+      String message;
+      if (e.code == 'weak-password') {
+        message = 'The password needs to have at least 6 characters.';
+      } else if (e.code == 'email-already-in-use') {
+        message = 'The account already exists for that email.';
+        print('The account already exists for that email.');
+      } else {
+        message = e.toString();
+      }
+      _showFlushbar(context, message);
+      setState(() {
+        isLoading = false;
+      });
+    } catch (e) {
+      _showFlushbar(context, e.toString());
+      setState(() {
+        isLoading = false;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -101,6 +153,9 @@ class _SignupStep1State extends State<SignupStep1> {
         SignupField(
           hint: 'email',
           keyboardType: TextInputType.emailAddress,
+          onChanged: (_) {
+            email = _;
+          },
           onComplete: () {
             FocusScope.of(context).nextFocus();
           },
@@ -109,45 +164,18 @@ class _SignupStep1State extends State<SignupStep1> {
           hint: 'contraseña',
           keyboardType: TextInputType.visiblePassword,
           obscureText: true,
+          onChanged: (_) {
+            password = _;
+          },
           onComplete: () {
-            print('tada');
+            registerUser(email, password);
           },
         ),
         SizedBox(height: kSignupBottomSheetCornerRadius / 2 - kBigBoxPadding),
         CtaButton(
           isLoading: isLoading,
-          onTap: () async {
-            try {
-              setState(() {
-                isLoading = true;
-              });
-              UserCredential userCredential = await _auth.createUserWithEmailAndPassword(email: "barry.allen@example.com", password: "12345");
-              widget.step1DoneCallback();
-              setState(() {
-                isLoading = false;
-              });
-            } /* on FirebaseAuthException catch (e) {
-              if (e.code == 'weak-password') {
-                print('The password provided is too weak: ${e.toString()}');
-              } else if (e.code == 'email-already-in-use') {
-                print(e.toString());
-                print('The account already exists for that email.');
-              }
-            } */
-            catch (e) {
-              print(e.toString());
-              print('huhululu');
-              Flushbar(
-                margin: EdgeInsets.all(kFlushbarPadding),
-                backgroundColor: colorIosSafariDark,
-                icon: Icon(Icons.error, color: colorRed),
-                title: 'Error',
-                message: e.toString(),
-                borderRadius: 100,
-                flushbarPosition: FlushbarPosition.TOP,
-                duration: Duration(seconds: 15),
-              ).show(context);
-            }
+          onTap: () {
+            registerUser(email, password);
           },
         ),
         SizedBox(height: kSignupBottomSheetCornerRadius / 2),
@@ -180,13 +208,15 @@ class SignupField extends StatelessWidget {
   final TextInputType keyboardType;
   final bool obscureText;
   final Function onComplete;
-  SignupField({this.hint, this.keyboardType, this.obscureText = false, this.onComplete});
+  final Function onChanged;
+  SignupField({this.hint, this.keyboardType, this.obscureText = false, this.onComplete, this.onChanged});
   @override
   Widget build(BuildContext context) {
     return Container(
       width: (Platform.isIOS || Platform.isAndroid) ? null : 500,
       padding: const EdgeInsets.symmetric(vertical: kSignupFieldPadding, horizontal: kCtaHeight / 2),
       child: TextField(
+        onChanged: onChanged,
         onEditingComplete: onComplete,
         keyboardAppearance: Brightness.dark,
         textInputAction: TextInputAction.next,

@@ -17,18 +17,21 @@ class CtaButton extends StatelessWidget {
           width: MediaQuery.of(context).size.width,
           decoration: BoxDecoration(color: colorCtaBackground, borderRadius: BorderRadius.all(Radius.circular(kCtaHeight / 2))),
           child: Center(
-            child: Padding(
-              padding: const EdgeInsets.only(top: 8),
-              child: isLoading
-                  ? CircularProgressIndicator(/* backgroundColor: Colors.white */)
-                  : Column(
+            child: isLoading
+                ? Container(
+                    height: kCtaHeight / 2,
+                    width: kCtaHeight / 2,
+                    child: CircularProgressIndicator(valueColor: AlwaysStoppedAnimation<Color>(Colors.white)))
+                : Padding(
+                    padding: const EdgeInsets.only(top: 8),
+                    child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text('CREAR MENÚ', style: ktsCta),
                         Text('GRATIS PARA SIEMPRE', style: kts2Cta),
                       ],
                     ),
-            ),
+                  ),
           ),
         ),
       ),
