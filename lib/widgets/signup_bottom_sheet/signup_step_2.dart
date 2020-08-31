@@ -4,6 +4,8 @@ import 'package:flutter/cupertino.dart';
 import 'swipable_horizontal_line.dart';
 
 class SignupStep2 extends StatelessWidget {
+  final String registeredEmail;
+  SignupStep2({this.registeredEmail});
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -23,10 +25,15 @@ class SignupStep2 extends StatelessWidget {
                 MediaQuery.of(context).platformBrightness == Brightness.dark ? ktsSignupFieldStep2DarkThemeTitle : ktsSignupFieldStep2LightThemeTitle,
           ),
           SizedBox(height: kSignupBottomSheetCornerRadius),
-          Text(
-            'Una vez que el Admin para crear el menú esté listo, le enviaremos el enlace a su email.',
+          RichText(
             textAlign: TextAlign.center,
-            style: MediaQuery.of(context).platformBrightness == Brightness.dark ? ktsSignupStep2DarkThemeMessage : ktsSignupStep2LightThemeMessage,
+            text: TextSpan(
+                style:
+                    MediaQuery.of(context).platformBrightness == Brightness.dark ? ktsSignupStep2DarkThemeMessage : ktsSignupStep2LightThemeMessage,
+                children: [
+                  TextSpan(text: 'Una vez que el Admin para crear el menú esté listo, le enviaremos las instrucciones a '),
+                  TextSpan(text: registeredEmail, style: TextStyle(decoration: TextDecoration.underline)),
+                ]),
           ),
           SizedBox(height: kSignupBottomSheetCornerRadius / 2),
           Text(

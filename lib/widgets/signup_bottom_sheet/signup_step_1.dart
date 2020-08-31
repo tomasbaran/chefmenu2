@@ -16,7 +16,7 @@ class SignupStep1 extends StatefulWidget {
 
 class _SignupStep1State extends State<SignupStep1> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
-  String email;
+  String _email;
   String password;
   bool isLoading = false;
 
@@ -50,7 +50,8 @@ class _SignupStep1State extends State<SignupStep1> {
       });
       await _auth.createUserWithEmailAndPassword(email: email, password: password);
       // if no error mark step1Done = true
-      widget.step1DoneCallback();
+      widget.step1DoneCallback(email);
+
       setState(() {
         isLoading = false;
       });
@@ -88,7 +89,7 @@ class _SignupStep1State extends State<SignupStep1> {
           hint: 'email',
           keyboardType: TextInputType.emailAddress,
           onChanged: (_) {
-            email = _;
+            _email = _;
           },
           onComplete: () {
             FocusScope.of(context).nextFocus();
@@ -102,14 +103,14 @@ class _SignupStep1State extends State<SignupStep1> {
             password = _;
           },
           onComplete: () {
-            registerUser(email, password);
+            registerUser(_email, password);
           },
         ),
         SizedBox(height: kSignupBottomSheetCornerRadius / 2 - kBigBoxPadding),
         CtaButton(
           isLoading: isLoading,
           onTap: () {
-            registerUser(email, password);
+            registerUser(_email, password);
           },
         ),
         SizedBox(height: kSignupBottomSheetCornerRadius / 2),

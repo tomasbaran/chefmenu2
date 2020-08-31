@@ -11,6 +11,7 @@ class SignupBottomSheet extends StatefulWidget {
 
 class _SignupBottomSheetState extends State<SignupBottomSheet> {
   bool step1Done = false;
+  String email;
 
   @override
   Widget build(BuildContext context) {
@@ -26,9 +27,12 @@ class _SignupBottomSheetState extends State<SignupBottomSheet> {
           ),
         ),
         child: step1Done
-            ? SignupStep2()
-            : SignupStep1(step1DoneCallback: () {
-                setState(() => step1Done = true);
+            ? SignupStep2(registeredEmail: email)
+            : SignupStep1(step1DoneCallback: (String registeredEmail) {
+                setState(() {
+                  email = registeredEmail;
+                  step1Done = true;
+                });
               }),
       ),
     );
