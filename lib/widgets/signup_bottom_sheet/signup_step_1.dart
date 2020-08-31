@@ -5,6 +5,8 @@ import 'package:flushbar/flushbar.dart';
 import '../cta_button.dart';
 import 'signup_field.dart';
 import 'swipable_horizontal_line.dart';
+import 'package:universal_io/io.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 class SignupStep1 extends StatefulWidget {
   final Function step1DoneCallback;
@@ -16,6 +18,8 @@ class SignupStep1 extends StatefulWidget {
 
 class _SignupStep1State extends State<SignupStep1> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
   String _email;
   String password;
   bool isLoading = false;
@@ -52,6 +56,13 @@ class _SignupStep1State extends State<SignupStep1> {
       // if no error mark step1Done = true
       widget.step1DoneCallback(email);
 
+      // write user info (esp. language) to DB
+      _firestore.collection('owners').doc(_auth.currentUser.uid).set({
+        'email': email,
+        'language': Platform.localeName.toLowerCase().substring(0, 2),
+        'uid': _auth.currentUser.uid,
+      });
+
       setState(() {
         isLoading = false;
       });
@@ -61,7 +72,8 @@ class _SignupStep1State extends State<SignupStep1> {
         message = 'The password needs to have at least 6 characters.';
       } else if (e.code == 'email-already-in-use') {
         message = 'The account already exists for that email.';
-        print('The account already exists for that email.');
+      } else if (e.code == 'invalid-email') {
+        message = 'The email address format is NOT correct. It looks like you made a typo while typing your email address.';
       } else {
         message = e.toString();
       }

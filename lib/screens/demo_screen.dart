@@ -9,6 +9,7 @@ import 'package:chefmenu2/change_notifiers/my_scroll_position.dart';
 import 'package:chefmenu2/change_notifiers/tab_index.dart';
 import 'package:chefmenu2/widgets/cover_container.dart';
 import 'package:chefmenu2/widgets/signup_bottom_sheet/signup_bottom_sheet.dart';
+import 'package:universal_io/io.dart';
 
 class DemoScreen extends StatefulWidget {
   static String id = '/demo';
@@ -126,7 +127,7 @@ class _DemoScreenState extends State<DemoScreen> with SingleTickerProviderStateM
               },
               child: Stack(
                 children: [
-                  CoverContainer(restaurantTitle: 'Don Juan', imageSrc: 'icons/cover.jpeg'),
+                  CoverContainer(restaurantTitle: Platform.localeName.substring(0, 2), imageSrc: 'icons/cover.jpeg'),
                   //DEPRECATED:
                   // Provider.of<MyScrollPosition>(context).data > backLayerAnimationTopPoint(context)
                   //     ? CtaButton()
