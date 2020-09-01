@@ -1,4 +1,5 @@
 import 'package:chefmenu2/animation/cover_aka_back_layer_formulas.dart';
+import 'package:chefmenu2/animation/my_fade_in.dart';
 import 'package:chefmenu2/theme/style_constants.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -6,13 +7,19 @@ import 'package:chefmenu2/change_notifiers/my_scroll_position.dart';
 import 'package:flutter/rendering.dart';
 import 'meal_card.dart';
 import 'package:chefmenu2/models/data.dart';
+import 'dart:core';
 
-class BigBoxContainer extends StatelessWidget {
+class BigBoxContainer extends StatefulWidget {
   BigBoxContainer({this.categoryTitle, this.tabController, this.scrollController});
   final TabController tabController;
   final String categoryTitle;
   final ScrollController scrollController;
 
+  @override
+  _BigBoxContainerState createState() => _BigBoxContainerState();
+}
+
+class _BigBoxContainerState extends State<BigBoxContainer> {
   int numberOfColumns(dynamic context) => ((MediaQuery.of(context).size.width - (2 * kBigBoxPadding)) / kMaxCrossAxisExtent).floor();
 
   List<MealCard> _buildGridTileList({dynamic context, int mealIndex, int categoryIndex}) => List.generate(
@@ -40,6 +47,20 @@ class BigBoxContainer extends StatelessWidget {
       return kBigBoxPadding;
   }
 
+  double animationOpacity = 1;
+  @override
+  void initState() {
+    super.initState();
+    widget.tabController.animation
+      ..addListener(() {
+        setState(() {
+          animationOpacity = 0.5 - widget.tabController.animation.value;
+          animationOpacity = animationOpacity.abs() * 2;
+          print('value: ${widget.tabController.animation.value}');
+        });
+      });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -57,7 +78,7 @@ class BigBoxContainer extends StatelessWidget {
       child: ClipRRect(
         borderRadius: BorderRadius.all(Radius.circular(30)),
         child: NestedScrollView(
-          controller: scrollController,
+          controller: widget.scrollController,
           headerSliverBuilder: (context, isScrolled) {
             return [
               SliverPadding(
@@ -71,10 +92,32 @@ class BigBoxContainer extends StatelessWidget {
                       decoration: BoxDecoration(
                           color: colorBackground, borderRadius: BorderRadius.only(topLeft: Radius.circular(30), topRight: Radius.circular(30))),
                       child: Center(
-                        child: Text(
-                          menu.categories[tabController.index].title,
-                          style: ktsCategoryTitle,
-                        ),
+                        child: Stack(children: [
+                          AnimatedOpacity(
+                            opacity: widget.tabController.animation.value > widget.tabController.previousIndex ? 1 : 0,
+                            duration: Duration(milliseconds: 300),
+                            child: Center(
+                              child: Text(
+                                widget.tabController.animation.value > widget.tabController.previousIndex
+                                    ? menu.categories[widget.tabController.index].title
+                                    : menu.categories[widget.tabController.previousIndex].title,
+                                style: ktsCategoryTitle,
+                              ),
+                            ),
+                          ),
+                          AnimatedOpacity(
+                            opacity: widget.tabController.animation.value < widget.tabController.previousIndex ? 1 : 0,
+                            duration: Duration(seconds: 1),
+                            child: Center(
+                              child: Text(
+                                widget.tabController.animation.value < widget.tabController.previousIndex
+                                    ? menu.categories[widget.tabController.index].title
+                                    : menu.categories[widget.tabController.previousIndex].title,
+                                style: ktsCategoryTitle,
+                              ),
+                            ),
+                          ),
+                        ]),
                       ),
                     ),
                   ),
@@ -83,7 +126,7 @@ class BigBoxContainer extends StatelessWidget {
             ];
           },
           body: TabBarView(
-            controller: tabController,
+            controller: widget.tabController,
             children: [
               GridView.extent(
                 maxCrossAxisExtent: kMaxCrossAxisExtent,
