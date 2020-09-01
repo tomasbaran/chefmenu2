@@ -61,9 +61,9 @@ class BigBoxContainer extends StatelessWidget {
                           color: colorBackground, borderRadius: BorderRadius.only(topLeft: Radius.circular(30), topRight: Radius.circular(30))),
                       child: Center(
                         child: Text(
-                          //_tabController.index == 0 ? 'Entrantes' : 'Main Courses',
+                          tabController.index == 0 ? 'Hamburgesas' : 'Postres',
                           //Provider.of<TabIndex>(context).position.toString(),
-                          categoryTitle,
+                          //categoryTitle,
                           style: ktsCategoryTitle,
                         ),
                       ),
@@ -78,12 +78,12 @@ class BigBoxContainer extends StatelessWidget {
             children: [
               GridView.extent(
                 maxCrossAxisExtent: kMaxCrossAxisExtent,
-                childAspectRatio: 0.52,
+                childAspectRatio: 0.53,
                 children: _buildGridTileList(context, 9),
               ),
               GridView.extent(
                 maxCrossAxisExtent: kMaxCrossAxisExtent,
-                childAspectRatio: 0.53,
+                childAspectRatio: 0.54,
                 children: _buildGridTileList(context, 6),
               ),
             ],

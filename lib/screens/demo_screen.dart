@@ -127,7 +127,7 @@ class _DemoScreenState extends State<DemoScreen> with SingleTickerProviderStateM
               },
               child: Stack(
                 children: [
-                  CoverContainer(restaurantTitle: Platform.localeName.substring(0, 2), imageSrc: 'icons/cover.jpeg'),
+                  CoverContainer(restaurantTitle: 'Don Juan', imageSrc: 'icons/cover.jpeg'),
                   //DEPRECATED:
                   // Provider.of<MyScrollPosition>(context).data > backLayerAnimationTopPoint(context)
                   //     ? CtaButton()

@@ -57,13 +57,13 @@ class MyTabBar extends StatelessWidget {
           indicator: BoxDecoration(shape: BoxShape.rectangle, borderRadius: BorderRadius.all(Radius.circular(30)), color: Colors.white),
           tabs: [
             Tab(
-              text: 'ENTRANTES',
+              text: 'HAMBURGESAS',
               // icon: Image.asset('icons/218-bacon-1.png',
               //     height: kTabIconHeight,
               //     color: Provider.of<TabIndex>(context).position == 0 ? colorTabActive : Colors.white.withOpacity(0.33) /* colorTabInactive */),
             ),
             Tab(
-              text: 'MAIN COURSES',
+              text: 'POSTRES',
               // icon: Image.asset('icons/164-crab.png',
               //     height: kTabIconHeight, color: _tabController.index == 1 ? colorTabActive : Colors.white.withOpacity(0.33) /* colorTabInactive */),
             ),

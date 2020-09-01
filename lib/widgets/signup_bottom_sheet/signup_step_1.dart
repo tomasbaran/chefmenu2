@@ -71,7 +71,9 @@ class _SignupStep1State extends State<SignupStep1> {
       if (e.code == 'weak-password') {
         message = 'The password needs to have at least 6 characters.';
       } else if (e.code == 'email-already-in-use') {
-        message = 'The account already exists for that email.';
+        print('e: $e email: $email');
+        //message = 'The account already exists for that email.';
+        message = '$e email: $email';
       } else if (e.code == 'invalid-email') {
         message = 'The email address format is NOT correct. It looks like you made a typo while typing your email address.';
       } else {
@@ -113,9 +115,6 @@ class _SignupStep1State extends State<SignupStep1> {
           obscureText: true,
           onChanged: (_) {
             password = _;
-          },
-          onComplete: () {
-            registerUser(_email, password);
           },
         ),
         SizedBox(height: kSignupBottomSheetCornerRadius / 2 - kBigBoxPadding),
