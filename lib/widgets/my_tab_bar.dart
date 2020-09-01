@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'package:chefmenu2/models/meal_category.dart';
 import 'package:flutter/material.dart';
 import 'package:chefmenu2/theme/style_constants.dart';
 import 'package:provider/provider.dart';
@@ -6,6 +7,7 @@ import 'dart:ui';
 import 'package:universal_io/io.dart';
 import 'package:chefmenu2/change_notifiers/my_scroll_position.dart';
 import 'package:chefmenu2/animation/cover_aka_back_layer_formulas.dart';
+import 'package:chefmenu2/models/data.dart';
 
 class MyTabBar extends StatelessWidget {
   //WORKAROUND: https://github.com/flutter/flutter/issues/64266
@@ -31,6 +33,17 @@ class MyTabBar extends StatelessWidget {
   MyTabBar({this.tabController, this.makeFabInvisible});
   final TabController tabController;
   final bool makeFabInvisible;
+
+  List<Widget> tabBuilder() {
+    List<Widget> output = [];
+
+    for (MealCategory category in menu.categories) {
+      output.add(Tab(text: category.title.toUpperCase()));
+    }
+
+    return output;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -55,19 +68,7 @@ class MyTabBar extends StatelessWidget {
           unselectedLabelColor: colorShade2,
           indicatorColor: Colors.blue,
           indicator: BoxDecoration(shape: BoxShape.rectangle, borderRadius: BorderRadius.all(Radius.circular(30)), color: Colors.white),
-          tabs: [
-            Tab(
-              text: 'HAMBURGESAS',
-              // icon: Image.asset('icons/218-bacon-1.png',
-              //     height: kTabIconHeight,
-              //     color: Provider.of<TabIndex>(context).position == 0 ? colorTabActive : Colors.white.withOpacity(0.33) /* colorTabInactive */),
-            ),
-            Tab(
-              text: 'POSTRES',
-              // icon: Image.asset('icons/164-crab.png',
-              //     height: kTabIconHeight, color: _tabController.index == 1 ? colorTabActive : Colors.white.withOpacity(0.33) /* colorTabInactive */),
-            ),
-          ],
+          tabs: tabBuilder(),
         ),
       ),
     );

@@ -72,9 +72,7 @@ class BigBoxContainer extends StatelessWidget {
                           color: colorBackground, borderRadius: BorderRadius.only(topLeft: Radius.circular(30), topRight: Radius.circular(30))),
                       child: Center(
                         child: Text(
-                          tabController.index == 0 ? 'Hamburgesas' : 'Postres',
-                          //Provider.of<TabIndex>(context).position.toString(),
-                          //categoryTitle,
+                          menu.categories[tabController.index].title,
                           style: ktsCategoryTitle,
                         ),
                       ),
