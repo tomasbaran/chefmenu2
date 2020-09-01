@@ -5,17 +5,38 @@ import 'package:provider/provider.dart';
 import 'package:chefmenu2/change_notifiers/my_scroll_position.dart';
 import 'package:flutter/rendering.dart';
 import 'meal_card.dart';
+import 'package:chefmenu2/models/meal.dart';
 
 class BigBoxContainer extends StatelessWidget {
   BigBoxContainer({this.categoryTitle, this.tabController, this.scrollController});
   final TabController tabController;
   final String categoryTitle;
   final ScrollController scrollController;
+  List ingredientsList = ['hielo', 'pimiento picante'];
+  List<Meal> meals = [
+    Meal(
+      title: 'Gallo Pinto',
+      imageUrl: 'img/0/0.jpeg',
+      ingredients: ['hielo', 'pimiento picante'],
+      price: 12.33,
+      portion: '240 g',
+    ),
+  ];
 
   int numberOfColumns(dynamic context) => ((MediaQuery.of(context).size.width - (2 * kBigBoxPadding)) / kMaxCrossAxisExtent).floor();
 
-  List<MealCard> _buildGridTileList(dynamic context, int count) =>
-      List.generate(count, (i) => MealCard(i: i, numberOfColumns: numberOfColumns(context)));
+  List<MealCard> _buildGridTileList(dynamic context, int count) => List.generate(
+      count,
+      (i) => MealCard(
+            i: i,
+            numberOfColumns: numberOfColumns(context),
+            title: meals[0].title,
+            portion: meals[0].portion,
+            price: meals[0].price,
+            imageUrl: meals[0].imageUrl,
+            //currency: meals[0].currency,
+            ingredients: meals[0].ingredients,
+          ));
 
   double bigBoxContainerBottomPadding(BuildContext context) {
     if ((Provider.of<MyScrollPosition>(context).data - backLayerAnimationTopPoint(context)) >= kBottomBigBoxPadding)

@@ -2,9 +2,24 @@ import 'package:flutter/material.dart';
 import 'package:chefmenu2/theme/style_constants.dart';
 
 class MealCard extends StatelessWidget {
+  final String title;
+  final List<String> ingredients;
+  final String imageUrl;
+  final String portion;
+  final String currency;
+  final double price;
   final int numberOfColumns;
   final int i;
-  MealCard({this.i, this.numberOfColumns});
+  MealCard({
+    this.i,
+    this.numberOfColumns,
+    this.currency,
+    this.imageUrl,
+    this.ingredients,
+    this.portion,
+    this.price,
+    this.title,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -28,8 +43,13 @@ class MealCard extends StatelessWidget {
           color: colorBackground,
         ),
         child: Stack(children: [
-          MealBox(),
-          MealCover(),
+          MealBox(
+            title: title,
+            price: price,
+            portion: portion,
+            ingredients: ingredients,
+          ),
+          MealCover(imageUrl: imageUrl),
         ]),
         //margin: EdgeInsets.all(0),
       ),
@@ -38,6 +58,8 @@ class MealCard extends StatelessWidget {
 }
 
 class MealCover extends StatelessWidget {
+  final String imageUrl;
+  MealCover({this.imageUrl});
   @override
   Widget build(BuildContext context) {
     return Align(
@@ -46,9 +68,7 @@ class MealCover extends StatelessWidget {
         height: kMealCoverSize,
         width: kMealCoverSize,
         decoration: BoxDecoration(
-          image: DecorationImage(
-              image: NetworkImage('https://images.pexels.com/photos/1633578/pexels-photo-1633578.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500'),
-              fit: BoxFit.cover),
+          image: DecorationImage(image: AssetImage(imageUrl), fit: BoxFit.cover),
           //color: Colors.red,
           borderRadius: BorderRadius.all(Radius.circular(kMealCoverCornerRadius)),
         ),
@@ -58,6 +78,27 @@ class MealCover extends StatelessWidget {
 }
 
 class MealBox extends StatelessWidget {
+  final String title;
+  final List<String> ingredients;
+  final String portion;
+  //final String currency;
+  final double price;
+  MealBox({
+    //this.currency,
+    this.ingredients,
+    this.portion,
+    this.price,
+    this.title,
+  });
+
+  String ingredientsText(List<String> ingredients) {
+    String out = '';
+    for (String ingredient in ingredients) {
+      out += ingredient + ', ';
+    }
+    return out.substring(0, out.length - 2);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -78,12 +119,12 @@ class MealBox extends StatelessWidget {
         children: [
           Column(
             children: [
-              Text('Good \'ld chicken', style: ktsMealBoxTitle, textAlign: TextAlign.center),
+              Text(title, style: ktsMealBoxTitle, textAlign: TextAlign.center),
               SizedBox(
                 height: kMealBoxPadding,
               ),
               Text(
-                'chicken, peppers, mayo, salad',
+                ingredientsText(ingredients),
                 style: ktsMealBoxDetail,
               ),
             ],
@@ -92,11 +133,11 @@ class MealBox extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                '300 g',
+                portion,
                 style: ktsMealBoxPortion,
               ),
               Text(
-                '\$ 16.00',
+                '\$ ${price.toString()}',
                 style: ktsMealBoxPrice,
               ),
             ],
