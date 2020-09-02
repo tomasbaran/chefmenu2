@@ -25,6 +25,25 @@ Menu menu = Menu(
       ],
     ),
     MealCategory(
+      title: 'Pescado',
+      meals: [
+        Meal(
+          title: 'Salmon',
+          imageUrl: 'img/0/0.jpeg',
+          ingredients: ['hielo', 'pimiento picante'],
+          price: 12.33,
+          portion: '240 g',
+        ),
+        Meal(
+          title: 'Dorada',
+          imageUrl: 'img/0/0.jpeg',
+          ingredients: ['hielo 2', 'pimiento picante 2'],
+          price: 1.39,
+          portion: '340 g',
+        ),
+      ],
+    ),
+    MealCategory(
       title: 'Postres',
       meals: [
         Meal(

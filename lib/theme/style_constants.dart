@@ -18,7 +18,6 @@ const Color colorIosSafariLight = Color(0xFFF6F7F8);
 const Color colorIosSafariDark = Color(0xFF575757);
 
 // TabBar
-const int kTabBarLength = 2;
 const double kTabIconHeight = 28;
 Color colorTabInactive = Colors.white.withOpacity(0.5);
 const Color colorTabActive = colorBackground;

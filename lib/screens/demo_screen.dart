@@ -9,7 +9,7 @@ import 'package:chefmenu2/change_notifiers/my_scroll_position.dart';
 import 'package:chefmenu2/change_notifiers/tab_index.dart';
 import 'package:chefmenu2/widgets/cover_container.dart';
 import 'package:chefmenu2/widgets/signup_bottom_sheet/signup_bottom_sheet.dart';
-import 'package:universal_io/io.dart';
+import 'package:chefmenu2/models/data.dart';
 
 class DemoScreen extends StatefulWidget {
   static String id = '/demo';
@@ -31,7 +31,7 @@ class _DemoScreenState extends State<DemoScreen> with SingleTickerProviderStateM
     super.initState();
     bigBoxScrollPosition = MyScrollPosition();
     _tabIndex = TabIndex();
-    _tabController = TabController(length: kTabBarLength, vsync: this);
+    _tabController = TabController(length: menu.categories.length, vsync: this);
     _scrollController = ScrollController();
   }
 
@@ -84,7 +84,7 @@ class _DemoScreenState extends State<DemoScreen> with SingleTickerProviderStateM
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: kTabBarLength,
+      length: menu.categories.length,
       child: ChangeNotifierProvider<TabIndex>(
         create: (context) => _tabIndex,
         child: ChangeNotifierProvider<MyScrollPosition>(

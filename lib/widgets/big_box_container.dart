@@ -47,15 +47,14 @@ class _BigBoxContainerState extends State<BigBoxContainer> {
       return kBigBoxPadding;
   }
 
-  double animationOpacity = 1;
+  int _roundedValue = 0;
   @override
   void initState() {
     super.initState();
     widget.tabController.animation
       ..addListener(() {
         setState(() {
-          animationOpacity = 0.5 - widget.tabController.animation.value;
-          animationOpacity = animationOpacity.abs() * 2;
+          _roundedValue = widget.tabController.animation.value.round();
           print('value: ${widget.tabController.animation.value}');
         });
       });
@@ -94,11 +93,12 @@ class _BigBoxContainerState extends State<BigBoxContainer> {
                       child: Center(
                         child: Stack(children: [
                           AnimatedOpacity(
-                            opacity: widget.tabController.animation.value > widget.tabController.previousIndex ? 1 : 0,
-                            duration: Duration(milliseconds: 300),
+                            opacity: _roundedValue > widget.tabController.previousIndex ? 1 : 0,
+                            duration: Duration(milliseconds: _roundedValue > widget.tabController.previousIndex ? 1500 : 600),
+                            curve: Curves.easeInOutQuart,
                             child: Center(
                               child: Text(
-                                widget.tabController.animation.value > widget.tabController.previousIndex
+                                _roundedValue > widget.tabController.previousIndex
                                     ? menu.categories[widget.tabController.index].title
                                     : menu.categories[widget.tabController.previousIndex].title,
                                 style: ktsCategoryTitle,
@@ -106,11 +106,12 @@ class _BigBoxContainerState extends State<BigBoxContainer> {
                             ),
                           ),
                           AnimatedOpacity(
-                            opacity: widget.tabController.animation.value < widget.tabController.previousIndex ? 1 : 0,
-                            duration: Duration(seconds: 1),
+                            opacity: _roundedValue < widget.tabController.previousIndex ? 1 : 0,
+                            duration: Duration(milliseconds: _roundedValue < widget.tabController.previousIndex ? 1500 : 600),
+                            curve: Curves.easeInOutQuart,
                             child: Center(
                               child: Text(
-                                widget.tabController.animation.value < widget.tabController.previousIndex
+                                _roundedValue < widget.tabController.previousIndex
                                     ? menu.categories[widget.tabController.index].title
                                     : menu.categories[widget.tabController.previousIndex].title,
                                 style: ktsCategoryTitle,
@@ -144,6 +145,15 @@ class _BigBoxContainerState extends State<BigBoxContainer> {
                   context: context,
                   categoryIndex: 1,
                   mealIndex: menu.categories[1].meals.length,
+                ),
+              ),
+              GridView.extent(
+                maxCrossAxisExtent: kMaxCrossAxisExtent,
+                childAspectRatio: 0.53,
+                children: _buildGridTileList(
+                  context: context,
+                  categoryIndex: 2,
+                  mealIndex: menu.categories[2].meals.length,
                 ),
               ),
             ],
