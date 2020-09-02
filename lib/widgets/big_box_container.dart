@@ -49,26 +49,36 @@ class _BigBoxContainerState extends State<BigBoxContainer> {
 
   int _currentIndex = 0;
   int _previousIndex = 0;
-  int valueA = 0;
-  bool activeA = true;
-  @override
-  void initState() {
-    super.initState();
+  int _nextIndex = 0;
+  bool _stackAIsActive = true;
+
+  void _changeTabIndex() {
     widget.tabController.animation
       ..addListener(() {
         _currentIndex = widget.tabController.animation.value.round();
-        print('_roundedValue: $_currentIndex');
-        // TODO: needed? using for setState?
-        if (_currentIndex != valueA) {
-          activeA = !activeA;
+        //print('_previousIndex: $_previousIndex');
+        //print('_currentIndex: $_currentIndex');
+        //print('_nextIndex: $_nextIndex');
 
-          _previousIndex = valueA;
-          print('previousIndex: $_previousIndex');
-          valueA = _currentIndex;
-          print('valueA: $valueA');
-          print('change!!!!');
+        if (_currentIndex != _nextIndex) {
+          // _stackAIsActive ? stackA is active : stackB is active
+          _stackAIsActive = !_stackAIsActive;
+
+          _previousIndex = _nextIndex;
+          //print('previousIndex: $_previousIndex');
+          _nextIndex = _currentIndex;
+          //print('_nextIndex: $_nextIndex');
+
+          //print('change!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
+
         }
       });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _changeTabIndex();
   }
 
   @override
@@ -102,24 +112,26 @@ class _BigBoxContainerState extends State<BigBoxContainer> {
                       decoration: BoxDecoration(
                           color: colorBackground, borderRadius: BorderRadius.only(topLeft: Radius.circular(30), topRight: Radius.circular(30))),
                       child: Stack(children: [
+                        // StackA
                         AnimatedOpacity(
-                          opacity: activeA ? 1 : 0,
-                          duration: Duration(milliseconds: activeA ? 1000 : 500),
-                          curve: activeA ? Curves.easeInCubic : Curves.easeOutCubic,
+                          opacity: _stackAIsActive ? 1 : 0,
+                          duration: Duration(milliseconds: _stackAIsActive ? 1000 : 500),
+                          curve: _stackAIsActive ? Curves.easeInCubic : Curves.easeOutCubic,
                           child: Center(
                             child: Text(
-                              activeA ? menu.categories[_currentIndex].title : menu.categories[_previousIndex].title,
+                              _stackAIsActive ? menu.categories[_currentIndex].title : menu.categories[_previousIndex].title,
                               style: ktsCategoryTitle,
                             ),
                           ),
                         ),
+                        // StackB
                         AnimatedOpacity(
-                          opacity: activeA ? 0 : 1,
-                          duration: Duration(milliseconds: activeA ? 500 : 1000),
-                          curve: !activeA ? Curves.easeInCubic : Curves.easeOutCubic,
+                          opacity: !_stackAIsActive ? 1 : 0,
+                          duration: Duration(milliseconds: !_stackAIsActive ? 1000 : 500),
+                          curve: !_stackAIsActive ? Curves.easeInCubic : Curves.easeOutCubic,
                           child: Center(
                             child: Text(
-                              !activeA ? menu.categories[_currentIndex].title : menu.categories[_previousIndex].title,
+                              !_stackAIsActive ? menu.categories[_currentIndex].title : menu.categories[_previousIndex].title,
                               style: ktsCategoryTitle,
                             ),
                           ),
