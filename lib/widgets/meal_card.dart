@@ -37,10 +37,11 @@ class MealCard extends StatelessWidget {
         margin: EdgeInsets.only(
           left: ((i + numberOfColumns + 1) % (numberOfColumns + 1) == 0) ? kMealCardMargin : 0,
           right: ((i + numberOfColumns + 1) % (numberOfColumns + 1) == numberOfColumns) ? kMealCardMargin : 0,
-          bottom: kMealCoverSize / 4,
+          bottom: kMealCoverSize / 2,
         ),
         decoration: BoxDecoration(
           color: colorBackground,
+          //color: Colors.amber,
         ),
         child: Stack(children: [
           MealBox(
