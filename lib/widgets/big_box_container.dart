@@ -47,7 +47,8 @@ class _BigBoxContainerState extends State<BigBoxContainer> {
       return kBigBoxPadding;
   }
 
-  int _roundedValue = 0;
+  int _currentIndex = 0;
+  int _previousIndex = 0;
   int valueA = 0;
   bool activeA = true;
   @override
@@ -55,12 +56,15 @@ class _BigBoxContainerState extends State<BigBoxContainer> {
     super.initState();
     widget.tabController.animation
       ..addListener(() {
-        _roundedValue = widget.tabController.animation.value.round();
-        print('_roundedValue: $_roundedValue');
+        _currentIndex = widget.tabController.animation.value.round();
+        print('_roundedValue: $_currentIndex');
         // TODO: needed? using for setState?
-        if (_roundedValue != valueA) {
+        if (_currentIndex != valueA) {
           activeA = !activeA;
-          valueA = _roundedValue;
+
+          _previousIndex = valueA;
+          print('previousIndex: $_previousIndex');
+          valueA = _currentIndex;
           print('valueA: $valueA');
           print('change!!!!');
         }
@@ -100,22 +104,22 @@ class _BigBoxContainerState extends State<BigBoxContainer> {
                       child: Stack(children: [
                         AnimatedOpacity(
                           opacity: activeA ? 1 : 0,
-                          duration: Duration(milliseconds: activeA ? 1000 : 00),
-                          curve: Curves.easeInOutQuart,
+                          duration: Duration(milliseconds: activeA ? 1000 : 500),
+                          curve: activeA ? Curves.easeInCubic : Curves.easeOutCubic,
                           child: Center(
                             child: Text(
-                              activeA ? menu.categories[_roundedValue].title : menu.categories[widget.tabController.index].title,
+                              activeA ? menu.categories[_currentIndex].title : menu.categories[_previousIndex].title,
                               style: ktsCategoryTitle,
                             ),
                           ),
                         ),
                         AnimatedOpacity(
                           opacity: activeA ? 0 : 1,
-                          duration: Duration(milliseconds: activeA ? 00 : 1000),
-                          curve: Curves.easeInOutQuart,
+                          duration: Duration(milliseconds: activeA ? 500 : 1000),
+                          curve: !activeA ? Curves.easeInCubic : Curves.easeOutCubic,
                           child: Center(
                             child: Text(
-                              !activeA ? menu.categories[_roundedValue].title : menu.categories[widget.tabController.index].title,
+                              !activeA ? menu.categories[_currentIndex].title : menu.categories[_previousIndex].title,
                               style: ktsCategoryTitle,
                             ),
                           ),
