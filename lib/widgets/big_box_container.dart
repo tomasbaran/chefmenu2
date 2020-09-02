@@ -48,15 +48,22 @@ class _BigBoxContainerState extends State<BigBoxContainer> {
   }
 
   int _roundedValue = 0;
+  int valueA = 0;
+  bool activeA = true;
   @override
   void initState() {
     super.initState();
     widget.tabController.animation
       ..addListener(() {
-        setState(() {
-          _roundedValue = widget.tabController.animation.value.round();
-          print('value: ${widget.tabController.animation.value}');
-        });
+        _roundedValue = widget.tabController.animation.value.round();
+        print('_roundedValue: $_roundedValue');
+        // TODO: needed? using for setState?
+        if (_roundedValue != valueA) {
+          activeA = !activeA;
+          valueA = _roundedValue;
+          print('valueA: $valueA');
+          print('change!!!!');
+        }
       });
   }
 
@@ -90,36 +97,30 @@ class _BigBoxContainerState extends State<BigBoxContainer> {
                       height: kSliverAppBarLayerHeight,
                       decoration: BoxDecoration(
                           color: colorBackground, borderRadius: BorderRadius.only(topLeft: Radius.circular(30), topRight: Radius.circular(30))),
-                      child: Center(
-                        child: Stack(children: [
-                          AnimatedOpacity(
-                            opacity: _roundedValue > widget.tabController.previousIndex ? 1 : 0,
-                            duration: Duration(milliseconds: _roundedValue > widget.tabController.previousIndex ? 1500 : 600),
-                            curve: Curves.easeInOutQuart,
-                            child: Center(
-                              child: Text(
-                                _roundedValue > widget.tabController.previousIndex
-                                    ? menu.categories[widget.tabController.index].title
-                                    : menu.categories[widget.tabController.previousIndex].title,
-                                style: ktsCategoryTitle,
-                              ),
+                      child: Stack(children: [
+                        AnimatedOpacity(
+                          opacity: activeA ? 1 : 0,
+                          duration: Duration(milliseconds: activeA ? 1000 : 00),
+                          curve: Curves.easeInOutQuart,
+                          child: Center(
+                            child: Text(
+                              activeA ? menu.categories[_roundedValue].title : menu.categories[widget.tabController.index].title,
+                              style: ktsCategoryTitle,
                             ),
                           ),
-                          AnimatedOpacity(
-                            opacity: _roundedValue < widget.tabController.previousIndex ? 1 : 0,
-                            duration: Duration(milliseconds: _roundedValue < widget.tabController.previousIndex ? 1500 : 600),
-                            curve: Curves.easeInOutQuart,
-                            child: Center(
-                              child: Text(
-                                _roundedValue < widget.tabController.previousIndex
-                                    ? menu.categories[widget.tabController.index].title
-                                    : menu.categories[widget.tabController.previousIndex].title,
-                                style: ktsCategoryTitle,
-                              ),
+                        ),
+                        AnimatedOpacity(
+                          opacity: activeA ? 0 : 1,
+                          duration: Duration(milliseconds: activeA ? 00 : 1000),
+                          curve: Curves.easeInOutQuart,
+                          child: Center(
+                            child: Text(
+                              !activeA ? menu.categories[_roundedValue].title : menu.categories[widget.tabController.index].title,
+                              style: ktsCategoryTitle,
                             ),
                           ),
-                        ]),
-                      ),
+                        ),
+                      ]),
                     ),
                   ),
                 ),
