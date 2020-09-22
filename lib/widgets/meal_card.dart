@@ -138,7 +138,7 @@ class MealBox extends StatelessWidget {
                 style: ktsMealBoxPortion,
               ),
               Text(
-                '\$ ${price.toString()}',
+                price == null ? '' : '\$ ${price.toString()}',
                 style: ktsMealBoxPrice,
               ),
             ],

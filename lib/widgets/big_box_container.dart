@@ -60,7 +60,7 @@ class _BigBoxContainerState extends State<BigBoxContainer> {
       numberOfColumns: numberOfColumns(context),
       title: menu.categories[categoryIndex].meals[i].title,
       portion: menu.categories[categoryIndex].meals[i].portion,
-      price: i.toDouble(),
+      price: menu.categories[categoryIndex].meals[i].price,
       imageUrl: menu.categories[categoryIndex].meals[i].imageUrl,
       //currency: meals[0].currency,
       ingredients: menu.categories[categoryIndex].meals[i].ingredients,
@@ -207,7 +207,7 @@ class _BigBoxContainerState extends State<BigBoxContainer> {
               Container(
                 child: GridView.extent(
                   maxCrossAxisExtent: kMaxCrossAxisExtent,
-                  childAspectRatio: 0.51,
+                  childAspectRatio: 0.44,
                   children: _buildGridTileList(
                     context: context,
                     categoryIndex: 0,
