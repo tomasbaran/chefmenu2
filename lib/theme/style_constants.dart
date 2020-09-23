@@ -30,7 +30,7 @@ const double kExponent = 5;
 const double kBlurSpeed = 0.027;
 const double kRestaurantTitleMaxShadowBlur = 30;
 const double kCoverHeightProportion = 0.35;
-const TextStyle ktsRestaurantTitle = TextStyle(height: 2.3, color: Colors.white, fontSize: 32, fontWeight: FontWeight.w600, shadows: <Shadow>[
+const TextStyle ktsRestaurantTitle = TextStyle(height: 2.3, color: Colors.white, fontSize: 32, fontWeight: FontWeight.w800, shadows: <Shadow>[
   Shadow(offset: Offset(0, 1), blurRadius: kRestaurantTitleMaxShadowBlur / 2, color: Color.fromARGB(255, 0, 0, 0)),
   Shadow(offset: Offset(0, 1), blurRadius: kRestaurantTitleMaxShadowBlur, color: Color.fromARGB(255, 0, 0, 0)),
 ]);
@@ -42,7 +42,7 @@ const double kMaxCrossAxisExtent = 250;
 
 // SliverAppBarLayer aka SliverPersistentHeader
 const double kSliverAppBarLayerHeight = 60;
-const TextStyle ktsCategoryTitle = TextStyle(color: colorPrimary1, fontSize: 32, fontWeight: FontWeight.w800);
+const TextStyle ktsCategoryTitle = TextStyle(color: colorPrimary1, fontSize: 28, fontWeight: FontWeight.w800);
 
 // CTA
 const double kCtaShowtimeDelay = 15;
