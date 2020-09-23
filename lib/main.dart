@@ -9,8 +9,10 @@ class MyApp extends StatelessWidget {
   //TODO: Install firebase analytics
   //FirebaseAnalytics analytics = FirebaseAnalytics();
 
+  ImageProvider logo = AssetImage('img/0/0.jpg');
   @override
   Widget build(BuildContext context) {
+    precacheImage(logo, context);
     return MaterialApp(
       //TODO: Install firebase analytics
       //navigatorObservers: [FirebaseAnalyticsObserver(analytics: analytics)],

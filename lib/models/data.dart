@@ -141,20 +141,6 @@ Menu menu = Menu(
           price: 1.39,
           portion: '340 g',
         ),
-        Meal(
-          title: 'Dorada',
-          imageUrl: 'img/1/7.jpg',
-          ingredients: ['hielo 2', 'pimiento picante 2'],
-          price: 1.39,
-          portion: '340 g',
-        ),
-        Meal(
-          title: 'Dorada',
-          imageUrl: 'img/1/8.jpg',
-          ingredients: ['hielo 2', 'pimiento picante 2'],
-          price: 1.39,
-          portion: '340 g',
-        ),
       ],
     ),
     MealCategory(

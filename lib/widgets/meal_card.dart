@@ -23,7 +23,6 @@ class MealCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    precacheImage(AssetImage('img/0/0.jpg'), context);
     return Container(
       //WORKAROUND: according to https://github.com/flutter/flutter/issues/25009
       decoration: BoxDecoration(
