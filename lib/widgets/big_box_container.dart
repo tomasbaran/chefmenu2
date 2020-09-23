@@ -206,7 +206,7 @@ class _BigBoxContainerState extends State<BigBoxContainer> {
             children: [
               Container(
                 child: GridView.extent(
-                  cacheExtent: 999,
+                  cacheExtent: 100,
                   maxCrossAxisExtent: kMaxCrossAxisExtent,
                   childAspectRatio: 0.44,
                   children: _buildGridTileList(
@@ -217,6 +217,7 @@ class _BigBoxContainerState extends State<BigBoxContainer> {
                 ),
               ),
               GridView.extent(
+                cacheExtent: 200,
                 maxCrossAxisExtent: kMaxCrossAxisExtent,
                 childAspectRatio: 0.52,
                 children: _buildGridTileList(
@@ -226,6 +227,7 @@ class _BigBoxContainerState extends State<BigBoxContainer> {
                 ),
               ),
               GridView.extent(
+                cacheExtent: 100,
                 maxCrossAxisExtent: kMaxCrossAxisExtent,
                 childAspectRatio: 0.53,
                 children: _buildGridTileList(
