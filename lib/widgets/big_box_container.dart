@@ -206,9 +206,9 @@ class _BigBoxContainerState extends State<BigBoxContainer> {
             children: [
               Container(
                 child: GridView.extent(
-                  cacheExtent: 100,
+                  //cacheExtent: 100,
                   maxCrossAxisExtent: kMaxCrossAxisExtent,
-                  childAspectRatio: 0.44,
+                  childAspectRatio: 0.46,
                   children: _buildGridTileList(
                     context: context,
                     categoryIndex: 0,
@@ -217,7 +217,7 @@ class _BigBoxContainerState extends State<BigBoxContainer> {
                 ),
               ),
               GridView.extent(
-                cacheExtent: 200,
+                //cacheExtent: 200,
                 maxCrossAxisExtent: kMaxCrossAxisExtent,
                 childAspectRatio: 0.52,
                 children: _buildGridTileList(
@@ -227,13 +227,43 @@ class _BigBoxContainerState extends State<BigBoxContainer> {
                 ),
               ),
               GridView.extent(
-                cacheExtent: 100,
+                //cacheExtent: 100,
                 maxCrossAxisExtent: kMaxCrossAxisExtent,
-                childAspectRatio: 0.53,
+                childAspectRatio: 0.47,
                 children: _buildGridTileList(
                   context: context,
                   categoryIndex: 2,
                   meals: menu.categories[2].meals.length,
+                ),
+              ),
+              GridView.extent(
+                //cacheExtent: 100,
+                maxCrossAxisExtent: kMaxCrossAxisExtent,
+                childAspectRatio: 0.47,
+                children: _buildGridTileList(
+                  context: context,
+                  categoryIndex: 3,
+                  meals: menu.categories[3].meals.length,
+                ),
+              ),
+              GridView.extent(
+                //cacheExtent: 100,
+                maxCrossAxisExtent: kMaxCrossAxisExtent,
+                childAspectRatio: 0.49,
+                children: _buildGridTileList(
+                  context: context,
+                  categoryIndex: 4,
+                  meals: menu.categories[4].meals.length,
+                ),
+              ),
+              GridView.extent(
+                //cacheExtent: 100,
+                maxCrossAxisExtent: kMaxCrossAxisExtent,
+                childAspectRatio: 0.56,
+                children: _buildGridTileList(
+                  context: context,
+                  categoryIndex: 5,
+                  meals: menu.categories[5].meals.length,
                 ),
               ),
             ],
