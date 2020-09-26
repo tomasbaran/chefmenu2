@@ -62,6 +62,7 @@ class MyTabBar extends StatelessWidget {
       child: ClipRRect(
         borderRadius: BorderRadius.circular(30),
         child: TabBar(
+          labelStyle: ktsTabBar,
           controller: tabController,
           isScrollable: true,
           labelColor: Colors.black,

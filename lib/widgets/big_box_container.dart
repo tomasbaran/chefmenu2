@@ -208,7 +208,7 @@ class _BigBoxContainerState extends State<BigBoxContainer> {
                 child: GridView.extent(
                   //cacheExtent: 100,
                   maxCrossAxisExtent: kMaxCrossAxisExtent,
-                  childAspectRatio: 0.46,
+                  childAspectRatio: 0.44,
                   children: _buildGridTileList(
                     context: context,
                     categoryIndex: 0,
@@ -219,7 +219,7 @@ class _BigBoxContainerState extends State<BigBoxContainer> {
               GridView.extent(
                 //cacheExtent: 200,
                 maxCrossAxisExtent: kMaxCrossAxisExtent,
-                childAspectRatio: 0.52,
+                childAspectRatio: 0.51,
                 children: _buildGridTileList(
                   context: context,
                   categoryIndex: 1,
@@ -229,7 +229,7 @@ class _BigBoxContainerState extends State<BigBoxContainer> {
               GridView.extent(
                 //cacheExtent: 100,
                 maxCrossAxisExtent: kMaxCrossAxisExtent,
-                childAspectRatio: 0.47,
+                childAspectRatio: 0.46,
                 children: _buildGridTileList(
                   context: context,
                   categoryIndex: 2,
@@ -239,7 +239,7 @@ class _BigBoxContainerState extends State<BigBoxContainer> {
               GridView.extent(
                 //cacheExtent: 100,
                 maxCrossAxisExtent: kMaxCrossAxisExtent,
-                childAspectRatio: 0.47,
+                childAspectRatio: 0.46,
                 children: _buildGridTileList(
                   context: context,
                   categoryIndex: 3,
@@ -259,7 +259,7 @@ class _BigBoxContainerState extends State<BigBoxContainer> {
               GridView.extent(
                 //cacheExtent: 100,
                 maxCrossAxisExtent: kMaxCrossAxisExtent,
-                childAspectRatio: 0.56,
+                childAspectRatio: 0.55,
                 children: _buildGridTileList(
                   context: context,
                   categoryIndex: 5,

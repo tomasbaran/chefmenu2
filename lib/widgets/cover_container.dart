@@ -48,7 +48,7 @@ class CoverContainer extends StatelessWidget {
         ),
       ),
       Padding(
-        padding: EdgeInsets.only(top: restaurantTitleTopPadding(context), left: kBigBoxPadding),
+        padding: EdgeInsets.only(top: restaurantTitleTopPadding(context), left: kBigBoxPadding / 2),
         child: Text(
           '    ' + restaurantTitle + '    ',
           style: ktsRestaurantTitle,

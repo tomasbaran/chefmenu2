@@ -21,6 +21,7 @@ const Color colorIosSafariDark = Color(0xFF575757);
 const double kTabIconHeight = 28;
 Color colorTabInactive = Colors.white.withOpacity(0.5);
 const Color colorTabActive = colorBackground;
+TextStyle ktsTabBar = GoogleFonts.nunitoSans(fontSize: 14, fontWeight: FontWeight.w800);
 
 // Cover
 const double kSmallScreenCoverColorOpacityCoefficient = 0.065;
@@ -30,10 +31,15 @@ const double kExponent = 5;
 const double kBlurSpeed = 0.027;
 const double kRestaurantTitleMaxShadowBlur = 30;
 const double kCoverHeightProportion = 0.35;
-const TextStyle ktsRestaurantTitle = TextStyle(height: 2.3, color: Colors.white, fontSize: 32, fontWeight: FontWeight.w800, shadows: <Shadow>[
-  Shadow(offset: Offset(0, 1), blurRadius: kRestaurantTitleMaxShadowBlur / 2, color: Color.fromARGB(255, 0, 0, 0)),
-  Shadow(offset: Offset(0, 1), blurRadius: kRestaurantTitleMaxShadowBlur, color: Color.fromARGB(255, 0, 0, 0)),
-]);
+TextStyle ktsRestaurantTitle = GoogleFonts.niconne(
+  //height: 2.3,
+  color: Colors.white,
+  fontSize: 42,
+  shadows: <Shadow>[
+    Shadow(offset: Offset(0, 1), blurRadius: kRestaurantTitleMaxShadowBlur / 2, color: Color.fromARGB(255, 0, 0, 0)),
+    Shadow(offset: Offset(0, 1), blurRadius: kRestaurantTitleMaxShadowBlur, color: Color.fromARGB(255, 0, 0, 0)),
+  ],
+);
 
 // BigBoxContainer
 const double kBigBoxPadding = 8;
@@ -42,15 +48,15 @@ const double kMaxCrossAxisExtent = 250;
 
 // SliverAppBarLayer aka SliverPersistentHeader
 const double kSliverAppBarLayerHeight = 60;
-const TextStyle ktsCategoryTitle = TextStyle(color: colorPrimary1, fontSize: 28, fontWeight: FontWeight.w800);
+TextStyle ktsCategoryTitle = GoogleFonts.nunitoSans(color: colorPrimary1, fontSize: 24, fontWeight: FontWeight.w800);
 
 // CTA
 const double kCtaShowtimeDelay = 15;
 const double kCtaHeight = 60;
 const double kCtaWidth = 358;
 const Color colorCtaBackground = colorRed;
-const TextStyle ktsCta = TextStyle(color: Colors.white, fontSize: 21, fontWeight: FontWeight.w700);
-const TextStyle kts2Cta = TextStyle(color: Color(0xFFECB4B4), fontSize: 12, fontWeight: FontWeight.w400);
+TextStyle ktsCta = GoogleFonts.nunitoSans(color: Colors.white, fontSize: 21, fontWeight: FontWeight.w800);
+TextStyle kts2Cta = GoogleFonts.nunitoSans(color: Color(0xFFECB4B4), fontSize: 12, fontWeight: FontWeight.w500);
 
 // MealCard
 const double kMealCoverSize = 120;
@@ -59,7 +65,7 @@ const double kMealBoxPadding = 12;
 const double kMealBoxCornerRadius = 30;
 const double kMealCoverCornerRadius = 20;
 Color colorMealBox = Color(0x00707070).withOpacity(0.3);
-TextStyle ktsMealBoxTitle = GoogleFonts.nunitoSans(color: Colors.white, fontSize: 19, fontWeight: FontWeight.w800);
+TextStyle ktsMealBoxTitle = GoogleFonts.nunitoSans(color: Colors.white, fontSize: 19, fontWeight: FontWeight.w800, height: 1.1);
 TextStyle ktsMealBoxDetail = GoogleFonts.nunitoSans(color: Color(0xFFE2E2E2), fontSize: 13, fontWeight: FontWeight.w300);
 TextStyle ktsMealBoxPortion = GoogleFonts.nunitoSans(color: Colors.white, fontSize: 13, fontWeight: FontWeight.w600);
 TextStyle ktsMealBoxPrice = GoogleFonts.nunitoSans(color: Colors.white, fontSize: 13, fontWeight: FontWeight.w800);

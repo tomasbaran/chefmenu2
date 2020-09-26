@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'screens/demo_screen.dart';
+import 'theme/style_constants.dart';
 
 void main() {
   runApp(MyApp());
@@ -17,6 +18,10 @@ class MyApp extends StatelessWidget {
       //TODO: Install firebase analytics
       //navigatorObservers: [FirebaseAnalyticsObserver(analytics: analytics)],
       theme: ThemeData(
+        // Android claming colors
+        accentColor: colorBackground.withOpacity(0.01),
+        //accentColorBrightness: Brightness.light,
+
         primarySwatch: Colors.teal,
         canvasColor: Colors.transparent,
       ),

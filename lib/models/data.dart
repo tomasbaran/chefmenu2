@@ -114,7 +114,7 @@ Menu menu = Menu(
         Meal(
           title: 'Cereales',
           imageUrl: 'img/5/2.jpg',
-          ingredients: ['papilla', 'avena', 'platano', 'granada', 'mango'],
+          ingredients: ['papilla', 'avena', 'plátano', 'granada', 'mango'],
           price: 4.99,
           portion: '280 g',
         ),
@@ -268,7 +268,7 @@ Menu menu = Menu(
         Meal(
           title: 'Perrito caliente',
           imageUrl: 'img/2/8.jpg',
-          ingredients: ['salchicha', 'habichuelas', 'cebolla crujiente', 'lechuga', 'pepinillo', 'mostaza', 'ketchup'],
+          ingredients: ['salchicha', 'lechuga', 'habichuelas', 'cebolla crujiente', 'pepinillo', 'mostaza', 'ketchup'],
           price: 9.99,
           portion: '100 g',
         ),

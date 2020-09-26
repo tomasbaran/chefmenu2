@@ -15,7 +15,18 @@ class CtaButton extends StatelessWidget {
           margin: EdgeInsets.symmetric(vertical: kBigBoxPadding, horizontal: kBigBoxPadding + 1),
           height: kCtaHeight,
           width: MediaQuery.of(context).size.width,
-          decoration: BoxDecoration(color: colorCtaBackground, borderRadius: BorderRadius.all(Radius.circular(kCtaHeight / 2))),
+          decoration: BoxDecoration(
+            color: colorCtaBackground,
+            borderRadius: BorderRadius.all(Radius.circular(kCtaHeight / 2)),
+            // boxShadow: [
+            //   BoxShadow(
+            //     color: colorCtaBackground.withOpacity(0.5),
+            //     spreadRadius: 0,
+            //     blurRadius: 35,
+            //     offset: Offset(0, 8), // changes position of shadow
+            //   ),
+            // ],
+          ),
           child: Center(
             child: isLoading
                 ? Container(
