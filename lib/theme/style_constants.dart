@@ -21,7 +21,7 @@ const Color colorIosSafariDark = Color(0xFF575757);
 const double kTabIconHeight = 28;
 Color colorTabInactive = Colors.white.withOpacity(0.5);
 const Color colorTabActive = colorBackground;
-TextStyle ktsTabBar = GoogleFonts.nunitoSans(fontSize: 14, fontWeight: FontWeight.w800);
+TextStyle ktsTabBar = GoogleFonts.nunitoSans(fontSize: 14, fontWeight: FontWeight.w700);
 
 // Cover
 const double kSmallScreenCoverColorOpacityCoefficient = 0.065;
@@ -55,8 +55,8 @@ const double kCtaShowtimeDelay = 15;
 const double kCtaHeight = 60;
 const double kCtaWidth = 358;
 const Color colorCtaBackground = colorRed;
-TextStyle ktsCta = GoogleFonts.nunitoSans(color: Colors.white, fontSize: 21, fontWeight: FontWeight.w800);
-TextStyle kts2Cta = GoogleFonts.nunitoSans(color: Color(0xFFECB4B4), fontSize: 12, fontWeight: FontWeight.w500);
+TextStyle ktsCta = GoogleFonts.nunitoSans(color: Colors.white, fontSize: 21, fontWeight: FontWeight.w800, height: 1.2);
+TextStyle kts2Cta = GoogleFonts.nunitoSans(color: Color(0xFFECB4B4), fontSize: 12, fontWeight: FontWeight.w500, height: 0.85);
 
 // MealCard
 const double kMealCoverSize = 120;

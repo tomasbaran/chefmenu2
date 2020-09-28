@@ -74,7 +74,6 @@ Menu menu = Menu(
             'mantequilla',
             'leche',
             'azúcar',
-            'leche',
             'crema',
           ],
           //price: 12.33,
@@ -174,7 +173,7 @@ Menu menu = Menu(
         Meal(
           title: 'Ensalada de colores',
           imageUrl: 'img/1/3.jpg',
-          ingredients: ['lechuga', 'pimiento', 'pimiento', 'aguacate', 'zanahoria', 'col', 'garbanzos'],
+          ingredients: ['lechuga', 'pimiento', 'aguacate', 'zanahoria', 'col', 'garbanzos'],
           price: 9.99,
           portion: '450 g',
         ),
