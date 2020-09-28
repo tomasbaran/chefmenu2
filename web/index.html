@@ -1,6 +1,15 @@
 <!DOCTYPE html>
 <html>
 <head>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-179191039-1"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'UA-179191039-1');
+</script>
   <meta charset="UTF-8">
   <meta content="IE=Edge" http-equiv="X-UA-Compatible">
   <meta name="description" content="A new Flutter project.">
@@ -12,7 +21,7 @@
   <link rel="apple-touch-icon" href="icons/Icon-192.png">
 
   <!-- Favicon -->
-  <link rel="shortcut icon" type="image/png" href="favicon.png"/>
+  <link rel="shortcut icon" type="image/png" href="favicon.ico"/>
 
   <title>chefmenu2</title>
   <link rel="manifest" href="manifest.json">
@@ -30,15 +39,37 @@
   </script>
   
   <!-- The core Firebase JS SDK is always required and must be listed first -->
-<script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.21.1/firebase-app.js"></script>
 <!-- Add Firebase products that you want to use -->
-<script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-auth.js"></script>
-<script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-firestore.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.21.1/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.21.1/firebase-firestore.js"></script>
 
 <!-- TODO: Add SDKs for Firebase products that you want to use
      https://firebase.google.com/docs/web/setup#available-libraries -->
-<script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-analytics.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.21.1/firebase-analytics.js"></script>
 
+
+<!--Production-->
+<script>
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  var firebaseConfig = {
+    apiKey: "AIzaSyAfJ5ihJvUP4qxqEbB1g5-OGz6HmTITXe8",
+    authDomain: "chefmenu2.firebaseapp.com",
+    databaseURL: "https://chefmenu2.firebaseio.com",
+    projectId: "chefmenu2",
+    storageBucket: "chefmenu2.appspot.com",
+    messagingSenderId: "437338725696",
+    appId: "1:437338725696:web:cd23c50a2debf5d1caeea5",
+    measurementId: "G-1GJZKS0WFY"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  firebase.analytics();
+</script>
+
+<!--Staging-->
+<!--
 <script>
   // Your web app's Firebase configuration
   var firebaseConfig = {
@@ -55,6 +86,7 @@
   firebase.initializeApp(firebaseConfig);
   firebase.analytics();
 </script>
+-->
 <script src="main.dart.js" type="application/javascript"></script>
   
 </body>
