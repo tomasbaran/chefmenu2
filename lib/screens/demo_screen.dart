@@ -10,6 +10,7 @@ import 'package:chefmenu2/change_notifiers/tab_index.dart';
 import 'package:chefmenu2/widgets/cover_container.dart';
 import 'package:chefmenu2/widgets/signup_bottom_sheet/signup_bottom_sheet.dart';
 import 'package:chefmenu2/models/data.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 
 class DemoScreen extends StatefulWidget {
   static String id = '/demo';
@@ -19,6 +20,7 @@ class DemoScreen extends StatefulWidget {
 }
 
 class _DemoScreenState extends State<DemoScreen> with SingleTickerProviderStateMixin {
+  FirebaseAnalytics analytics = FirebaseAnalytics();
   MyScrollPosition bigBoxScrollPosition;
   TabIndex _tabIndex;
   TabController _tabController;
@@ -136,6 +138,7 @@ class _DemoScreenState extends State<DemoScreen> with SingleTickerProviderStateM
                   //CtaButton(),
                   Provider.of<MyScrollPosition>(context).data > 0 /* (backLayerAnimationTopPoint(context) + kCtaShowtimeDelay) */ ? CtaButton(
                           onTap: () {
+                            analytics.logEvent(name: 'CTA_click_1');
                             showModalBottomSheet(isScrollControlled: true, context: context, builder: (BuildContext context) => SignupBottomSheet());
                           },
                         )

@@ -7,6 +7,7 @@ import 'signup_field.dart';
 import 'swipable_horizontal_line.dart';
 import 'package:universal_io/io.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 
 class SignupStep1 extends StatefulWidget {
   final Function step1DoneCallback;
@@ -19,6 +20,7 @@ class SignupStep1 extends StatefulWidget {
 class _SignupStep1State extends State<SignupStep1> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final FirebaseAnalytics _analytics = FirebaseAnalytics();
 
   String _email;
   String password;
@@ -66,7 +68,10 @@ class _SignupStep1State extends State<SignupStep1> {
       setState(() {
         isLoading = false;
       });
+      _analytics.logEvent(name: 'CTA_click_2', parameters: {'success': true});
     } on FirebaseAuthException catch (e) {
+      _analytics.logEvent(name: 'CTA_click_2', parameters: {'success': false});
+      _analytics.logEvent(name: 'signup_error', parameters: {'message': e.code.toString()});
       String message;
       if (e.code == 'weak-password') {
         message = 'The password needs to have at least 6 characters.';
@@ -84,6 +89,9 @@ class _SignupStep1State extends State<SignupStep1> {
       });
       _showFlushbar(context, message);
     } catch (e) {
+      _analytics.logEvent(name: 'CTA_click_2', parameters: {'success': false});
+      _analytics.logEvent(name: 'signup_error', parameters: {'message': e.toString()});
+      print(e.toString());
       setState(() {
         isLoading = false;
       });
