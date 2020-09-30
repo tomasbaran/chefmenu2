@@ -10,6 +10,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      title: 'Chefmenu 2.0 Demo | Don Juan',
       theme: ThemeData(
         // Android claming colors
         accentColor: colorBackground.withOpacity(0.01),
