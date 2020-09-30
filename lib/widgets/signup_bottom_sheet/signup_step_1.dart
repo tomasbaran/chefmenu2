@@ -68,9 +68,9 @@ class _SignupStep1State extends State<SignupStep1> {
       setState(() {
         isLoading = false;
       });
-      _analytics.logEvent(name: 'CTA_click_2', parameters: {'success': true});
+      _analytics.logEvent(name: 'CTA_click_2', parameters: {'success': 1});
     } on FirebaseAuthException catch (e) {
-      _analytics.logEvent(name: 'CTA_click_2', parameters: {'success': false});
+      _analytics.logEvent(name: 'CTA_click_2', parameters: {'success': 0});
       _analytics.logEvent(name: 'signup_error', parameters: {'message': e.code.toString()});
       String message;
       if (e.code == 'weak-password') {
@@ -89,7 +89,7 @@ class _SignupStep1State extends State<SignupStep1> {
       });
       _showFlushbar(context, message);
     } catch (e) {
-      _analytics.logEvent(name: 'CTA_click_2', parameters: {'success': false});
+      _analytics.logEvent(name: 'CTA_click_2', parameters: {'success': 0});
       _analytics.logEvent(name: 'signup_error', parameters: {'message': e.toString()});
       print(e.toString());
       setState(() {

@@ -204,16 +204,14 @@ class _BigBoxContainerState extends State<BigBoxContainer> {
           body: TabBarView(
             controller: widget.tabController,
             children: [
-              Container(
-                child: GridView.extent(
-                  //cacheExtent: 100,
-                  maxCrossAxisExtent: kMaxCrossAxisExtent,
-                  childAspectRatio: 0.44,
-                  children: _buildGridTileList(
-                    context: context,
-                    categoryIndex: 0,
-                    meals: menu.categories[0].meals.length,
-                  ),
+              GridView.extent(
+                //cacheExtent: 100,
+                maxCrossAxisExtent: kMaxCrossAxisExtent,
+                childAspectRatio: 0.44,
+                children: _buildGridTileList(
+                  context: context,
+                  categoryIndex: 0,
+                  meals: menu.categories[0].meals.length,
                 ),
               ),
               GridView.extent(
