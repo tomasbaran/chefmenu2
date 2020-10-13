@@ -36,7 +36,7 @@ Email:
 
 **Emails sent** &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ->&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; **Opens** &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;-> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; **Click** &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; -> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; **Registrations**
 
-    699            40%      285           16%          46(6.6%)     13%     6(0.9%)  
+    699            40%      285           16%           46(6.6%)      13%     6(0.9%)  
     
 #### Madrid (ES)
 
