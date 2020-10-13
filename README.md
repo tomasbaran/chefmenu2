@@ -55,3 +55,5 @@ Email:
 **Emails sent** &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ->&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; **Opens** &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;-> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; **Click** &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; -> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; **Registrations**
 
     605            35%      212             13%           27(4.5%)     7.4%     2(0.3%)  
+
+![Alt Text](screenshots/stats.png)
