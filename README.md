@@ -16,7 +16,7 @@ Email:
 
 > ¡Hola!
 > 
-> Apuesto que la carta digital con código QR que tienen no sirve bien. ¿Por qué? Porque los clientes podrían gastar mucho más con una web de clase mundial que les > hace descubrir todo lo que ofrece su local.
+> Apuesto que la carta digital con código QR que tienen no sirve bien. ¿Por qué? Porque los clientes podrían gastar mucho más con una web de clase mundial que les hace descubrir todo lo que ofrece su local.
 > 
 > ¿Cómo sería esa web? ASÍ
 > 
