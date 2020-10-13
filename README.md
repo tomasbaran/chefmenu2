@@ -12,7 +12,7 @@ Digital online menu for restaurants and bars.
 
 ### Biz data
 
-Email:
+Email template:
 
 > ¡Hola!
 > 
@@ -27,6 +27,10 @@ Email:
 > Tomás Baran
 > Director general y fundador
 > ChefMenu
+
+#### Services/apps I was using
+- **Google Apps** (Gmail): being a new account Gmail allowed me to send 400 emails/day. In 3.5 months (3500 emails sent/300 received), the limit increased to 500 emails/day.
+- **Gmass**: for mass gmail sending
 
 **Emails sent** &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; ->&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; **Opens** &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;-> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; **Click** &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; -> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; **Registrations**
 
