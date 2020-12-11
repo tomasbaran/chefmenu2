@@ -4,6 +4,9 @@ Digital online menu for restaurants and bars.
 
 ![Alt Text](screenshots/1.gif)
 
+### Live Link
+https://demo.chefmenu.app
+
 ### Work Summary
 
 **1769 lines** of code written
