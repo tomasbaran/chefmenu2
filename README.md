@@ -5,7 +5,7 @@ Digital online menu for restaurants and bars.
 ![Alt Text](screenshots/1.gif)
 
 ### Live Link
-https://demo.chefmenu.app
+[https://chefmenu2-staging.web.app](https://chefmenu2-staging.web.app/#/)
 
 ### Work Summary
 
